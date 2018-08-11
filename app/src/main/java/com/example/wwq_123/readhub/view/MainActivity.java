@@ -64,6 +64,11 @@ public class MainActivity extends AppCompatActivity implements TabLayout.OnTabSe
         });
     }
 
+    @Override
+    protected void onPause() {
+        super.onPause();
+    }
+
     private void initData() {
 
         handler.setCallBack(new MyHandler.CallBack() {
