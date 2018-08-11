@@ -9,6 +9,7 @@ import android.support.v7.widget.DividerItemDecoration;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.OrientationHelper;
 import android.support.v7.widget.RecyclerView;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -20,17 +21,11 @@ import com.example.wwq_123.readhub.model.MyRecyclerAdapter;
 import com.example.wwq_123.readhub.model.bean.DataItem;
 import com.example.wwq_123.readhub.model.bean.Title;
 import com.example.wwq_123.readhub.presenter.MainPresenter;
+import com.example.wwq_123.readhub.presenter.service.Service;
 
 import java.io.Serializable;
 import java.util.List;
 
-import retrofit2.Retrofit;
-import rx.Observable;
-import rx.Observer;
-import rx.Scheduler;
-import rx.Subscriber;
-import rx.android.schedulers.AndroidSchedulers;
-import rx.schedulers.Schedulers;
 
 
 public class MainFragment extends Fragment implements SwipeRefreshLayout.OnRefreshListener{
@@ -63,18 +58,13 @@ public class MainFragment extends Fragment implements SwipeRefreshLayout.OnRefre
         Bundle bundle = getArguments();
         Title title = (Title) bundle.get("title");
         TYPE = bundle.getInt("type");
-
-        initData();
+        Service service = presenter.initData(TYPE);     //向网络请求数据，返回服务调用回调方法
         initView();
         initRefreshLayout();
-        initRecycleView();
+        initRecycleView(service);
         return view;
     }
 
-    private void initData() {
-        //presenter.getContent(title,type);网络请求
-       presenter.initData(TYPE);
-    }
 
     private void initView() {
         refreshLayout = view.findViewById(R.id.refreshLayout);
@@ -87,12 +77,13 @@ public class MainFragment extends Fragment implements SwipeRefreshLayout.OnRefre
         refreshLayout.setOnRefreshListener(this);
     }
 
-    private void initRecycleView() {
+
+    private void initRecycleView(Service service) {
         //接收网络数据
-        presenter.setCallBack(new MainPresenter.CallBack() {
+        service.setCallBack(new Service.CallBack() {
             @Override
-            public void getData(List<? extends DataItem> data) {
-                adapter = new MyRecyclerAdapter(getContext(),data,TYPE);
+            public void getData(List<? extends DataItem> list) {
+                adapter = new MyRecyclerAdapter(getContext(),list,TYPE);
                 manager = new LinearLayoutManager(getContext());
                 manager.setOrientation(OrientationHelper.VERTICAL);
                 recyclerView.setLayoutManager(manager);
@@ -100,6 +91,8 @@ public class MainFragment extends Fragment implements SwipeRefreshLayout.OnRefre
                 recyclerView.setAdapter(adapter);
             }
         });
+
+        //设置滚动事件
         recyclerView.addOnScrollListener(new RecyclerView.OnScrollListener() {
             @Override
             public void onScrollStateChanged(RecyclerView recyclerView, int newState) {

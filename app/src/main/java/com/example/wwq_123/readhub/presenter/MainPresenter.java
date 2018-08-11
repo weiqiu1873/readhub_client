@@ -7,22 +7,19 @@ import android.widget.Toast;
 
 import com.example.wwq_123.readhub.model.Okhttp;
 import com.example.wwq_123.readhub.model.bean.DataItem;
-import com.example.wwq_123.readhub.model.bean.Title;
+import com.example.wwq_123.readhub.model.retrofit.API;
 import com.example.wwq_123.readhub.model.retrofit.APIInterface;
-import com.example.wwq_123.readhub.model.retrofit.bean.BlockchainData;
 import com.example.wwq_123.readhub.model.retrofit.bean.Data;
-import com.example.wwq_123.readhub.model.retrofit.bean.JobData;
-import com.example.wwq_123.readhub.model.retrofit.bean.NewsData;
-import com.example.wwq_123.readhub.model.retrofit.bean.TechData;
 import com.example.wwq_123.readhub.model.retrofit.bean.TopicData;
-import com.example.wwq_123.readhub.util.DataUtil;
+import com.example.wwq_123.readhub.presenter.service.BlockchainService;
+import com.example.wwq_123.readhub.presenter.service.JobService;
+import com.example.wwq_123.readhub.presenter.service.NewsService;
+import com.example.wwq_123.readhub.presenter.service.Service;
+import com.example.wwq_123.readhub.presenter.service.TechService;
+import com.example.wwq_123.readhub.presenter.service.TopicService;
 
-import java.util.ArrayList;
 import java.util.List;
 
-import retrofit2.Retrofit;
-import retrofit2.adapter.rxjava.RxJavaCallAdapterFactory;
-import retrofit2.converter.gson.GsonConverterFactory;
 import rx.Observable;
 import rx.Observer;
 import rx.android.schedulers.AndroidSchedulers;
@@ -34,12 +31,10 @@ public class MainPresenter {
     private Okhttp okhttp = new Okhttp();
     private Handler handler;
     private Context context;
-    private CallBack callBack;
-    private  Retrofit retrofit = new Retrofit.Builder()
-            .baseUrl("https://api.readhub.cn/")
-            .addConverterFactory(GsonConverterFactory.create())
-            .addCallAdapterFactory(RxJavaCallAdapterFactory.create())
-            .build();
+    private Service service;
+    public MainPresenter(Context c){
+        this.context = c;
+    }
     public MainPresenter(Handler h,Context c){
         this.handler = h;
         this.context = c;
@@ -56,56 +51,42 @@ public class MainPresenter {
         }).start();
     }
 
-    public void initData(int type){
-
-        APIInterface service = retrofit.create(APIInterface.class);
-       if (type==0){
-           Observable<TopicData> observable = service.getTopicData(null,10);
-           rxjava(observable,type);
-       }else if (type==1){
-           Observable<NewsData> observable = service.getNewsData(null,10);
-           rxjava(observable,type);
-       }else if (type==2){
-           Observable<TechData> observable = service.getTechsData(null,10);
-           rxjava(observable,type);
-       }else if (type==3){
-           Observable<BlockchainData> observable = service.getBlockchainData(null,10);
-           rxjava(observable,type);
-       }else {
-           Observable<JobData> observable = service.getJobData(null,10);
-           rxjava(observable,type);
-       }
-
+    public Service initData(int type){
+        switch (type){
+            case 0:
+                service = new TopicService();
+                break;
+            case 1:
+                service = new NewsService();
+                service.initData();
+                break;
+            case 2:
+                service = new TechService();
+                break;
+            case 3:
+                service = new BlockchainService();
+                break;
+            case 4:
+                service = new JobService();
+                break;
+                default:service = new Service();
+                    break;
+        }
+        service.initData();
+        //返回服务提供回调函数
+        return service;
     }
 
-    public void rxjava(Observable<? extends Data> observable, final int type){
-        observable.subscribeOn(Schedulers.io())
-                .observeOn(AndroidSchedulers.mainThread())
-                .subscribe(new Observer<Data>() {
-                    @Override
-                    public void onCompleted() {
-//                        Toast.makeText(context.getApplicationContext(), "Get Top Movie Completed", Toast.LENGTH_SHORT).show();
-                    }
-                    @Override
-                    public void onError(Throwable e) {
-//                        Toast.makeText(context.getApplicationContext(),"获取数据失败",Toast.LENGTH_SHORT).show();
-                    }
-                    @Override
-                    public void onNext(Data d) {
-                        //从data中提取数据
-                        DataUtil util = new DataUtil();
-                        List<? extends DataItem> list = util.extractData(d,type);
-                        //回调函数返回数据
-                        callBack.getData(list);
-                    }
-                });
+
+    public Service updateData(){
+        service.initData();//重新获取数据
+        return service;
     }
 
-    public void setCallBack(CallBack callBack) {
-        this.callBack = callBack;
+    public Service addData(DataItem item){
+        service.addData(item);
+        return service;
     }
 
-    public interface CallBack{
-        public abstract void getData(List<? extends DataItem> list);
-    }
+
 }

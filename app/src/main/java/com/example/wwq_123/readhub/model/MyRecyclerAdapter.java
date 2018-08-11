@@ -33,7 +33,7 @@ public class MyRecyclerAdapter extends RecyclerView.Adapter<RecyclerView.ViewHol
     private static final int ADD = 1;
     private static final int UPDATE = 0;
     private MainPresenter presenter;
-    private int type;
+    private int TYPE;
     private List<? extends DataItem> data;
     private Context context;
     private LayoutInflater inflater;
@@ -48,7 +48,7 @@ public class MyRecyclerAdapter extends RecyclerView.Adapter<RecyclerView.ViewHol
 
     public MyRecyclerAdapter(Context c, List<? extends DataItem> data,int type){
         this.context = c;
-        this.type = type;
+        this.TYPE = type;
         this.data = data;
         inflater = LayoutInflater.from(context);
     }
@@ -62,7 +62,7 @@ public class MyRecyclerAdapter extends RecyclerView.Adapter<RecyclerView.ViewHol
             View view = inflater.inflate(R.layout.recycleview_foot_item,parent,false);
             FootHolder holder = new FootHolder(view);
             return holder;
-        }else if(type==4){
+        }else if(TYPE==4){
             View view = inflater.inflate(R.layout.recycleview_job_item,parent,false);
             JobViewHolder holder = new JobViewHolder(view);
             return holder;
@@ -118,11 +118,10 @@ public class MyRecyclerAdapter extends RecyclerView.Adapter<RecyclerView.ViewHol
      public void updateList(int type) {
         if (type==ADD){
             // 在原有的数据之上增加新数据
-            presenter.updateData();
-
+            presenter.addData(data.get(data.size()));
         }else {
             //更新原有数据
-
+            presenter.updateData();
         }
         notifyDataSetChanged();
      }
