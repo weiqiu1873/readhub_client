@@ -14,14 +14,25 @@ import android.widget.Toast;
 import com.example.wwq_123.readhub.R;
 import com.example.wwq_123.readhub.model.bean.DataItem;
 import com.example.wwq_123.readhub.model.bean.JobDataItem;
+import com.example.wwq_123.readhub.model.retrofit.APIInterface;
+import com.example.wwq_123.readhub.model.retrofit.bean.Data;
+import com.example.wwq_123.readhub.presenter.MainPresenter;
 
 import java.util.ArrayList;
 import java.util.List;
+
+import retrofit2.Retrofit;
+import retrofit2.adapter.rxjava.RxJavaCallAdapterFactory;
+import retrofit2.converter.gson.GsonConverterFactory;
+import rx.Observable;
+import rx.android.schedulers.AndroidSchedulers;
+import rx.schedulers.Schedulers;
 
 public class MyRecyclerAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
 
     private static final int ADD = 1;
     private static final int UPDATE = 0;
+    private MainPresenter presenter;
     private int type;
     private List<? extends DataItem> data;
     private Context context;
@@ -31,6 +42,7 @@ public class MyRecyclerAdapter extends RecyclerView.Adapter<RecyclerView.ViewHol
 
     public MyRecyclerAdapter(Context context) {
         this.context = context;
+        presenter = new MainPresenter(context);
         inflater = LayoutInflater.from(context);
     }
 
@@ -89,7 +101,7 @@ public class MyRecyclerAdapter extends RecyclerView.Adapter<RecyclerView.ViewHol
                 @Override
                 public void onClick(View v) {
                     System.out.println("button...........add");
-//                    updateList(ADD);
+                    updateList(ADD);
                 }
             });
         }
@@ -104,39 +116,15 @@ public class MyRecyclerAdapter extends RecyclerView.Adapter<RecyclerView.ViewHol
 
     // 暴露接口，更新数据源
      public void updateList(int type) {
-//        if (type==ADD){
-//            // 在原有的数据之上增加新数据
-//            Retrofit retrofit = new Retrofit.Builder()
-//                    .baseUrl("https://api.readhub.cn/")
-//                    .addConverterFactory(GsonConverterFactory.create())
-//                    .addCallAdapterFactory(RxJavaCallAdapterFactory.create())
-//                    .build();
-//            APIInterface service = retrofit.create(APIInterface.class);
-//            Observable<Data> observable = service.getTopicData(null,10);
-//            observable.subscribeOn(Schedulers.io())
-//              .observeOn(AndroidSchedulers.mainThread())
-//               .subscribe(new Observer<Data>() {
-//                @Override
-//                public void onCompleted() {
-//                    Toast.makeText(context, "Get Top Movie Completed", Toast.LENGTH_SHORT).show();
-//                }
-//
-//                @Override
-//                public void onError(Throwable e) {
-//                    Toast.makeText(context,"获取数据失败",Toast.LENGTH_SHORT).show();
-//                }
-//
-//                @Override
-//                public void onNext(Data data) {
-//
-//
-//                }
-//            });
-//        }else {
-//            //更新原有数据
-//
-//        }
-//        notifyDataSetChanged();
+        if (type==ADD){
+            // 在原有的数据之上增加新数据
+            presenter.updateData();
+
+        }else {
+            //更新原有数据
+
+        }
+        notifyDataSetChanged();
      }
 
     @Override
