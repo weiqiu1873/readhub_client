@@ -37,8 +37,8 @@ public class DataUtil {
         return list;
     }
     //从topic中提取所需的数据
-    public List<TopicDataItem> extractTopic(TopicData topic){
-        List<TopicDataItem> list = new ArrayList<>();
+    public List<DataItem> extractTopic(TopicData topic){
+        List<DataItem> list = new ArrayList<>();
         for (TopicData.DataBean bean: topic.getData()) {
             TopicDataItem item = new TopicDataItem();
             item.setUrl(bean.getId());
@@ -67,8 +67,8 @@ public class DataUtil {
         return list;
     }
     //从news中提取所需的数据
-    public List<NewsDataItem> extractNews(NewsData news){
-        List<NewsDataItem> list = new ArrayList<>();
+    public List<DataItem> extractNews(NewsData news){
+        List<DataItem> list = new ArrayList<>();
         for (NewsData.DataBean bean:news.getData()) {
             NewsDataItem item = new NewsDataItem();
             item.setId(bean.getId());
@@ -125,8 +125,8 @@ public class DataUtil {
         return list;
     }
 
-    public List<JobDataItem> extractJob(JobData job){
-        List<JobDataItem> list = new ArrayList<>();
+    public List<DataItem> extractJob(JobData job){
+        List<DataItem> list = new ArrayList<>();
         for (JobData.DataBean bean:job.getData()) {
             JobDataItem item = new JobDataItem();
             item.setId(bean.getId());

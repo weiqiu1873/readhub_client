@@ -92,4 +92,19 @@ public class TopicDataItem extends DataItem{
     public void setNewsArray(List<NewsDataItem> newsArray) {
         this.newsArray = newsArray;
     }
+
+    @Override
+    public String toString() {
+        return "TopicDataItem{" +
+                "url='" + url + '\'' +
+                ", createdAt='" + createdAt + '\'' +
+                ", order=" + order +
+                ", publishDate='" + publishDate + '\'' +
+                ", summary='" + summary + '\'' +
+                ", title='" + title + '\'' +
+                ", updatedAt='" + updatedAt + '\'' +
+                ", timeline=" + timeline +
+                ", newsArray=" + newsArray +
+                '}';
+    }
 }

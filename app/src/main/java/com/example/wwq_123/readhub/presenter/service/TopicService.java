@@ -35,7 +35,7 @@ public class TopicService extends Service{
                     public void onNext(TopicData topicData) {
                         //从data中提取数据
                         DataUtil util = new DataUtil();
-                        List<? extends  DataItem> list = util.extractTopic(topicData);
+                        List<DataItem> list = util.extractTopic(topicData);
                         //回调函数返回数据
                         callBack.getData(list);
                     }
@@ -44,7 +44,29 @@ public class TopicService extends Service{
 
     @Override
     public void addData(DataItem item) {
-
+        TopicDataItem data = (TopicDataItem) item;
+        APIInterface service = API.getService();
+        Observable<TopicData> observable = service.getTopicData(String.valueOf(((TopicDataItem) item).getOrder()),10);
+        observable.subscribeOn(Schedulers.io())
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribe(new Observer<TopicData>() {
+                    @Override
+                    public void onCompleted() {
+//                        Toast.makeText(context.getApplicationContext(), "Get Top Movie Completed", Toast.LENGTH_SHORT).show();
+                    }
+                    @Override
+                    public void onError(Throwable e) {
+//                        Toast.makeText(context.getApplicationContext(),"获取数据失败",Toast.LENGTH_SHORT).show();
+                    }
+                    @Override
+                    public void onNext(TopicData topicData) {
+                        //从data中提取数据
+                        DataUtil util = new DataUtil();
+                        List<DataItem> list = util.extractTopic(topicData);
+                        //回调函数返回数据
+                        callBack.getData(list);
+                    }
+                });
     }
 
     @Override

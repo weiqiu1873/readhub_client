@@ -301,4 +301,23 @@ public class JobDataItem extends DataItem{
         }
     }
 
+    @Override
+    public String toString() {
+        return "JobDataItem{" +
+                "id=" + id +
+                ", uuid='" + uuid + '\'' +
+                ", jobTitle='" + jobTitle + '\'' +
+                ", jobCount=" + jobCount +
+                ", companyCount=" + companyCount +
+                ", salaryLower=" + salaryLower +
+                ", salaryUpper=" + salaryUpper +
+                ", experienceLower=" + experienceLower +
+                ", experienceUpper=" + experienceUpper +
+                ", cities=" + cities +
+                ", sources=" + sources +
+                ", publishDate='" + publishDate + '\'' +
+                ", createdAt='" + createdAt + '\'' +
+                ", jobsArray=" + jobsArray +
+                '}';
+    }
 }

@@ -6,6 +6,7 @@ import com.example.wwq_123.readhub.model.retrofit.APIInterface;
 import com.example.wwq_123.readhub.model.retrofit.bean.BlockchainData;
 import com.example.wwq_123.readhub.model.retrofit.bean.Data;
 import com.example.wwq_123.readhub.util.DataUtil;
+import com.example.wwq_123.readhub.util.TimeUtil;
 
 import java.util.List;
 
@@ -35,7 +36,7 @@ public class BlockchainService extends Service{
                     @Override
                     public void onNext(BlockchainData blockchainData) {
                         DataUtil util = new DataUtil();
-                        List<? extends  DataItem> list = util.extractBlockchain(blockchainData);
+                        List<DataItem> list = util.extractBlockchain(blockchainData);
                         callBack.getData(list);
                     }
                 });
@@ -43,7 +44,26 @@ public class BlockchainService extends Service{
 
     @Override
     public void addData(DataItem item) {
+        APIInterface service = API.getService();
+        Observable<BlockchainData> observable = service.getBlockchainData(TimeUtil.UTCTOTimestamp(item.getPublishDate()),10);
+        observable.subscribeOn(Schedulers.io())
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribe(new Observer<BlockchainData>() {
+                    @Override
+                    public void onCompleted() {
 
+                    }
+                    @Override
+                    public void onError(Throwable e) {
+
+                    }
+                    @Override
+                    public void onNext(BlockchainData blockchainData) {
+                        DataUtil util = new DataUtil();
+                        List<DataItem> list = util.extractBlockchain(blockchainData);
+                        callBack.getData(list);
+                    }
+                });
     }
 
     public void setCallBack(CallBack callBack) {

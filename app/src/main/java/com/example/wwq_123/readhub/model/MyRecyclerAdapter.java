@@ -14,19 +14,11 @@ import android.widget.Toast;
 import com.example.wwq_123.readhub.R;
 import com.example.wwq_123.readhub.model.bean.DataItem;
 import com.example.wwq_123.readhub.model.bean.JobDataItem;
-import com.example.wwq_123.readhub.model.retrofit.APIInterface;
-import com.example.wwq_123.readhub.model.retrofit.bean.Data;
 import com.example.wwq_123.readhub.presenter.MainPresenter;
+import com.example.wwq_123.readhub.presenter.service.Service;
 
 import java.util.ArrayList;
 import java.util.List;
-
-import retrofit2.Retrofit;
-import retrofit2.adapter.rxjava.RxJavaCallAdapterFactory;
-import retrofit2.converter.gson.GsonConverterFactory;
-import rx.Observable;
-import rx.android.schedulers.AndroidSchedulers;
-import rx.schedulers.Schedulers;
 
 public class MyRecyclerAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
 
@@ -34,7 +26,7 @@ public class MyRecyclerAdapter extends RecyclerView.Adapter<RecyclerView.ViewHol
     private static final int UPDATE = 0;
     private MainPresenter presenter;
     private int TYPE;
-    private List<? extends DataItem> data;
+    private List<DataItem> data;
     private Context context;
     private LayoutInflater inflater;
     private int normalType = 0;     // 第一种ViewType，正常的item
@@ -46,10 +38,11 @@ public class MyRecyclerAdapter extends RecyclerView.Adapter<RecyclerView.ViewHol
         inflater = LayoutInflater.from(context);
     }
 
-    public MyRecyclerAdapter(Context c, List<? extends DataItem> data,int type){
+    public MyRecyclerAdapter(Context c, List<DataItem> data, int type){
         this.context = c;
         this.TYPE = type;
         this.data = data;
+        presenter = new MainPresenter(context);
         inflater = LayoutInflater.from(context);
     }
 
@@ -101,7 +94,8 @@ public class MyRecyclerAdapter extends RecyclerView.Adapter<RecyclerView.ViewHol
                 @Override
                 public void onClick(View v) {
                     System.out.println("button...........add");
-                    updateList(ADD);
+//                    updateList(ADD);
+                    getMoreData();
                 }
             });
         }
@@ -114,16 +108,32 @@ public class MyRecyclerAdapter extends RecyclerView.Adapter<RecyclerView.ViewHol
         data = new ArrayList<>();
     }
 
-    // 暴露接口，更新数据源
-     public void updateList(int type) {
-        if (type==ADD){
-            // 在原有的数据之上增加新数据
-            presenter.addData(data.get(data.size()));
-        }else {
-            //更新原有数据
-            presenter.updateData();
-        }
-        notifyDataSetChanged();
+    //更新原有数据
+     public void updateList() {
+         Service service = presenter.updateData(TYPE);
+         service.setCallBack(new Service.CallBack() {
+             @Override
+             public void getData(List<DataItem> list) {
+                 data = list;
+                 notifyDataSetChanged();
+             }
+         });
+     }
+    // 在原有的数据之上增加新数据
+     public void getMoreData(){
+         Service service = presenter.addData(data.get(data.size()-1),TYPE);
+         service.setCallBack(new Service.CallBack() {
+             @Override
+             public void getData(List<DataItem> list) {
+                 for(int i=0;i<list.size();i++){
+                     data.add(list.get(i));
+                 }
+//                 for (DataItem item:data) {
+//                     System.out.println("data add....."+item.toString());
+//                 }
+                 notifyDataSetChanged();
+             }
+         });
      }
 
     @Override

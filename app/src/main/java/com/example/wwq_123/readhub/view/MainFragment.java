@@ -82,7 +82,7 @@ public class MainFragment extends Fragment implements SwipeRefreshLayout.OnRefre
         //接收网络数据
         service.setCallBack(new Service.CallBack() {
             @Override
-            public void getData(List<? extends DataItem> list) {
+            public void getData(List<DataItem> list) {
                 adapter = new MyRecyclerAdapter(getContext(),list,TYPE);
                 manager = new LinearLayoutManager(getContext());
                 manager.setOrientation(OrientationHelper.VERTICAL);
@@ -100,7 +100,7 @@ public class MainFragment extends Fragment implements SwipeRefreshLayout.OnRefre
                 // 在newState为滑到底部时
                 if (newState == RecyclerView.SCROLL_STATE_IDLE){
                     //加载更多数据
-                    updateRecyclerView(ADD);
+                    adapter.getMoreData();
                 }
             }
 
@@ -112,10 +112,6 @@ public class MainFragment extends Fragment implements SwipeRefreshLayout.OnRefre
         });
     }
 
-    private void updateRecyclerView(int type) {
-        adapter.updateList(type);
-    }
-
     //下拉刷新
     @Override
     public void onRefresh() {
@@ -123,8 +119,8 @@ public class MainFragment extends Fragment implements SwipeRefreshLayout.OnRefre
         refreshLayout.setRefreshing(true);
         // 重置adapter的数据源为空
         adapter.resetDatas();
-        // 获取第第0条到第PAGE_COUNT（值为10）条的数据
-        updateRecyclerView(UPDATE);
+        // 更新数据
+        adapter.updateList();
         handler.postDelayed(new Runnable() {
             @Override
             public void run() {

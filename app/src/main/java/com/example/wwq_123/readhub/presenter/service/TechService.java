@@ -6,6 +6,7 @@ import com.example.wwq_123.readhub.model.retrofit.APIInterface;
 import com.example.wwq_123.readhub.model.retrofit.bean.Data;
 import com.example.wwq_123.readhub.model.retrofit.bean.TechData;
 import com.example.wwq_123.readhub.util.DataUtil;
+import com.example.wwq_123.readhub.util.TimeUtil;
 
 import java.util.List;
 
@@ -27,16 +28,14 @@ public class TechService extends Service{
                     public void onCompleted() {
 
                     }
-
                     @Override
                     public void onError(Throwable e) {
 
                     }
-
                     @Override
                     public void onNext(TechData techData) {
                         DataUtil util = new DataUtil();
-                        List<? extends  DataItem> list = util.extractTech(techData);
+                        List<DataItem> list = util.extractTech(techData);
                         callBack.getData(list);
                     }
                 });
@@ -45,6 +44,26 @@ public class TechService extends Service{
     @Override
     public void addData(DataItem item) {
 
+        APIInterface service = API.getService();
+        Observable<TechData> observable = service.getTechsData(TimeUtil.UTCTOTimestamp(item.getPublishDate()),10);
+        observable.subscribeOn(Schedulers.io())
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribe(new Observer<TechData>() {
+                    @Override
+                    public void onCompleted() {
+
+                    }
+                    @Override
+                    public void onError(Throwable e) {
+
+                    }
+                    @Override
+                    public void onNext(TechData techData) {
+                        DataUtil util = new DataUtil();
+                        List<DataItem> list = util.extractTech(techData);
+                        callBack.getData(list);
+                    }
+                });
     }
 
     public void setCallBack(CallBack callBack) {

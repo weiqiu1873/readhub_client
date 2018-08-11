@@ -20,6 +20,6 @@ public class Service {
     public void addData(DataItem item){};
 
     public interface CallBack{
-        public abstract void getData(List<? extends DataItem> list);
+        public abstract void getData(List<DataItem> list);
     }
 }

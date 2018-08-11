@@ -96,4 +96,20 @@ public class DataItem {
     public void setPublishDate(String publishDate) {
         this.publishDate = publishDate;
     }
+
+    @Override
+    public String toString() {
+        return "DataItem{" +
+                "id=" + id +
+                ", title='" + title + '\'' +
+                ", summary='" + summary + '\'' +
+                ", summaryAuto='" + summaryAuto + '\'' +
+                ", url='" + url + '\'' +
+                ", mobileUrl='" + mobileUrl + '\'' +
+                ", siteName='" + siteName + '\'' +
+                ", language='" + language + '\'' +
+                ", authorName=" + authorName +
+                ", publishDate='" + publishDate + '\'' +
+                '}';
+    }
 }

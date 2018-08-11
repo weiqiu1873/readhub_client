@@ -10,4 +10,11 @@ public class NewsDataItem extends DataItem{
     public void setSiteSlug(String siteSlug) {
         this.siteSlug = siteSlug;
     }
+
+    @Override
+    public String toString() {
+        return "NewsDataItem{" +
+                "siteSlug='" + siteSlug + '\'' +
+                '}';
+    }
 }

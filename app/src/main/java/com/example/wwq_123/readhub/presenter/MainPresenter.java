@@ -31,7 +31,6 @@ public class MainPresenter {
     private Okhttp okhttp = new Okhttp();
     private Handler handler;
     private Context context;
-    private Service service;
     public MainPresenter(Context c){
         this.context = c;
     }
@@ -52,6 +51,7 @@ public class MainPresenter {
     }
 
     public Service initData(int type){
+        Service service;
         switch (type){
             case 0:
                 service = new TopicService();
@@ -78,12 +78,54 @@ public class MainPresenter {
     }
 
 
-    public Service updateData(){
+    public Service updateData(int type){
+        Service service;
+        switch (type){
+            case 0:
+                service = new TopicService();
+                break;
+            case 1:
+                service = new NewsService();
+                service.initData();
+                break;
+            case 2:
+                service = new TechService();
+                break;
+            case 3:
+                service = new BlockchainService();
+                break;
+            case 4:
+                service = new JobService();
+                break;
+            default:service = new Service();
+                break;
+        }
         service.initData();//重新获取数据
         return service;
     }
 
-    public Service addData(DataItem item){
+    public Service addData(DataItem item,int type){
+        Service service;
+        switch (type){
+            case 0:
+                service = new TopicService();
+                break;
+            case 1:
+                service = new NewsService();
+                service.initData();
+                break;
+            case 2:
+                service = new TechService();
+                break;
+            case 3:
+                service = new BlockchainService();
+                break;
+            case 4:
+                service = new JobService();
+                break;
+            default:service = new Service();
+                break;
+        }
         service.addData(item);
         return service;
     }
