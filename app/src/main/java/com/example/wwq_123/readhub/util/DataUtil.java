@@ -62,6 +62,7 @@ public class DataUtil {
                 newsItem.setSiteSlug(newsBean.getSiteSlug());
                 newsDataItemList.add(newsItem);
             }
+            item.setNewsArray(newsDataItemList);
             list.add(item);
         }
         return list;

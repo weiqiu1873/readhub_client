@@ -1,6 +1,8 @@
-package com.example.wwq_123.readhub.model;
+package com.example.wwq_123.readhub.view;
 
 import android.content.Context;
+import android.content.Intent;
+import android.net.Uri;
 import android.support.annotation.NonNull;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
@@ -9,16 +11,17 @@ import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.LinearLayout;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import com.example.wwq_123.readhub.R;
 import com.example.wwq_123.readhub.model.bean.DataItem;
 import com.example.wwq_123.readhub.model.bean.JobDataItem;
 import com.example.wwq_123.readhub.presenter.MainPresenter;
 import com.example.wwq_123.readhub.presenter.service.Service;
+import com.example.wwq_123.readhub.view.ShowDataActivity;
 
 import java.util.ArrayList;
 import java.util.List;
+
 
 public class MyRecyclerAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
 
@@ -31,7 +34,6 @@ public class MyRecyclerAdapter extends RecyclerView.Adapter<RecyclerView.ViewHol
     private LayoutInflater inflater;
     private int normalType = 0;     // 第一种ViewType，正常的item
     private int footType = 1;       // 第二种ViewType，底部的提示View
-
     public MyRecyclerAdapter(Context context) {
         this.context = context;
         presenter = new MainPresenter(context);
@@ -45,7 +47,6 @@ public class MyRecyclerAdapter extends RecyclerView.Adapter<RecyclerView.ViewHol
         presenter = new MainPresenter(context);
         inflater = LayoutInflater.from(context);
     }
-
 
     //重写onCreateViewHolder方法，返回一个自定义的ViewHolder
     @NonNull
@@ -78,7 +79,18 @@ public class MyRecyclerAdapter extends RecyclerView.Adapter<RecyclerView.ViewHol
             holder1.content.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
-                    Toast.makeText(context,data.get(position).getUrl(),Toast.LENGTH_SHORT);
+                    if (TYPE==0){
+                        //跳转到ShowDataActivity
+                        Intent intent = new Intent(context, ShowDataActivity.class);
+                        intent.putExtra("data",data.get(position));
+                        context.startActivity(intent);
+                    }else {
+                        //调用默认浏览器打开网页
+                        Uri uri = Uri.parse(data.get(position).getMobileUrl());
+                        Intent intent = new Intent(Intent.ACTION_VIEW,uri);
+                        context.startActivity(intent);
+                    }
+
                 }
             });
         }else if (holder instanceof JobViewHolder){
@@ -93,8 +105,6 @@ public class MyRecyclerAdapter extends RecyclerView.Adapter<RecyclerView.ViewHol
             holder1.button.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
-                    System.out.println("button...........add");
-//                    updateList(ADD);
                     getMoreData();
                 }
             });
@@ -128,9 +138,6 @@ public class MyRecyclerAdapter extends RecyclerView.Adapter<RecyclerView.ViewHol
                  for(int i=0;i<list.size();i++){
                      data.add(list.get(i));
                  }
-//                 for (DataItem item:data) {
-//                     System.out.println("data add....."+item.toString());
-//                 }
                  notifyDataSetChanged();
              }
          });
@@ -139,10 +146,6 @@ public class MyRecyclerAdapter extends RecyclerView.Adapter<RecyclerView.ViewHol
     @Override
     public int getItemCount() {
         return data.size()+1;
-    }
-    // 自定义方法，获取列表中数据源的最后一个位置，比getItemCount少1，因为不计上footView
-    public int getRealLastPosition() {
-        return data.size();
     }
 
     @Override
@@ -177,4 +180,6 @@ public class MyRecyclerAdapter extends RecyclerView.Adapter<RecyclerView.ViewHol
             button = itemView.findViewById(R.id.refreshBtn);
         }
     }
+
+
 }

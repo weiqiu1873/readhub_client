@@ -9,15 +9,14 @@ import android.support.v7.widget.DividerItemDecoration;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.OrientationHelper;
 import android.support.v7.widget.RecyclerView;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
+
 import com.example.wwq_123.readhub.R;
 import com.example.wwq_123.readhub.model.MyHandler;
 import com.example.wwq_123.readhub.model.MyItemDecoration;
-import com.example.wwq_123.readhub.model.MyRecyclerAdapter;
 import com.example.wwq_123.readhub.model.bean.DataItem;
 import com.example.wwq_123.readhub.model.bean.Title;
 import com.example.wwq_123.readhub.presenter.MainPresenter;
@@ -25,8 +24,6 @@ import com.example.wwq_123.readhub.presenter.service.Service;
 
 import java.io.Serializable;
 import java.util.List;
-
-
 
 public class MainFragment extends Fragment implements SwipeRefreshLayout.OnRefreshListener{
 
@@ -62,9 +59,9 @@ public class MainFragment extends Fragment implements SwipeRefreshLayout.OnRefre
         initView();
         initRefreshLayout();
         initRecycleView(service);
+
         return view;
     }
-
 
     private void initView() {
         refreshLayout = view.findViewById(R.id.refreshLayout);
@@ -76,7 +73,6 @@ public class MainFragment extends Fragment implements SwipeRefreshLayout.OnRefre
                 android.R.color.holo_orange_light, android.R.color.holo_green_light);
         refreshLayout.setOnRefreshListener(this);
     }
-
 
     private void initRecycleView(Service service) {
         //接收网络数据

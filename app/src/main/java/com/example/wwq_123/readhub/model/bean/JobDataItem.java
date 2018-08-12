@@ -1,8 +1,9 @@
 package com.example.wwq_123.readhub.model.bean;
 
+import java.io.Serializable;
 import java.util.List;
 
-public class JobDataItem extends DataItem{
+public class JobDataItem extends DataItem implements Serializable{
     private int id;
     private String uuid;
     private String jobTitle;

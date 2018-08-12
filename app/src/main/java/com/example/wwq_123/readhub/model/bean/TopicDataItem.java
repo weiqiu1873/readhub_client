@@ -1,8 +1,9 @@
 package com.example.wwq_123.readhub.model.bean;
 
+import java.io.Serializable;
 import java.util.List;
 
-public class TopicDataItem extends DataItem{
+public class TopicDataItem extends DataItem implements Serializable{
     private String url;     //id
     private String createdAt;
     private int order;

@@ -1,11 +1,13 @@
 package com.example.wwq_123.readhub.model.bean;
 
+import java.io.Serializable;
+
 /*
  ** 实体类
  * 开发者
  * 区块链
  */
-public class DataItem {
+public class DataItem implements Serializable{
     private int id;
     private String title;
     private String summary;

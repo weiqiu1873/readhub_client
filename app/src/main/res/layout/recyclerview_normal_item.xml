@@ -6,6 +6,7 @@
     <TextView
         android:id="@+id/item_title"
         android:textSize="17dp"
+        android:textColor="@color/colorBlack"
         android:padding="10dp"
         android:background="@color/colorWhite"
         android:layout_width="match_parent"
@@ -17,8 +18,18 @@
     <TextView
         android:id="@+id/item_content"
         android:textSize="15dp"
+        android:textColor="@color/colorBlack"
         android:padding="8dp"
+        android:clickable="true"
         android:background="@color/colorWhite"
         android:layout_width="match_parent"
         android:layout_height="wrap_content" />
+    <View
+        android:background="@color/colorDrak"
+        android:layout_width="match_parent"
+        android:layout_height="1dp"/>
+    <TextView
+        android:background="@color/colorWhite"
+        android:layout_width="match_parent"
+        android:layout_height="40dp" />
 </LinearLayout>
