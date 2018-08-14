@@ -1,4 +1,4 @@
-package com.example.wwq_123.readhub.model;
+package com.example.wwq_123.readhub.view;
 
 import android.graphics.Canvas;
 import android.graphics.Rect;

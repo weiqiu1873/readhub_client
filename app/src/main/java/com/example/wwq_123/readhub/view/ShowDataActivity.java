@@ -1,24 +1,20 @@
 package com.example.wwq_123.readhub.view;
 
+import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
-import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.OrientationHelper;
 import android.support.v7.widget.RecyclerView;
-import android.util.Log;
-import android.view.View;
-import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import com.example.wwq_123.readhub.R;
-import com.example.wwq_123.readhub.model.MyItemDecoration;
+import com.example.wwq_123.readhub.adapter.DataNewsArrayAdapter;
 import com.example.wwq_123.readhub.model.bean.DataItem;
-import com.example.wwq_123.readhub.model.bean.NewsDataItem;
 import com.example.wwq_123.readhub.model.bean.TopicDataItem;
-import com.example.wwq_123.readhub.model.retrofit.bean.TopicData;
+
 
 public class ShowDataActivity extends AppCompatActivity{
 
@@ -27,6 +23,7 @@ public class ShowDataActivity extends AppCompatActivity{
     private DataItem data;
     private RecyclerView newsArray;
     private DataNewsArrayAdapter adapter;
+
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -44,7 +41,6 @@ public class ShowDataActivity extends AppCompatActivity{
         newsArray.setLayoutManager(manager);
         newsArray.addItemDecoration(new MyItemDecoration());
         newsArray.setAdapter(adapter);
-
     }
 
     private void initData() {
@@ -58,5 +54,10 @@ public class ShowDataActivity extends AppCompatActivity{
         title = findViewById(R.id.data_title);
         summary = findViewById(R.id.data_summary);
         newsArray = findViewById(R.id.newsArray_list);
+    }
+
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
     }
 }

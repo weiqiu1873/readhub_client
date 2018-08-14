@@ -1,30 +1,27 @@
-package com.example.wwq_123.readhub.presenter.service;
+package com.example.wwq_123.readhub.model.net.netservice;
 
+import com.example.wwq_123.readhub.model.Model;
 import com.example.wwq_123.readhub.model.bean.DataItem;
-import com.example.wwq_123.readhub.model.bean.NewsDataItem;
-import com.example.wwq_123.readhub.model.retrofit.API;
-import com.example.wwq_123.readhub.model.retrofit.APIInterface;
-import com.example.wwq_123.readhub.model.retrofit.bean.Data;
-import com.example.wwq_123.readhub.model.retrofit.bean.NewsData;
+import com.example.wwq_123.readhub.model.net.retrofit.API;
+import com.example.wwq_123.readhub.model.net.retrofit.APIInterface;
+import com.example.wwq_123.readhub.model.jsonbean.BlockchainData;
 import com.example.wwq_123.readhub.util.DataUtil;
 import com.example.wwq_123.readhub.util.TimeUtil;
-
 import java.util.List;
-
 import rx.Observable;
 import rx.Observer;
 import rx.android.schedulers.AndroidSchedulers;
 import rx.schedulers.Schedulers;
 
-public class NewsService extends Service{
+public class BlockchainService implements Service{
 
-
-    public void initData(){
+    @Override
+    public void getData(Model.GetDataCallBack callBack){
         APIInterface service = API.getService();
-        Observable<NewsData> observable = service.getNewsData(null,10);
+        Observable<BlockchainData> observable = service.getBlockchainData(null,10);
         observable.subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
-                .subscribe(new Observer<NewsData>() {
+                .subscribe(new Observer<BlockchainData>() {
                     @Override
                     public void onCompleted() {
 
@@ -36,22 +33,21 @@ public class NewsService extends Service{
                     }
 
                     @Override
-                    public void onNext(NewsData newsData) {
+                    public void onNext(BlockchainData blockchainData) {
                         DataUtil util = new DataUtil();
-                        List<DataItem> list = util.extractNews(newsData);
-                        callBack.getData(list);
+                        List<DataItem> list = util.extractBlockchain(blockchainData);
+                        callBack.DataCallBack(list);
                     }
                 });
     }
 
     @Override
-    public void addData(DataItem item) {
-        NewsDataItem data = (NewsDataItem) item;
+    public void getMoreData(Model.GetMoreDataCallBack callBack,DataItem item) {
         APIInterface service = API.getService();
-        Observable<NewsData> observable = service.getNewsData(TimeUtil.UTCTOTimestamp(data.getPublishDate()),10);
+        Observable<BlockchainData> observable = service.getBlockchainData(TimeUtil.UTCTOTimestamp(item.getPublishDate()),10);
         observable.subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
-                .subscribe(new Observer<NewsData>() {
+                .subscribe(new Observer<BlockchainData>() {
                     @Override
                     public void onCompleted() {
 
@@ -61,15 +57,12 @@ public class NewsService extends Service{
 
                     }
                     @Override
-                    public void onNext(NewsData newsData) {
+                    public void onNext(BlockchainData blockchainData) {
                         DataUtil util = new DataUtil();
-                        List<DataItem> list = util.extractNews(newsData);
-                        callBack.getData(list);
+                        List<DataItem> list = util.extractBlockchain(blockchainData);
+                        callBack.DataCallBack(list);
                     }
                 });
     }
 
-    public void setCallBack(CallBack callBack) {
-        super.setCallBack(callBack);
-    }
 }

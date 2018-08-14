@@ -1,6 +1,7 @@
-package com.example.wwq_123.readhub.model;
+package com.example.wwq_123.readhub.model.net;
 
 import android.os.Handler;
+import android.os.Looper;
 import android.os.Message;
 
 import java.io.IOException;
@@ -30,11 +31,12 @@ public class Okhttp {
         return response.body().string();
     }
     //异步获取数据
-    public void asyRun(String url, final Handler handler, final int type) {
+    public void asyRun(String url , final int type) {
         Request request = new Request.Builder()
                 .url(url)
                 .build();
         client.newCall(request).enqueue(new Callback() {
+            Handler handler = new Handler(Looper.getMainLooper());
             @Override
             public void onFailure(Call call, IOException e) {
                 Message message = handler.obtainMessage();
@@ -62,17 +64,5 @@ public class Okhttp {
                 .build();
         Response response = client.newCall(request).execute();
         return response.body().string();
-    }
-//
-    String bowlingJson(String player1, String player2) {
-        return "{'winCondition':'HIGH_SCORE',"
-                + "'name':'Bowling',"
-                + "'round':4,"
-                + "'lastSaved':1367702411696,"
-                + "'dateStarted':1367702378785,"
-                + "'players':["
-                + "{'name':'" + player1 + "','history':[10,8,6,7,8],'color':-13388315,'total':39},"
-                + "{'name':'" + player2 + "','history':[6,10,5,10,10],'color':-48060,'total':41}"
-                + "]}";
     }
 }

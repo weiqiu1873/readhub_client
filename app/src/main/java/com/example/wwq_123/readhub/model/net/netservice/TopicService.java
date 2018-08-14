@@ -1,10 +1,11 @@
-package com.example.wwq_123.readhub.presenter.service;
+package com.example.wwq_123.readhub.model.net.netservice;
 
+import com.example.wwq_123.readhub.model.Model;
 import com.example.wwq_123.readhub.model.bean.DataItem;
 import com.example.wwq_123.readhub.model.bean.TopicDataItem;
-import com.example.wwq_123.readhub.model.retrofit.API;
-import com.example.wwq_123.readhub.model.retrofit.APIInterface;
-import com.example.wwq_123.readhub.model.retrofit.bean.TopicData;
+import com.example.wwq_123.readhub.model.net.retrofit.API;
+import com.example.wwq_123.readhub.model.net.retrofit.APIInterface;
+import com.example.wwq_123.readhub.model.jsonbean.TopicData;
 import com.example.wwq_123.readhub.util.DataUtil;
 
 import java.util.List;
@@ -14,10 +15,9 @@ import rx.Observer;
 import rx.android.schedulers.AndroidSchedulers;
 import rx.schedulers.Schedulers;
 
-public class TopicService extends Service{
-
-    public void initData(){
-
+public class TopicService implements Service{
+    @Override
+    public void getData(Model.GetDataCallBack callBack){
         APIInterface service = API.getService();
         Observable<TopicData> observable = service.getTopicData(null,10);
         observable.subscribeOn(Schedulers.io())
@@ -37,13 +37,13 @@ public class TopicService extends Service{
                         DataUtil util = new DataUtil();
                         List<DataItem> list = util.extractTopic(topicData);
                         //回调函数返回数据
-                        callBack.getData(list);
+                        callBack.DataCallBack(list);
                     }
                 });
     }
 
     @Override
-    public void addData(DataItem item) {
+    public void getMoreData(Model.GetMoreDataCallBack callBack,DataItem item) {
         TopicDataItem data = (TopicDataItem) item;
         APIInterface service = API.getService();
         Observable<TopicData> observable = service.getTopicData(String.valueOf(((TopicDataItem) item).getOrder()),10);
@@ -64,13 +64,9 @@ public class TopicService extends Service{
                         DataUtil util = new DataUtil();
                         List<DataItem> list = util.extractTopic(topicData);
                         //回调函数返回数据
-                        callBack.getData(list);
+                        callBack.DataCallBack(list);
                     }
                 });
     }
 
-    @Override
-    public void setCallBack(CallBack callBack) {
-        super.setCallBack(callBack);
-    }
 }

@@ -1,4 +1,4 @@
-package com.example.wwq_123.readhub.model.retrofit;
+package com.example.wwq_123.readhub.model.net.retrofit;
 
 import retrofit2.Retrofit;
 import retrofit2.adapter.rxjava.RxJavaCallAdapterFactory;

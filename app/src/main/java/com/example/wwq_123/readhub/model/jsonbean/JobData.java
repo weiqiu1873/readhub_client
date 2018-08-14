@@ -1,7 +1,5 @@
-package com.example.wwq_123.readhub.model.retrofit.bean;
+package com.example.wwq_123.readhub.model.jsonbean;
 
-
-import com.google.gson.annotations.SerializedName;
 
 import java.util.List;
 

@@ -1,4 +1,4 @@
-package com.example.wwq_123.readhub.model.retrofit.bean;
+package com.example.wwq_123.readhub.model.jsonbean;
 
 
 import java.util.List;
