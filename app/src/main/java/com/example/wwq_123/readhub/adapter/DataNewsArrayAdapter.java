@@ -12,7 +12,7 @@ import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import com.example.wwq_123.readhub.R;
-import com.example.wwq_123.readhub.model.bean.NewsDataItem;
+import com.example.wwq_123.readhub.mvc.model.bean.NewsDataItem;
 
 import java.util.List;
 

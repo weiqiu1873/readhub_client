@@ -1,59 +1,21 @@
 package com.example.wwq_123.readhub.util;
 
-import com.example.wwq_123.readhub.model.Model;
-import com.example.wwq_123.readhub.model.bean.DataItem;
-import com.example.wwq_123.readhub.model.bean.JobDataItem;
-import com.example.wwq_123.readhub.model.bean.NewsDataItem;
-import com.example.wwq_123.readhub.model.bean.Title;
-import com.example.wwq_123.readhub.model.bean.TopicDataItem;
-import com.example.wwq_123.readhub.model.net.retrofit.APIInterface;
-import com.example.wwq_123.readhub.model.jsonbean.BlockchainData;
-import com.example.wwq_123.readhub.model.jsonbean.JobData;
-import com.example.wwq_123.readhub.model.jsonbean.NewsData;
-import com.example.wwq_123.readhub.model.jsonbean.TechData;
-import com.example.wwq_123.readhub.model.jsonbean.TopicData;
+import com.example.wwq_123.readhub.mvc.model.bean.DataItem;
+import com.example.wwq_123.readhub.mvc.model.bean.JobDataItem;
+import com.example.wwq_123.readhub.mvc.model.bean.NewsDataItem;
+import com.example.wwq_123.readhub.mvc.model.bean.TopicDataItem;
+import com.example.wwq_123.readhub.mvc.model.jsonbean.BlockchainData;
+import com.example.wwq_123.readhub.mvc.model.jsonbean.JobData;
+import com.example.wwq_123.readhub.mvc.model.jsonbean.NewsData;
+import com.example.wwq_123.readhub.mvc.model.jsonbean.TechData;
+import com.example.wwq_123.readhub.mvc.model.jsonbean.TopicData;
 
 import java.util.ArrayList;
 import java.util.List;
 
-import retrofit2.Retrofit;
-import retrofit2.adapter.rxjava.RxJavaCallAdapterFactory;
-import retrofit2.converter.scalars.ScalarsConverterFactory;
-import rx.Observable;
-import rx.Observer;
-import rx.android.schedulers.AndroidSchedulers;
-import rx.schedulers.Schedulers;
-
 public class DataUtil {
 
-    public void getTabTitle(final Model.GetTabTitleCallBack callBack){
-
-        Retrofit retrofit = new Retrofit.Builder()
-                .baseUrl("https://readhub.cn/")
-                .addConverterFactory(ScalarsConverterFactory.create())
-                .addCallAdapterFactory(RxJavaCallAdapterFactory.create())
-                .build();
-        APIInterface service = retrofit.create(APIInterface.class);
-        Observable<String> observable = service.getTabTitle();
-        observable.subscribeOn(Schedulers.io())
-                .observeOn(AndroidSchedulers.mainThread())
-                .subscribe(new Observer<String>() {
-                    @Override
-                    public void onCompleted() {
-                        System.out.println("onCompletd..............");
-                    }
-                    @Override
-                    public void onError(Throwable e) {
-                        System.out.println("onError..............\n"+e.getMessage());
-                    }
-                    @Override
-                    public void onNext(String s) {
-                        System.out.println(s);
-                        List<Title> titles =  HtmlUtil.getTitle(s);
-                        callBack.TabTitleCallBack(titles);
-                    }
-                });
-    }
+    public DataUtil(){ }
 
     //从topic中提取所需的数据
     public List<DataItem> extractTopic(TopicData topic){

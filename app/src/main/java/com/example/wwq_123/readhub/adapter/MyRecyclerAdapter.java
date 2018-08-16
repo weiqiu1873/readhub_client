@@ -13,11 +13,11 @@ import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import com.example.wwq_123.readhub.R;
-import com.example.wwq_123.readhub.model.bean.DataItem;
-import com.example.wwq_123.readhub.model.bean.JobDataItem;
-import com.example.wwq_123.readhub.presenter.MainFragmentPresenter;
-import com.example.wwq_123.readhub.view.Display;
-import com.example.wwq_123.readhub.view.ShowDataActivity;
+import com.example.wwq_123.readhub.mvc.model.bean.DataItem;
+import com.example.wwq_123.readhub.mvc.model.bean.JobDataItem;
+import com.example.wwq_123.readhub.mvc.presenter.MainFragmentPresenter;
+import com.example.wwq_123.readhub.mvc.view.Display;
+import com.example.wwq_123.readhub.mvc.view.ShowDataActivity;
 
 
 import java.util.ArrayList;

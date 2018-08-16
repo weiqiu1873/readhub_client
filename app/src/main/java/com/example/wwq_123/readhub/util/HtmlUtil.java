@@ -1,6 +1,6 @@
 package com.example.wwq_123.readhub.util;
 
-import com.example.wwq_123.readhub.model.bean.Title;
+import com.example.wwq_123.readhub.mvc.model.bean.Title;
 
 import org.jsoup.Jsoup;
 import org.jsoup.nodes.Document;
