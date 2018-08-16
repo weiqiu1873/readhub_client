@@ -29,6 +29,7 @@ public class MainFragmentPresenter extends BasePresenter<Display.DisplayData> im
     }
     public MainFragmentPresenter(MyRecyclerAdapter adapter){
         this.adapter = adapter;
+        api = API.getService();
     }
 
     @Override

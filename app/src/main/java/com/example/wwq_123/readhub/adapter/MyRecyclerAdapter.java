@@ -100,6 +100,7 @@ public class MyRecyclerAdapter extends RecyclerView.Adapter<RecyclerView.ViewHol
                 @Override
                 public void onClick(View v) {
                     //点击加载更多
+                    requestMoreData();
                 }
             });
         }

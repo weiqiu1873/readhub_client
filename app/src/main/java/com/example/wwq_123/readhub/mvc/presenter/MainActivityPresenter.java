@@ -36,7 +36,6 @@ public class MainActivityPresenter extends BasePresenter implements Presenter.Lo
             @Override
             public void onNext(String string) {
                 List<Title> titles =  HtmlUtil.getTitle(string);
-                System.out.println(string);
                 view.initTitle(titles);
             }
         });
