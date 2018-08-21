@@ -5,31 +5,36 @@
     android:orientation="vertical">
     <TextView
         android:id="@+id/item_title"
-        android:textSize="17dp"
+        android:textSize="16dp"
         android:textColor="@color/colorBlack"
-        android:padding="10dp"
+        android:paddingTop="8dp"
+        android:paddingBottom="6dp"
+        android:paddingLeft="5dp"
+        android:paddingRight="5dp"
+        android:singleLine="true"
+        android:ellipsize="end"
         android:background="@color/colorWhite"
         android:layout_width="match_parent"
         android:layout_height="wrap_content" />
     <View
-        android:background="@color/colorDrak"
+        android:background="@color/colorDrak2"
+        android:paddingLeft="10dp"
+        android:paddingRight="10dp"
         android:layout_width="match_parent"
         android:layout_height="1dp"/>
     <TextView
         android:id="@+id/item_content"
         android:textSize="15dp"
-        android:textColor="@color/colorBlack"
-        android:padding="8dp"
-        android:clickable="true"
+        android:textColor="@color/colorDrak1"
+        android:paddingTop="5dp"
+        android:paddingBottom="5dp"
+        android:paddingRight="20dp"
         android:background="@color/colorWhite"
         android:layout_width="match_parent"
         android:layout_height="wrap_content" />
-    <View
-        android:background="@color/colorDrak"
-        android:layout_width="match_parent"
-        android:layout_height="1dp"/>
+
     <TextView
         android:background="@color/colorWhite"
         android:layout_width="match_parent"
-        android:layout_height="40dp" />
+        android:layout_height="10dp" />
 </LinearLayout>

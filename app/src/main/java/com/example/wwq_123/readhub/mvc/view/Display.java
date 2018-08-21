@@ -7,18 +7,14 @@ import java.util.List;
 
 public interface Display{
 
-    public interface TabTitle{
-        public abstract void initTitle(List<Title> titles);
-
+    interface TabTitle{
+        void initTitle(List<Title> titles);
     }
 
-    public interface DisplayData{
-        public abstract void initData(List<DataItem> list);
-
-    }
-
-    public interface SetMoreDisplayData{
-        public abstract void getMoreData(List<DataItem> list);
+    interface DisplayData{
+        void initData(List<DataItem> list);
+        void setMoreData(List<DataItem> list);
+        void setUpdateData(List<DataItem> list);
     }
 
 }

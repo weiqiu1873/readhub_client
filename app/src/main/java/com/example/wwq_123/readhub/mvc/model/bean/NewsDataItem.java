@@ -1,6 +1,7 @@
 package com.example.wwq_123.readhub.mvc.model.bean;
 
 import java.io.Serializable;
+import java.util.Objects;
 
 public class NewsDataItem extends DataItem implements Serializable{
     private String siteSlug;
@@ -118,5 +119,10 @@ public class NewsDataItem extends DataItem implements Serializable{
         return "NewsDataItem{" +
                 "siteSlug='" + siteSlug + '\'' +
                 '}';
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        return super.equals(o);
     }
 }

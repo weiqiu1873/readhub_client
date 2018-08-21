@@ -44,6 +44,7 @@ public class DataUtil {
                 newsDataItemList.add(newsItem);
             }
             item.setNewsArray(newsDataItemList);
+            item.setStatus(0);
             list.add(item);
         }
         return list;
@@ -64,7 +65,9 @@ public class DataUtil {
             item.setLanguage(bean.getLanguage());
             item.setPublishDate(bean.getPublishDate());
             item.setSiteSlug(bean.getSiteSlug());
+            item.setStatus(0);
             list.add(item);
+
         }
         return list;
     }
@@ -83,6 +86,7 @@ public class DataUtil {
             item.setAuthorName(bean.getAuthorName());
             item.setLanguage(bean.getLanguage());
             item.setPublishDate(bean.getPublishDate());
+            item.setStatus(0);
             list.add(item);
         }
         return list;
@@ -102,6 +106,7 @@ public class DataUtil {
             item.setAuthorName(bean.getAuthorName());
             item.setLanguage(bean.getLanguage());
             item.setPublishDate(bean.getPublishDate());
+            item.setStatus(0);
             list.add(item);
         }
         return list;

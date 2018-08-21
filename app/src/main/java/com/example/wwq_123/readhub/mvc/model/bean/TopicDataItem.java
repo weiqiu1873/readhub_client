@@ -1,7 +1,11 @@
 package com.example.wwq_123.readhub.mvc.model.bean;
 
+import android.os.Build;
+import android.support.annotation.RequiresApi;
+
 import java.io.Serializable;
 import java.util.List;
+import java.util.Objects;
 
 public class TopicDataItem extends DataItem implements Serializable{
     private String url;     //id
@@ -107,5 +111,21 @@ public class TopicDataItem extends DataItem implements Serializable{
                 ", timeline=" + timeline +
                 ", newsArray=" + newsArray +
                 '}';
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        if (!super.equals(o)) return false;
+        TopicDataItem that = (TopicDataItem) o;
+        return order == that.order;
+    }
+
+    @RequiresApi(api = Build.VERSION_CODES.KITKAT)
+    @Override
+    public int hashCode() {
+
+        return Objects.hash(super.hashCode(), url);
     }
 }

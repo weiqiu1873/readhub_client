@@ -1,6 +1,10 @@
 package com.example.wwq_123.readhub.mvc.model.bean;
 
+import android.os.Build;
+import android.support.annotation.RequiresApi;
+
 import java.io.Serializable;
+import java.util.Objects;
 
 /*
  ** 实体类
@@ -18,6 +22,15 @@ public class DataItem implements Serializable{
     private String language;
     private Object authorName;
     private String publishDate;
+    private int status;
+
+    public int getStatus() {
+        return status;
+    }
+
+    public void setStatus(int status) {
+        this.status = status;
+    }
 
     public int getId() {
         return id;
@@ -113,5 +126,20 @@ public class DataItem implements Serializable{
                 ", authorName=" + authorName +
                 ", publishDate='" + publishDate + '\'' +
                 '}';
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        DataItem dataItem = (DataItem) o;
+        return id == dataItem.id;
+    }
+
+    @RequiresApi(api = Build.VERSION_CODES.KITKAT)
+    @Override
+    public int hashCode() {
+
+        return Objects.hash(id);
     }
 }

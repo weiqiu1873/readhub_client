@@ -4,14 +4,17 @@ import com.example.wwq_123.readhub.mvc.model.bean.DataItem;
 
 public interface Presenter {
 
-    public interface LoadTabTitlePresenter{
-        public abstract void loadTabTitle();
+    interface LoadTabTitlePresenter{
+         void loadTabTitle();
     }
 
-    public interface LoadDataPresenter{
-        public abstract void loadData(int fragmentId);
+    interface LoadDataPresenter{
+        void loadData(int fragmentId);
     }
-    public interface LoadMoreDataPresenter{
-        public abstract void loadMoreData(int fragmentId, DataItem item);
+    interface LoadMoreDataPresenter{
+        void loadMoreData(int fragmentId, DataItem item);
+    }
+    interface UpdateDataPresenter{
+        void updateData(int fragmentId,DataItem item);
     }
 }

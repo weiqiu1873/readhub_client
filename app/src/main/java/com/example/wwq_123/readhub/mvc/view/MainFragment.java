@@ -9,9 +9,11 @@ import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.OrientationHelper;
 import android.support.v7.widget.RecyclerView;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Toast;
 
 import com.example.wwq_123.readhub.R;
 import com.example.wwq_123.readhub.adapter.MyRecyclerAdapter;
@@ -64,6 +66,7 @@ public class MainFragment extends Fragment implements SwipeRefreshLayout.OnRefre
 
     @Override
     public void initData(List<DataItem> list) {
+
         adapter = new MyRecyclerAdapter(getContext(),list,TYPE);
         manager = new LinearLayoutManager(getContext());
         manager.setOrientation(OrientationHelper.VERTICAL);
@@ -72,6 +75,23 @@ public class MainFragment extends Fragment implements SwipeRefreshLayout.OnRefre
         recyclerView.setAdapter(adapter);
     }
 
+    @Override
+    public void setMoreData(List<DataItem> list) {
+        adapter.setMoreData(list);
+        adapter.notifyDataSetChanged();
+    }
+
+    //更新数据
+    @Override
+    public void setUpdateData(List<DataItem> list) {
+        if (list==null){
+            Toast.makeText(getContext(),"已是最新数据",Toast.LENGTH_SHORT).show();
+        }else {
+            adapter.resetDatas();
+            adapter.setData(list);
+            adapter.notifyDataSetChanged();
+        }
+    }
     private void initRefreshLayout() {
         refreshLayout.setColorSchemeResources(android.R.color.holo_blue_light, android.R.color.holo_red_light,
                 android.R.color.holo_orange_light, android.R.color.holo_green_light);
@@ -79,7 +99,6 @@ public class MainFragment extends Fragment implements SwipeRefreshLayout.OnRefre
     }
 
     private void initRecycleView() {
-
         //设置滚动事件
         recyclerView.addOnScrollListener(new RecyclerView.OnScrollListener() {
             @Override
@@ -88,7 +107,7 @@ public class MainFragment extends Fragment implements SwipeRefreshLayout.OnRefre
                 // 在newState为滑到底部时
                 if (newState == RecyclerView.SCROLL_STATE_IDLE){
                     //加载更多数据
-                    adapter.requestMoreData();
+                    mainPresenter.loadMoreData(TYPE,adapter.getData().get(adapter.getLastItemIndex()));
                 }
             }
             @Override
@@ -102,12 +121,8 @@ public class MainFragment extends Fragment implements SwipeRefreshLayout.OnRefre
     //下拉刷新
     @Override
     public void onRefresh() {
-        // 设置可见
+        mainPresenter.updateData(TYPE,adapter.getData().get(0));
         refreshLayout.setRefreshing(true);
-        // 重置adapter的数据源为空
-        adapter.resetDatas();
-        // 更新数据
-        adapter.updateList();
         new Handler().postDelayed(new Runnable() {
             @Override
             public void run() {
@@ -116,4 +131,5 @@ public class MainFragment extends Fragment implements SwipeRefreshLayout.OnRefre
             }
         }, 1000);
     }
+
 }

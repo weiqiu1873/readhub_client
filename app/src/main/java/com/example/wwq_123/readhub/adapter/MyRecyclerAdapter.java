@@ -1,5 +1,6 @@
 package com.example.wwq_123.readhub.adapter;
 
+import android.annotation.SuppressLint;
 import android.content.Context;
 import android.content.Intent;
 import android.net.Uri;
@@ -16,7 +17,6 @@ import com.example.wwq_123.readhub.R;
 import com.example.wwq_123.readhub.mvc.model.bean.DataItem;
 import com.example.wwq_123.readhub.mvc.model.bean.JobDataItem;
 import com.example.wwq_123.readhub.mvc.presenter.MainFragmentPresenter;
-import com.example.wwq_123.readhub.mvc.view.Display;
 import com.example.wwq_123.readhub.mvc.view.ShowDataActivity;
 
 
@@ -24,7 +24,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 
-public class MyRecyclerAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> implements Display.SetMoreDisplayData {
+public class MyRecyclerAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder>{
 
     private int TYPE;
     private List<DataItem> data;
@@ -38,6 +38,14 @@ public class MyRecyclerAdapter extends RecyclerView.Adapter<RecyclerView.ViewHol
         this.TYPE = type;
         this.data = data;
         inflater = LayoutInflater.from(context);
+    }
+
+    public void setData(List<DataItem> data){
+        this.data = data;
+    }
+
+    public List<DataItem> getData() {
+        return data;
     }
 
     //重写onCreateViewHolder方法，返回一个自定义的ViewHolder
@@ -60,29 +68,46 @@ public class MyRecyclerAdapter extends RecyclerView.Adapter<RecyclerView.ViewHol
         }
     }
     //填充onCreateViewHolder方法返回的holder中的控件
+    @SuppressLint("ResourceAsColor")
     @Override
     public void onBindViewHolder(RecyclerView.ViewHolder holder, final int position) {
         if (holder instanceof NormalViewHolder){
             NormalViewHolder holder1 = (NormalViewHolder)holder;
-            holder1.title.setText(data.get(position).getTitle());
-            holder1.content.setText(data.get(position).getSummary());
+            //设置summary为空的item
+            if (data.get(position).getSummary().equals("")){
+                holder1.content.setVisibility(View.GONE);
+                holder1.title.setSingleLine(false);
+                holder1.title.setText(data.get(position).getTitle());
+            }else {
+                holder1.title.setText(data.get(position).getTitle());
+                holder1.content.setText(data.get(position).getSummary());
+            }
             ViewGroup.LayoutParams layoutParams = holder.itemView.getLayoutParams();
             layoutParams.height = LinearLayout.LayoutParams.WRAP_CONTENT;
             holder1.content.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
                     if (TYPE==0){
+                        //设置该信息为已读状态
+                        System.out.println("item-status:"+data.get(position).getStatus());
+                        data.get(position).setStatus(1);
+                        holder1.title.setTextColor(R.color.colorDrak2);
+                        holder1.content.setTextColor(R.color.colorDrak2);
                         //跳转到ShowDataActivity
+                        System.out.println("item-status:"+data.get(position).getStatus());
                         Intent intent = new Intent(context, ShowDataActivity.class);
                         intent.putExtra("data",data.get(position));
                         context.startActivity(intent);
-//                        EventBus.getDefault().post(data.get(position));
-//                        context.startActivity(new Intent(context,ShowDataActivity.class));
+
                     }else {
+                        holder1.title.setTextColor(R.color.colorDrak2);
+                        holder1.content.setTextColor(R.color.colorDrak2);
                         //调用默认浏览器打开网页
                         Uri uri = Uri.parse(data.get(position).getMobileUrl());
                         Intent intent = new Intent(Intent.ACTION_VIEW,uri);
                         context.startActivity(intent);
+                        data.get(position).setStatus(1);//设置该信息为已读状态
+
                     }
 
                 }
@@ -100,17 +125,21 @@ public class MyRecyclerAdapter extends RecyclerView.Adapter<RecyclerView.ViewHol
                 @Override
                 public void onClick(View v) {
                     //点击加载更多
-                    requestMoreData();
+
                 }
             });
         }
 
     }
 
+
+
     @Override
     public int getItemCount() {
         return data.size()+1;
     }
+
+    public int getLastItemIndex(){ return data.size()-1;};
 
     @Override
     public int getItemViewType(int position) {
@@ -126,25 +155,11 @@ public class MyRecyclerAdapter extends RecyclerView.Adapter<RecyclerView.ViewHol
         data = new ArrayList<>();
     }
 
-    //更新原有数据
-     public void updateList() {
-
-        notifyDataSetChanged();
-     }
-
-    //向presenter申请数据
-    public void requestMoreData(){
-        MainFragmentPresenter presenter = new MainFragmentPresenter(this);
-        presenter.loadMoreData(TYPE,data.get(data.size()-1));
-    }
-    //接口方法接收数据
-    @Override
-    public void getMoreData(List<DataItem> list) {
+    public void setMoreData(List<DataItem> list) {
         // 在原有的数据之上增加新数据
         for (DataItem item:list) {
             data.add(item);
         }
-        notifyDataSetChanged();
     }
 
     class NormalViewHolder extends RecyclerView.ViewHolder {
@@ -170,6 +185,4 @@ public class MyRecyclerAdapter extends RecyclerView.Adapter<RecyclerView.ViewHol
             button = itemView.findViewById(R.id.refreshBtn);
         }
     }
-
-
 }
