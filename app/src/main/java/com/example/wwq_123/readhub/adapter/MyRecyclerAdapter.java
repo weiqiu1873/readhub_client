@@ -16,8 +16,8 @@ import android.widget.TextView;
 import com.example.wwq_123.readhub.R;
 import com.example.wwq_123.readhub.mvc.model.bean.DataItem;
 import com.example.wwq_123.readhub.mvc.model.bean.JobDataItem;
-import com.example.wwq_123.readhub.mvc.presenter.MainFragmentPresenter;
 import com.example.wwq_123.readhub.mvc.view.ShowDataActivity;
+import com.example.wwq_123.readhub.util.TimeUtil;
 
 
 import java.util.ArrayList;
@@ -73,6 +73,9 @@ public class MyRecyclerAdapter extends RecyclerView.Adapter<RecyclerView.ViewHol
     public void onBindViewHolder(RecyclerView.ViewHolder holder, final int position) {
         if (holder instanceof NormalViewHolder){
             NormalViewHolder holder1 = (NormalViewHolder)holder;
+            if (data.get(position).getPublishDate()!=null){
+                holder1.time.setText(TimeUtil.TimeDifference(data.get(position).getPublishDate()));
+            }
             //设置summary为空的item
             if (data.get(position).getSummary().equals("")){
                 holder1.content.setVisibility(View.GONE);
@@ -89,12 +92,11 @@ public class MyRecyclerAdapter extends RecyclerView.Adapter<RecyclerView.ViewHol
                 public void onClick(View v) {
                     if (TYPE==0){
                         //设置该信息为已读状态
-                        System.out.println("item-status:"+data.get(position).getStatus());
                         data.get(position).setStatus(1);
                         holder1.title.setTextColor(R.color.colorDrak2);
                         holder1.content.setTextColor(R.color.colorDrak2);
+                        holder1.title.setTextColor(R.color.colorDrak2);
                         //跳转到ShowDataActivity
-                        System.out.println("item-status:"+data.get(position).getStatus());
                         Intent intent = new Intent(context, ShowDataActivity.class);
                         intent.putExtra("data",data.get(position));
                         context.startActivity(intent);
@@ -102,12 +104,12 @@ public class MyRecyclerAdapter extends RecyclerView.Adapter<RecyclerView.ViewHol
                     }else {
                         holder1.title.setTextColor(R.color.colorDrak2);
                         holder1.content.setTextColor(R.color.colorDrak2);
+                        holder1.title.setTextColor(R.color.colorDrak2);
                         //调用默认浏览器打开网页
                         Uri uri = Uri.parse(data.get(position).getMobileUrl());
                         Intent intent = new Intent(Intent.ACTION_VIEW,uri);
                         context.startActivity(intent);
                         data.get(position).setStatus(1);//设置该信息为已读状态
-
                     }
 
                 }
@@ -150,7 +152,7 @@ public class MyRecyclerAdapter extends RecyclerView.Adapter<RecyclerView.ViewHol
         }
     }
 
-    // 暴露接口，下拉刷新时，通过暴露方法将数据源置为空
+    // 将数据源置为空
     public void resetDatas() {
         data = new ArrayList<>();
     }
@@ -164,10 +166,12 @@ public class MyRecyclerAdapter extends RecyclerView.Adapter<RecyclerView.ViewHol
 
     class NormalViewHolder extends RecyclerView.ViewHolder {
         TextView title;
+        TextView time;
         TextView content;
         public NormalViewHolder(View v) {
             super(v);
             title = v.findViewById(R.id.item_title);
+            time = v.findViewById(R.id.item_time);
             content = v.findViewById(R.id.item_content);
         }
     }

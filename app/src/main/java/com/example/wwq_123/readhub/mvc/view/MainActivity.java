@@ -8,6 +8,7 @@ import android.support.v4.app.FragmentPagerAdapter;
 import android.support.v4.view.ViewPager;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.view.Window;
 
 import com.example.wwq_123.readhub.R;
 import com.example.wwq_123.readhub.mvc.model.bean.Title;
@@ -22,17 +23,21 @@ public class MainActivity extends AppCompatActivity implements Display.TabTitle,
     private TabLayout tabLayout;
     private ViewPager viewPager;
     private MyAdapter adapter;
-    private LoadingDialog dialog;
+    private MyDialog  dialog;
     private MainActivityPresenter mainPresenter = new MainActivityPresenter(this);
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         mainPresenter.loadTabTitle();
         setContentView(R.layout.activity_main);
-//        dialog = new LoadingDialog(this);
-//        dialog.startAnim();
+        initLoading();
         initView();
         tabLayout.addOnTabSelectedListener(this);
+    }
+
+    private void initLoading() {
+       dialog = MyDialog.showDialog(MainActivity.this);
+       dialog.show();
     }
 
 
@@ -43,11 +48,11 @@ public class MainActivity extends AppCompatActivity implements Display.TabTitle,
 
     @Override
     public void initTitle(List<Title> titles) {
+        dialog.cancel();
         adapter = new MyAdapter(getSupportFragmentManager(),titles);
         viewPager.setAdapter(adapter);
         viewPager.setCurrentItem(0,false);
         tabLayout.setupWithViewPager(viewPager);
-//        dialog.stopAnim();
     }
 
     class MyAdapter extends FragmentPagerAdapter{

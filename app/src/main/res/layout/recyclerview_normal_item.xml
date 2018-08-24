@@ -3,19 +3,37 @@
     xmlns:android="http://schemas.android.com/apk/res/android" android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical">
-    <TextView
-        android:id="@+id/item_title"
-        android:textSize="16dp"
-        android:textColor="@color/colorBlack"
-        android:paddingTop="8dp"
-        android:paddingBottom="6dp"
-        android:paddingLeft="5dp"
-        android:paddingRight="5dp"
-        android:singleLine="true"
-        android:ellipsize="end"
-        android:background="@color/colorWhite"
+    <LinearLayout
+        android:orientation="horizontal"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content" />
+        android:layout_height="wrap_content">
+        <TextView
+            android:id="@+id/item_title"
+            android:textSize="16dp"
+            android:textColor="@color/colorBlack"
+            android:background="@color/colorWhite"
+            android:paddingTop="8dp"
+            android:paddingBottom="6dp"
+            android:paddingLeft="5dp"
+            android:paddingRight="20dp"
+            android:singleLine="true"
+            android:ellipsize="end"
+            android:layout_weight="1"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content" />
+        
+        <TextView
+            android:id="@+id/item_time"
+            android:paddingTop="10dp"
+            android:paddingBottom="6dp"
+            android:paddingLeft="20dp"
+            android:paddingRight="10dp"
+            android:textColor="@color/colorDrak1"
+            android:background="@color/colorWhite"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content" />
+    </LinearLayout>
+    
     <View
         android:background="@color/colorDrak2"
         android:paddingLeft="10dp"
@@ -26,15 +44,23 @@
         android:id="@+id/item_content"
         android:textSize="15dp"
         android:textColor="@color/colorDrak1"
+        android:background="@color/colorWhite"
         android:paddingTop="5dp"
         android:paddingBottom="5dp"
         android:paddingRight="20dp"
-        android:background="@color/colorWhite"
+        android:paddingLeft="20dp"
         android:layout_width="match_parent"
         android:layout_height="wrap_content" />
 
     <TextView
+        android:text="查看话题"
+        android:textSize="15dp"
+        android:textColor="@color/colorDrak1"
+        android:gravity="right"
+        android:paddingRight="20dp"
+        android:paddingBottom="10dp"
         android:background="@color/colorWhite"
         android:layout_width="match_parent"
-        android:layout_height="10dp" />
+        android:layout_height="wrap_content" />
+
 </LinearLayout>

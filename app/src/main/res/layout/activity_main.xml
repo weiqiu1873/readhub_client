@@ -7,9 +7,21 @@
     tools:context=".mvc.view.MainActivity"
     android:orientation="vertical">
 
+    <android.support.v7.widget.Toolbar
+        android:background="@color/colorWhite"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+        <ImageView
+            android:src="@drawable/readhub_logo"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content" />
+    </android.support.v7.widget.Toolbar>
 
     <android.support.design.widget.TabLayout
-        app:tabIndicatorColor="@color/colorPrimary"
+        app:tabIndicatorColor="@color/colorWhite"
+        android:background="@color/colorPrimary"
+        app:tabTextColor="@color/colorDrak2"
+        app:tabSelectedTextColor="@color/colorWhite"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:id="@+id/tabLayout"/>
@@ -19,6 +31,7 @@
         android:layout_height="1dp"/>
 
     <android.support.v4.view.ViewPager
+        android:background="@color/colorWhite"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:id="@+id/viewPager"/>

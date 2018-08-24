@@ -35,12 +35,16 @@ public class ShowDataActivity extends AppCompatActivity{
     private void initRecycleView() {
         TopicDataItem item = (TopicDataItem) data;
         adapter = new DataNewsArrayAdapter(this,item.getNewsArray());
-        LinearLayoutManager manager = new LinearLayoutManager(this);
+        CustomLinearLayoutManager manager = new CustomLinearLayoutManager(this);
         manager.setOrientation(OrientationHelper.VERTICAL);
+        manager.setScrollEnabled(false);
         newsArray.setLayoutManager(manager);
         newsArray.addItemDecoration(new MyItemDecoration());
         newsArray.setAdapter(adapter);
+
     }
+
+
 
     private void initData() {
         Intent intent = getIntent();
@@ -59,4 +63,6 @@ public class ShowDataActivity extends AppCompatActivity{
     protected void onDestroy() {
         super.onDestroy();
     }
+
+
 }
