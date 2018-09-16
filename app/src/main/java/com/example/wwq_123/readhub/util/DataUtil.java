@@ -1,14 +1,13 @@
 package com.example.wwq_123.readhub.util;
 
-import com.example.wwq_123.readhub.mvc.model.bean.DataItem;
-import com.example.wwq_123.readhub.mvc.model.bean.JobDataItem;
-import com.example.wwq_123.readhub.mvc.model.bean.NewsDataItem;
-import com.example.wwq_123.readhub.mvc.model.bean.TopicDataItem;
-import com.example.wwq_123.readhub.mvc.model.jsonbean.BlockchainData;
-import com.example.wwq_123.readhub.mvc.model.jsonbean.JobData;
-import com.example.wwq_123.readhub.mvc.model.jsonbean.NewsData;
-import com.example.wwq_123.readhub.mvc.model.jsonbean.TechData;
-import com.example.wwq_123.readhub.mvc.model.jsonbean.TopicData;
+import com.example.wwq_123.readhub.model.bean.TopicDataItem;
+import com.example.wwq_123.readhub.model.jsonbean.BlockchainData;
+import com.example.wwq_123.readhub.model.jsonbean.JobData;
+import com.example.wwq_123.readhub.model.jsonbean.NewsData;
+import com.example.wwq_123.readhub.model.jsonbean.TechData;
+import com.example.wwq_123.readhub.model.jsonbean.TopicData;
+import com.example.wwq_123.readhub.model.jsonbean.bean.CommonDataItem;
+import com.example.wwq_123.readhub.model.jsonbean.bean.JobDataItem;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -18,8 +17,8 @@ public class DataUtil {
     public DataUtil(){ }
 
     //从topic中提取所需的数据
-    public List<DataItem> extractTopic(TopicData topic){
-        List<DataItem> list = new ArrayList<>();
+    public List<TopicDataItem> extractTopic(TopicData topic){
+        List<TopicDataItem> list = new ArrayList<>();
         for (TopicData.DataBean bean: topic.getData()) {
             TopicDataItem item = new TopicDataItem();
             item.setUrl(bean.getId());
@@ -30,9 +29,9 @@ public class DataUtil {
             item.setTitle(bean.getTitle());
             item.setUpdatedAt(bean.getUpdatedAt());
             item.setTimeline(bean.getTimeline());
-            List<NewsDataItem> newsDataItemList = new ArrayList<>();
+            List<CommonDataItem> newsDataItemList = new ArrayList<>();
             for (TopicData.DataBean.NewsArrayBean newsBean:bean.getNewsArray()) {
-                NewsDataItem newsItem = new NewsDataItem();
+                CommonDataItem newsItem = new CommonDataItem();
                 newsItem.setId(newsBean.getId());
                 newsItem.setTitle(newsBean.getTitle());
                 newsItem.setUrl(newsBean.getUrl());
@@ -40,20 +39,18 @@ public class DataUtil {
                 newsItem.setSiteName(newsBean.getSiteName());
                 newsItem.setAuthorName(newsBean.getAuthorName());
                 newsItem.setPublishDate(newsBean.getPublishDate());
-                newsItem.setSiteSlug(newsBean.getSiteSlug());
                 newsDataItemList.add(newsItem);
             }
             item.setNewsArray(newsDataItemList);
-            item.setStatus(0);
             list.add(item);
         }
         return list;
     }
     //从news中提取所需的数据
-    public List<DataItem> extractNews(NewsData news){
-        List<DataItem> list = new ArrayList<>();
+    public static List<CommonDataItem> extractTech(NewsData news){
+        List<CommonDataItem> list = new ArrayList<>();
         for (NewsData.DataBean bean:news.getData()) {
-            NewsDataItem item = new NewsDataItem();
+            CommonDataItem item = new CommonDataItem();
             item.setId(bean.getId());
             item.setTitle(bean.getTitle());
             item.setSummary(bean.getSummary());
@@ -64,7 +61,6 @@ public class DataUtil {
             item.setAuthorName(bean.getAuthorName());
             item.setLanguage(bean.getLanguage());
             item.setPublishDate(bean.getPublishDate());
-            item.setSiteSlug(bean.getSiteSlug());
             item.setStatus(0);
             list.add(item);
 
@@ -72,10 +68,10 @@ public class DataUtil {
         return list;
     }
     //从tech中提取所需的数据
-    public List<DataItem> extractTech(TechData tech){
-        List<DataItem> list = new ArrayList<>();
+    public static List<CommonDataItem> extractDeveloper(TechData tech){
+        List<CommonDataItem> list = new ArrayList<>();
         for (TechData.DataBean bean:tech.getData()) {
-            DataItem item = new DataItem();
+            CommonDataItem item = new CommonDataItem();
             item.setId(bean.getId());
             item.setTitle(bean.getTitle());
             item.setSummary(bean.getSummary());
@@ -92,10 +88,10 @@ public class DataUtil {
         return list;
     }
 
-    public List<DataItem> extractBlockchain(BlockchainData blockchain){
-        List<DataItem> list = new ArrayList<>();
+    public static List<CommonDataItem> extractBlockchain(BlockchainData blockchain){
+        List<CommonDataItem> list = new ArrayList<>();
         for (BlockchainData.DataBean bean:blockchain.getData()) {
-            DataItem item = new DataItem();
+            CommonDataItem item = new CommonDataItem();
             item.setId(bean.getId());
             item.setTitle(bean.getTitle());
             item.setSummary(bean.getSummary());
@@ -112,8 +108,8 @@ public class DataUtil {
         return list;
     }
 
-    public List<DataItem> extractJob(JobData job){
-        List<DataItem> list = new ArrayList<>();
+    public static List<JobDataItem> extractJob(JobData job){
+        List<JobDataItem> list = new ArrayList<>();
         for (JobData.DataBean bean:job.getData()) {
             JobDataItem item = new JobDataItem();
             item.setId(bean.getId());

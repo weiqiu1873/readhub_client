@@ -1,24 +1,35 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     package="com.example.wwq_123.readhub">
-    <uses-permission android:name="android.permission.INTERNET" />
-
+    <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE"/>
+    <uses-permission android:name="android.permission.ACCESS_WIFI_STATE"/>
+    <uses-permission android:name="android.permission.READ_PHONE_STATE"/>
+    <uses-permission android:name="android.permission.INTERNET"/>
     <application
+        android:name=".UMApplication"
         android:allowBackup="true"
         android:icon="@mipmap/ic_launcher"
         android:label="@string/app_name"
         android:hardwareAccelerated="false"
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
-        android:theme="@style/Theme.AppCompat.NoActionBar">
-        <activity android:name=".mvc.view.MainActivity">
+        android:theme="@style/Theme.AppCompat.Light.NoActionBar">
+        <meta-data android:value="5b9267fdf43e480b39000402" android:name="UMENG_APPKEY" />
+        <meta-data android:value="readhub" android:name="UMENG_CHANNEL" />
+
+        <activity android:name=".mvp.view.ShowDataActivity"></activity>
+        <activity android:name=".view.WebActivity"></activity>
+        <activity android:name=".view.topic.detail.TopicDetailActivity"></activity>
+        <activity android:name=".view.MainActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
-
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity android:name=".mvc.view.ShowDataActivity"></activity>
+        <activity android:name=".view.job.detail.JobDetailActivity"></activity>
+        <service android:name=".service.LoadingService"></service>
+
     </application>
+
 
 </manifest>

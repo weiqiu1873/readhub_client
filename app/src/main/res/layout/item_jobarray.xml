@@ -1,0 +1,67 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:layout_marginTop="5dp"
+    android:layout_marginBottom="5dp">
+
+    <TextView
+        android:id="@+id/jobArray_item_title"
+        android:layout_alignParentLeft="true"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="20dp"
+        android:layout_marginBottom="5dp"
+        android:textSize="@dimen/font_16"
+        android:textColor="@color/b2"/>
+
+    <TextView
+        android:id="@+id/jobArray_item_company"
+        android:layout_below="@id/jobArray_item_title"
+        android:layout_alignParentLeft="true"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="20dp"
+        android:layout_marginBottom="5dp"
+        android:textSize="@dimen/font_14"
+        android:textColor="@color/b3"/>
+
+    <TextView
+        android:id="@+id/jobArray_item_salary"
+        android:layout_below="@id/jobArray_item_company"
+        android:layout_alignParentLeft="true"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="20dp"
+        android:layout_marginRight="10dp"
+        android:textSize="@dimen/font_14"
+        android:textColor="@color/c6"/>
+    <TextView
+        android:id="@+id/jobArray_item_experience"
+        android:layout_below="@id/jobArray_item_company"
+        android:layout_toRightOf="@id/jobArray_item_salary"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="10dp"
+        android:layout_marginRight="10dp"
+        android:textSize="@dimen/font_14"
+        android:textColor="@color/b3"/>
+    <TextView
+        android:id="@+id/jobArray_item_city"
+        android:layout_below="@id/jobArray_item_company"
+        android:layout_toRightOf="@id/jobArray_item_experience"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="10dp"
+        android:textSize="@dimen/font_14"
+        android:textColor="@color/b3"/>
+    <TextView
+        android:id="@+id/jobArray_item_site"
+        android:layout_below="@id/jobArray_item_company"
+        android:layout_alignParentRight="true"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textSize="@dimen/font_14"
+        android:textColor="@color/b3"/>
+</RelativeLayout>

@@ -6,32 +6,20 @@ import retrofit2.converter.gson.GsonConverterFactory;
 import retrofit2.converter.scalars.ScalarsConverterFactory;
 
 public class API {
-    private static APIInterface service1;
-    private static APIInterface service2;
-    //https://api.readhub.cn/
+
+    public static final String BASE_URL = "https://api.readhub.cn/";
+    private static APIInterface service;
 
     public static APIInterface getService(){
-        if (service1==null){
+        if (service==null){
             Retrofit retrofit = new Retrofit.Builder()
-                    .baseUrl("https://api.readhub.cn/")
+                    .baseUrl(BASE_URL)
                     .addConverterFactory(GsonConverterFactory.create())
                     .addCallAdapterFactory(RxJavaCallAdapterFactory.create())
                     .build();
-            service1 = retrofit.create(APIInterface.class);
+            service = retrofit.create(APIInterface.class);
         }
-        return service1;
-    }
-
-    public static APIInterface getTitleService(){
-        if (service2==null){
-            Retrofit retrofit = new Retrofit.Builder()
-                    .baseUrl("https://readhub.cn/")
-                    .addConverterFactory(ScalarsConverterFactory.create())
-                    .addCallAdapterFactory(RxJavaCallAdapterFactory.create())
-                    .build();
-            service2 = retrofit.create(APIInterface.class);
-        }
-        return service2;
+        return service;
     }
 
 }

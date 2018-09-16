@@ -1,33 +1,39 @@
 package com.example.wwq_123.readhub.net.retrofit;
 
-import com.example.wwq_123.readhub.mvc.model.jsonbean.BlockchainData;
-import com.example.wwq_123.readhub.mvc.model.jsonbean.JobData;
-import com.example.wwq_123.readhub.mvc.model.jsonbean.NewsData;
-import com.example.wwq_123.readhub.mvc.model.jsonbean.TechData;
-import com.example.wwq_123.readhub.mvc.model.jsonbean.TopicData;
+import com.example.wwq_123.readhub.model.jsonbean.BlockchainData;
+import com.example.wwq_123.readhub.model.jsonbean.Chart;
+import com.example.wwq_123.readhub.model.jsonbean.JobData;
+import com.example.wwq_123.readhub.model.jsonbean.NewsData;
+import com.example.wwq_123.readhub.model.jsonbean.TechData;
+import com.example.wwq_123.readhub.model.jsonbean.TopicData;
+import com.example.wwq_123.readhub.model.jsonbean.bean.TopicDetail;
 
 import retrofit2.http.GET;
+import retrofit2.http.Path;
 import retrofit2.http.Query;
 import rx.Observable;
 
 
 public interface APIInterface {
 
-    @GET("/")
-    Observable<String> getTabTitle();
-
     @GET("topic")
     Observable<TopicData> getTopicData(@Query("lastCursor") String lastCursor , @Query("pageSize") int pageSize);
 
+    @GET("topic/{id}")
+    Observable<TopicDetail> getTopicDetail(@Path("id") String id);
+
     @GET("news")
-    Observable<NewsData> getNewsData(@Query("lastCursor") String lastCursor , @Query("pageSize") int pageSize);
+    Observable<NewsData> getTechNews(@Query("lastCursor") String lastCursor , @Query("pageSize") int pageSize);
 
     @GET("technews")
-    Observable<TechData> getTechsData(@Query("lastCursor") String lastCursor , @Query("pageSize") int pageSize);
+    Observable<TechData> getDeveloperNews(@Query("lastCursor") String lastCursor , @Query("pageSize") int pageSize);
 
     @GET("blockchain")
-    Observable<BlockchainData> getBlockchainData(@Query("lastCursor") String lastCursor , @Query("pageSize") int pageSize);
+    Observable<BlockchainData> getBlockchainNews(@Query("lastCursor") String lastCursor , @Query("pageSize") int pageSize);
 
     @GET("jobs")
     Observable<JobData> getJobData(@Query("lastCursor") String lastCursor , @Query("pageSize") int pageSize);
+
+    @GET("jobs/{id}/chart")
+    Observable<Chart> getChart(@Path("id") String id);
 }

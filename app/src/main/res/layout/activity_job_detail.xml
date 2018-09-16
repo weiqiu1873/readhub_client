@@ -1,0 +1,97 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical">
+    <android.support.v7.widget.Toolbar
+        android:background="@color/c1"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+        <ImageButton
+            android:id="@+id/job_detail_back_btn"
+            android:background="@color/c1"
+            android:src="@mipmap/ic_common_back"
+            android:layout_marginRight="20dp"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content" />
+        <TextView
+            android:text="职位详情"
+            android:textColor="@color/b7"
+            android:textSize="@dimen/font_20"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content" />
+    </android.support.v7.widget.Toolbar>
+    <ScrollView
+        android:id="@+id/job_detail_scroll"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+        <LinearLayout
+            android:orientation="vertical"
+            android:focusable="true"
+            android:focusableInTouchMode="true"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+            <TextView
+                android:id="@+id/job_detail_title"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_margin="10dp"
+                android:textColor="@color/c8"
+                android:textSize="@dimen/font_20"/>
+            <TextView
+                android:id="@+id/job_detail_summary"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="10dp"
+                android:padding="15dp"
+                android:background="@color/colorWhite"
+                android:textColor="@color/b2"
+                android:textSize="@dimen/font_16"/>
+
+            <com.github.mikephil.charting.charts.LineChart
+                android:id="@+id/job_detail_salary_chart"
+                android:layout_width="match_parent"
+                android:layout_height="150dp"
+                android:paddingLeft="20dp"
+                android:paddingRight="20dp"
+                android:layout_marginTop="2dp"
+                android:layout_marginBottom="10dp"/>
+
+            <com.github.mikephil.charting.charts.LineChart
+                android:id="@+id/job_detail_experience_chart"
+                android:layout_width="match_parent"
+                android:layout_height="150dp"
+                android:paddingLeft="20dp"
+                android:paddingRight="20dp"
+                android:layout_marginTop="2dp"
+                android:layout_marginBottom="10dp"/>
+
+            <com.github.mikephil.charting.charts.BarChart
+                android:id="@+id/job_detail_city_chart"
+                android:layout_width="match_parent"
+                android:layout_height="150dp"
+                android:paddingLeft="20dp"
+                android:paddingRight="20dp"
+                android:layout_marginTop="2dp"
+                android:layout_marginBottom="10dp"/>
+
+            <TextView
+                android:text="相关职位"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="5dp"
+                android:layout_marginBottom="10dp"
+                android:paddingLeft="20dp"
+                android:textColor="@color/b1"
+                android:textSize="@dimen/font_16"/>
+            <android.support.v7.widget.RecyclerView
+                android:id="@+id/job_detail_jobArray"
+                android:paddingLeft="10dp"
+                android:paddingRight="10dp"
+                android:layout_marginBottom="20dp"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"/>
+        </LinearLayout>
+    </ScrollView>
+</LinearLayout>

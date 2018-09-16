@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="200dp"
+    android:orientation="vertical"
+    android:background="@color/b3"
+    android:padding="30dp">
+    <com.example.wwq_123.readhub.view.custom_ui.CircleImageView
+        android:id="@+id/user_image"
+        android:src="@drawable/ic_flying_pig"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="40dp"/>
+    <TextView
+        android:id="@+id/user_name"
+        android:text="未登陆"
+        android:textSize="@dimen/font_16"
+        android:textColor="@color/colorWhite"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content" />
+
+
+</LinearLayout>

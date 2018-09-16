@@ -1,39 +1,85 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<android.support.v4.widget.DrawerLayout
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    xmlns:tools="http://schemas.android.com/tools"
+    xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".mvc.view.MainActivity"
-    android:orientation="vertical">
+    android:background="@color/transparent"
+    android:id="@+id/drawer_layout">
 
-    <android.support.v7.widget.Toolbar
-        android:background="@color/colorWhite"
+    <LinearLayout
+        android:gravity="center"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content">
-        <ImageView
-            android:src="@drawable/readhub_logo"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content" />
-    </android.support.v7.widget.Toolbar>
+        android:layout_height="match_parent"
+        android:orientation="vertical">
+        <android.support.v7.widget.Toolbar
+            android:background="@color/c1"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+            <Button
+                android:id="@+id/drawerBtn"
+                android:text="drawer"
+                android:textColor="@color/colorWhite"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content" />
+            <TextView
+                android:id="@+id/title_text"
+                android:text="Readhub"
+                android:textSize="@dimen/font_25"
+                android:textColor="@color/b7"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content" />
+            <Button
+                android:id="@+id/service"
+                android:text="service"
+                android:textColor="@color/colorWhite"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content" />
+        </android.support.v7.widget.Toolbar>
 
-    <android.support.design.widget.TabLayout
-        app:tabIndicatorColor="@color/colorWhite"
-        android:background="@color/colorPrimary"
-        app:tabTextColor="@color/colorDrak2"
-        app:tabSelectedTextColor="@color/colorWhite"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:id="@+id/tabLayout"/>
-    <View
-        android:background="@color/colorDrak2"
-        android:layout_width="match_parent"
-        android:layout_height="1dp"/>
+        <com.example.wwq_123.readhub.view.custom_ui.ScrollViewPager
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:layout_weight="1"
+            android:id="@+id/viewPager"/>
+        <View
+            android:background="@color/b6"
+            android:layout_width="match_parent"
+            android:layout_height="1dp"/>
+        <RadioGroup
+            android:id="@+id/rg_tab"
+            android:background="@color/colorWhite"
+            android:layout_width="match_parent"
+            android:layout_height="60dp"
+            android:orientation="horizontal">
+            <RadioButton
+                android:id="@+id/rg_tab_topic"
+                style="@style/tab_radio_button_style"
+                android:drawableTop="@drawable/selector_topic"
+                android:text="@string/rg_tab_topic"/>
+            <RadioButton
+                android:id="@+id/rg_tab_news"
+                style="@style/tab_radio_button_style"
+                android:drawableTop="@drawable/selector_news"
+                android:text="@string/rg_tab_news"/>
+            <RadioButton
+                android:id="@+id/rg_tab_job"
+                style="@style/tab_radio_button_style"
+                android:drawableTop="@drawable/selector_job"
+                android:text="@string/rg_tab_job"/>
+        </RadioGroup>
+    </LinearLayout>
 
-    <android.support.v4.view.ViewPager
-        android:background="@color/colorWhite"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:id="@+id/viewPager"/>
+    <android.support.design.widget.NavigationView
+        android:id="@+id/navigation_view"
+        android:layout_width="280dp"
+        android:layout_height="match_parent"
+        android:layout_gravity="left"
+        android:fitsSystemWindows="true"
+        app:headerLayout="@layout/header_layout"
+        app:menu="@menu/drawer_menu"
+        app:itemIconTint="@color/c4">
 
-</LinearLayout>
+    </android.support.design.widget.NavigationView>
+
+</android.support.v4.widget.DrawerLayout>
