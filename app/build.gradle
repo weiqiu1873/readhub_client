@@ -42,6 +42,11 @@ android {
         targetCompatibility 1.8
         sourceCompatibility 1.8
     }
+    greendao {
+        schemaVersion 1
+        daoPackage 'com.example.wwq_123.readhub.greendao.gen'
+        targetGenDir 'src/main/java'
+    }
     
 }
 
@@ -66,6 +71,7 @@ dependencies {
     implementation 'com.android.support:cardview-v7:27.1.1'
     implementation 'com.just.agentweb:agentweb:4.0.2'
     implementation 'com.github.PhilJay:MPAndroidChart:v3.0.2'
+    implementation 'com.github.bumptech.glide:glide:3.7.0'
     //友盟
     implementation 'com.umeng.sdk:common:1.5.3'
     implementation 'com.umeng.sdk:analytics:7.5.0'

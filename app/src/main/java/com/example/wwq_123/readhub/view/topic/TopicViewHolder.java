@@ -17,8 +17,12 @@ import com.example.wwq_123.readhub.model.bean.TopicDataItem;
 import com.example.wwq_123.readhub.view.topic.detail.TopicDetailActivity;
 import com.example.wwq_123.readhub.util.TimeUtil;
 import com.umeng.socialize.ShareAction;
+import com.umeng.socialize.ShareContent;
 import com.umeng.socialize.UMShareListener;
 import com.umeng.socialize.bean.SHARE_MEDIA;
+import com.umeng.socialize.media.UMImage;
+import com.umeng.socialize.shareboard.SnsPlatform;
+import com.umeng.socialize.utils.ShareBoardlistener;
 
 import org.greenrobot.eventbus.EventBus;
 
@@ -79,27 +83,45 @@ public class TopicViewHolder extends RecyclerView.ViewHolder {
             EventBus.getDefault().post(event);
         });
         tvShare.setOnClickListener((v) ->{
-            new ShareAction((Activity) context)
-                    .withText(item.getTitle())
-                    .setDisplayList(SHARE_MEDIA.QQ,SHARE_MEDIA.WEIXIN,SHARE_MEDIA.SINA,SHARE_MEDIA.QZONE,SHARE_MEDIA.WEIXIN_CIRCLE)
-                    .setCallback(new UMShareListener() {
-                        @Override
-                        public void onStart(SHARE_MEDIA share_media) {
+            UMShareListener listener = new UMShareListener() {
+                @Override
+                public void onStart(SHARE_MEDIA share_media) {
 
-                        }
-                        @Override
-                        public void onResult(SHARE_MEDIA share_media) {
-                            Toast.makeText(context,"成功了",Toast.LENGTH_LONG).show();
-                        }
-                        @Override
-                        public void onError(SHARE_MEDIA share_media, Throwable throwable) {
-                            Toast.makeText(context,"失败"+throwable.getMessage(),Toast.LENGTH_LONG).show();
-                        }
-                        @Override
-                        public void onCancel(SHARE_MEDIA share_media) {
-                            Toast.makeText(context,"取消了",Toast.LENGTH_LONG).show();
-                        }
-                    }).open();
+                }
+                @Override
+                public void onResult(SHARE_MEDIA share_media) {
+                    Toast.makeText(context,"成功了",Toast.LENGTH_LONG).show();
+                }
+                @Override
+                public void onError(SHARE_MEDIA share_media, Throwable throwable) {
+                    Toast.makeText(context,"失败"+throwable.getMessage(),Toast.LENGTH_LONG).show();
+                }
+                @Override
+                public void onCancel(SHARE_MEDIA share_media) {
+                    Toast.makeText(context,"取消了",Toast.LENGTH_LONG).show();
+                }
+            };
+            ShareBoardlistener boardlistener = ((snaPlatform,share_media)->{
+                if (share_media==SHARE_MEDIA.QQ||share_media==SHARE_MEDIA.QZONE){
+                    new ShareAction((Activity) context)
+                            .setPlatform(share_media)
+                            .setCallback(listener)
+                            .withMedia(new UMImage(context,R.drawable.ic_flying_pig))
+                            .share();
+                }
+                if (share_media==SHARE_MEDIA.WEIXIN||share_media==SHARE_MEDIA.WEIXIN_CIRCLE){
+                    new ShareAction((Activity) context)
+                            .setPlatform(share_media)
+                            .setCallback(listener)
+                            .withText(item.getTitle())
+                            .withSubject("资讯:")
+                            .share();
+                }
+            });
+            new ShareAction((Activity) context)
+                    .setDisplayList(SHARE_MEDIA.QQ,SHARE_MEDIA.WEIXIN,SHARE_MEDIA.SINA,SHARE_MEDIA.QZONE,SHARE_MEDIA.WEIXIN_CIRCLE)
+                    .setShareboardclickCallback(boardlistener)
+                    .open();
         });
         tvCollect.setOnClickListener((v) ->{
                 if (collectStatus){
@@ -113,7 +135,6 @@ public class TopicViewHolder extends RecyclerView.ViewHolder {
                     collectStatus = true;
                     topicDB.insert(item);
                 }
-            EventBus.getDefault().post(new Event.Topic());
         });
     }
 

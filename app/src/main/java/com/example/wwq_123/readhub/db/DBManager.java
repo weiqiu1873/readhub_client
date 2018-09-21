@@ -2,7 +2,9 @@ package com.example.wwq_123.readhub.db;
 
 import android.content.Context;
 import android.database.sqlite.SQLiteDatabase;
-import com.example.wwq_123.readhub.model.jsonbean.bean.DaoMaster;
+
+import com.example.wwq_123.readhub.greendao.gen.DaoMaster;
+
 
 public class DBManager {
     private static final String DB_NAME = "readhub_db";

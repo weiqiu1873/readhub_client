@@ -1,4 +1,5 @@
-package com.example.wwq_123.readhub.model.jsonbean.bean;
+package com.example.wwq_123.readhub.model.bean;
+
 
 import java.util.List;
 
@@ -197,7 +198,7 @@ public class TopicDetail {
 
         private double weight;
         private String nerName;
-        private int entityId;
+        private String entityId;
         private String entityName;
         private String entityType;
         private String entityUniqueId;
@@ -218,11 +219,11 @@ public class TopicDetail {
             this.nerName = nerName;
         }
 
-        public int getEntityId() {
+        public String getEntityId() {
             return entityId;
         }
 
-        public void setEntityId(int entityId) {
+        public void setEntityId(String entityId) {
             this.entityId = entityId;
         }
 

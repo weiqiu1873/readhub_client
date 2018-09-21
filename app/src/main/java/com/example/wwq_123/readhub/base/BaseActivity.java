@@ -20,14 +20,16 @@ import com.umeng.socialize.UMShareAPI;
 
 import static anet.channel.util.Utils.context;
 
-public abstract class BaseActivity extends AppCompatActivity implements BaseContract.BaseView {
+public abstract class BaseActivity<T extends BaseContract.BasePresenter> extends AppCompatActivity implements BaseContract.BaseView {
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(getLayoutId());
         initView();
+        initTitleBar();
         initData();
+        initEvent();
         UMConfigure.setLogEnabled(true);
         UMConfigure.setEncryptEnabled(true);
         MobclickAgent.setScenarioType(this, MobclickAgent.EScenarioType.E_UM_NORMAL);
@@ -46,22 +48,17 @@ public abstract class BaseActivity extends AppCompatActivity implements BaseCont
         MobclickAgent.onPause(this);
     }
 
-    @Override
-    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
-        super.onActivityResult(requestCode, resultCode, data);
-        UMShareAPI.get(this).onActivityResult(requestCode, resultCode, data);
-    }
 
     @Override
     public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults) {
-//        super.onRequestPermissionsResult(requestCode, permissions, grantResults);
+        super.onRequestPermissionsResult(requestCode, permissions, grantResults);
         if(Build.VERSION.SDK_INT>=23){
             String[] mPermissionList = new String[]{Manifest.permission.WRITE_EXTERNAL_STORAGE
                     ,Manifest.permission.ACCESS_FINE_LOCATION
                     ,Manifest.permission.CALL_PHONE
                     ,Manifest.permission.READ_LOGS
                     ,Manifest.permission.READ_PHONE_STATE
-                    , Manifest.permission.READ_EXTERNAL_STORAGE
+                    ,Manifest.permission.READ_EXTERNAL_STORAGE
                     ,Manifest.permission.SET_DEBUG_APP
                     ,Manifest.permission.SYSTEM_ALERT_WINDOW
                     ,Manifest.permission.GET_ACCOUNTS
@@ -75,6 +72,10 @@ public abstract class BaseActivity extends AppCompatActivity implements BaseCont
     public abstract void initView();
 
     public abstract void initData();
+
+    public abstract void initTitleBar();
+
+    public abstract void initEvent();
 
     @Override
     public void showSuccess() {

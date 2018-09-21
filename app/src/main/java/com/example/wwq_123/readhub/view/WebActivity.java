@@ -34,7 +34,6 @@ public class WebActivity extends BaseActivity {
 
     @Override
     public void initView() {
-//        umeng(this);
         web_frame = findViewById(R.id.web_frame);
     }
 
@@ -47,6 +46,16 @@ public class WebActivity extends BaseActivity {
                 .createAgentWeb()
                 .ready()
                 .go(url);
+
+    }
+
+    @Override
+    public void initTitleBar() {
+
+    }
+
+    @Override
+    public void initEvent() {
 
     }
 

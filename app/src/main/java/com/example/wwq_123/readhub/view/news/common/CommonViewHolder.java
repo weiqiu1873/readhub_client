@@ -12,12 +12,15 @@ import android.widget.Toast;
 
 import com.example.wwq_123.readhub.R;
 import com.example.wwq_123.readhub.db.NewsDB;
-import com.example.wwq_123.readhub.model.jsonbean.bean.CommonDataItem;
+import com.example.wwq_123.readhub.eventbus.Event;
+import com.example.wwq_123.readhub.model.bean.CommonDataItem;
 import com.example.wwq_123.readhub.view.WebActivity;
 import com.example.wwq_123.readhub.util.TimeUtil;
 import com.umeng.socialize.ShareAction;
 import com.umeng.socialize.UMShareListener;
 import com.umeng.socialize.bean.SHARE_MEDIA;
+
+import org.greenrobot.eventbus.EventBus;
 
 
 public class CommonViewHolder extends RecyclerView.ViewHolder{
@@ -26,6 +29,7 @@ public class CommonViewHolder extends RecyclerView.ViewHolder{
     private TextView news_summary;
     private TextView news_time;
     private TextView news_author;
+    private ImageButton news_delete;
     private ImageButton news_collect;
     private ImageButton news_share;
     private boolean collectStatus = false;
@@ -39,6 +43,7 @@ public class CommonViewHolder extends RecyclerView.ViewHolder{
         news_summary = itemView.findViewById(R.id.news_common_item_summary);
         news_time = itemView.findViewById(R.id.news_common_item_time);
         news_author = itemView.findViewById(R.id.news_common_item_author);
+        news_delete = itemView.findViewById(R.id.news_common_item_delete);
         news_collect = itemView.findViewById(R.id.news_common_item_collect);
         news_share = itemView.findViewById(R.id.news_common_item_share);
     }
@@ -52,6 +57,13 @@ public class CommonViewHolder extends RecyclerView.ViewHolder{
                 Intent intent = new Intent(context, WebActivity.class);
                 intent.putExtra("url",item.getMobileUrl());
                 context.startActivity(intent);
+        });
+        news_delete.setOnClickListener((v)->{
+            newsDB = new NewsDB(context);
+            newsDB.delete(item);
+            Event.News event = new Event.News();
+            event.item = item;
+            EventBus.getDefault().post(event);
         });
         news_collect.setOnClickListener((v)->{
             newsDB = new NewsDB(context);
@@ -90,5 +102,11 @@ public class CommonViewHolder extends RecyclerView.ViewHolder{
                         }
                     }).open();
         });
+    }
+
+    public void showDelete(){
+        news_delete.setVisibility(View.VISIBLE);
+        news_time.setVisibility(View.GONE);
+        news_collect.setVisibility(View.GONE);
     }
 }

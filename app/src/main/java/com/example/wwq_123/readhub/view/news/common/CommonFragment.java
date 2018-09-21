@@ -7,8 +7,7 @@ import android.view.View;
 
 import com.example.wwq_123.readhub.R;
 import com.example.wwq_123.readhub.base.BaseFragment;
-import com.example.wwq_123.readhub.model.jsonbean.bean.CommonDataItem;
-
+import com.example.wwq_123.readhub.model.bean.CommonDataItem;
 
 import java.util.List;
 

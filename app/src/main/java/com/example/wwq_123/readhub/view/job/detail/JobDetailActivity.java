@@ -9,14 +9,15 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.ImageButton;
 import android.widget.TextView;
 
 import com.example.wwq_123.readhub.R;
 import com.example.wwq_123.readhub.base.BaseActivity;
+import com.example.wwq_123.readhub.model.bean.JobDataItem;
 import com.example.wwq_123.readhub.model.jsonbean.Chart;
-import com.example.wwq_123.readhub.model.jsonbean.bean.JobDataItem;
 import com.example.wwq_123.readhub.view.WebActivity;
+import com.example.wwq_123.readhub.view.custom_ui.MyLoadingView;
+import com.example.wwq_123.readhub.view.custom_ui.TitleBar;
 import com.github.mikephil.charting.charts.BarChart;
 import com.github.mikephil.charting.charts.LineChart;
 import com.github.mikephil.charting.components.XAxis;
@@ -34,7 +35,7 @@ import java.util.List;
 
 
 public class JobDetailActivity extends BaseActivity implements JobDetailContract.View {
-    private ImageButton backBtn;
+    private TitleBar titleBar;
     private TextView detail_title,detail_summary;
     private LineChart salary_chart,experience_chart;
     private BarChart city_chart;
@@ -50,7 +51,7 @@ public class JobDetailActivity extends BaseActivity implements JobDetailContract
 
     @Override
     public void initView() {
-        backBtn = findViewById(R.id.job_detail_back_btn);
+        titleBar = findViewById(R.id.job_detail_titlebar);
         detail_title = findViewById(R.id.job_detail_title);
         detail_summary = findViewById(R.id.job_detail_summary);
         jobArray = findViewById(R.id.job_detail_jobArray);
@@ -60,23 +61,43 @@ public class JobDetailActivity extends BaseActivity implements JobDetailContract
         salary_chart = findViewById(R.id.job_detail_salary_chart);
         experience_chart = findViewById(R.id.job_detail_experience_chart);
         city_chart = findViewById(R.id.job_detail_city_chart);
-        initChart();
-        initListener();
+        initSalaryChart();
+        initExperienceChart();
+        initCityChart();
     }
 
-    private void initListener() {
-        backBtn.setOnClickListener((v -> onBackPressed()));
+    @Override
+    public void initData() {
+        Intent intent = getIntent();
+        job = (JobDataItem) intent.getSerializableExtra("job");
+        Log.d("job",job.toString());
+        detail_title.setText(job.getJobTitle());
+        String summmary = "北京、上海、深圳"
+                +"等地共更新了"+job.getJobCount()+"个职位\n待遇集中在"
+                +job.getSalaryLower()+"-"+job.getSalaryUpper()+"k\n一般要求"
+                +job.getExperienceLower()+"-"+job.getExperienceUpper()+"年经验";
+        detail_summary.setText(summmary);
+        jobArrayList = job.getJobsArray();
+        if (presenter==null){
+            presenter = new JobDetailPresenter(this);
+        }
+        presenter.getChart(String.valueOf(job.getId()));
+    }
+
+    @Override
+    public void initTitleBar() {
+        titleBar.setTitle("职位详情");
+        titleBar.setLeftImage(R.drawable.ic_common_back);
+        titleBar.setListener((v)->onBackPressed());
+    }
+
+    @Override
+    public void initEvent() {
         adapter.setListenter((v,position)->{
             Intent intent = new Intent(this, WebActivity.class);
             intent.putExtra("url",jobArrayList.get(position).getUrl());
             startActivity(intent);
         });
-    }
-
-    private void initChart() {
-        initSalaryChart();
-        initExperienceChart();
-        initCityChart();
     }
 
     private void initCityChart() {
@@ -124,24 +145,6 @@ public class JobDetailActivity extends BaseActivity implements JobDetailContract
         xAxis.setTextSize(12f);
         xAxis.setPosition(XAxis.XAxisPosition.BOTTOM);
         xAxis.setValueFormatter(((value,axis)->value+"k"));
-    }
-
-    @Override
-    public void initData() {
-        Intent intent = getIntent();
-        job = (JobDataItem) intent.getSerializableExtra("job");
-        Log.d("job",job.toString());
-        detail_title.setText(job.getJobTitle());
-        String summmary = "北京、上海、深圳"
-                +"等地共更新了"+job.getJobCount()+"个职位\n待遇集中在"
-                +job.getSalaryLower()+"-"+job.getSalaryUpper()+"k\n一般要求"
-                +job.getExperienceLower()+"-"+job.getExperienceUpper()+"年经验";
-        detail_summary.setText(summmary);
-        jobArrayList = job.getJobsArray();
-        if (presenter==null){
-            presenter = new JobDetailPresenter(this);
-        }
-        presenter.getChart(String.valueOf(job.getId()));
     }
 
     @Override

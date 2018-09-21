@@ -1,7 +1,7 @@
 package com.example.wwq_123.readhub.view.news.common;
 
 import com.example.wwq_123.readhub.base.BasePresenter;
-import com.example.wwq_123.readhub.model.jsonbean.bean.CommonDataItem;
+import com.example.wwq_123.readhub.model.bean.CommonDataItem;
 import com.example.wwq_123.readhub.net.retrofit.MySubscriber;
 import com.example.wwq_123.readhub.util.DataUtil;
 

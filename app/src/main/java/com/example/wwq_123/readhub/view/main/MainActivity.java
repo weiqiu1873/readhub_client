@@ -1,14 +1,17 @@
-package com.example.wwq_123.readhub.view;
+package com.example.wwq_123.readhub.view.main;
 
 import android.content.Intent;
+import android.graphics.Bitmap;
+import android.graphics.drawable.Drawable;
+import android.support.design.widget.NavigationView;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentPagerAdapter;
 import android.support.v4.view.ViewPager;
 import android.support.v4.widget.DrawerLayout;
+import android.util.Log;
 import android.view.Gravity;
-import android.view.View;
-import android.widget.Button;
+import android.widget.LinearLayout;
 import android.widget.RadioButton;
 import android.widget.RadioGroup;
 import android.widget.TextView;
@@ -16,27 +19,38 @@ import android.widget.Toast;
 
 import com.example.wwq_123.readhub.R;
 import com.example.wwq_123.readhub.base.BaseActivity;
+import com.example.wwq_123.readhub.db.PreferencesUtil;
+import com.example.wwq_123.readhub.util.ImageUtil;
+import com.example.wwq_123.readhub.view.collect.CollectActivity;
+import com.example.wwq_123.readhub.view.custom_ui.CircleImageView;
+import com.example.wwq_123.readhub.view.custom_ui.TitleBar;
 import com.example.wwq_123.readhub.view.job.JobFragment;
 import com.example.wwq_123.readhub.view.news.NewsFragment;
 import com.example.wwq_123.readhub.view.topic.TopicFragment;
-import com.example.wwq_123.readhub.service.LoadingService;
+import com.umeng.socialize.UMAuthListener;
+import com.umeng.socialize.UMShareAPI;
+import com.umeng.socialize.bean.SHARE_MEDIA;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Map;
 
 
-public class MainActivity extends BaseActivity implements View.OnClickListener{
+public class MainActivity extends BaseActivity<MainPresenter> implements MainContract.View{
 
     private static final String TAG = "MainActivity";
     private DrawerLayout drawerLayout;
-    private TextView title;
+    private TitleBar titleBar;
     private RadioGroup rg_tab;
     private RadioButton rg_tab_topic;
     private RadioButton rg_tab_news;
     private RadioButton rg_tab_job;
     private ViewPager viewPager;
     private ViewPagerAdapter adapter;
-    private Button drawerBtn,service;
+    private NavigationView navigationView;
+    private LinearLayout header_layout;
+    private CircleImageView user_image;
+    private TextView user_name;
     private List<String> titles = new ArrayList<>();
     private List<Fragment> fragments = new ArrayList<>();
 
@@ -44,6 +58,7 @@ public class MainActivity extends BaseActivity implements View.OnClickListener{
     private NewsFragment newsFragment;
     private JobFragment jobFragment;
 
+    private MainPresenter presenter;
 
     @Override
     public int getLayoutId() {
@@ -69,10 +84,20 @@ public class MainActivity extends BaseActivity implements View.OnClickListener{
         viewPager.setCurrentItem(0);
         viewPager.setOffscreenPageLimit(2);
         rg_tab_topic.setChecked(true);
-        initListener();
     }
 
-    private void initListener() {
+    @Override
+    public void initTitleBar() {
+        titleBar.setTitle("Readhub");
+        titleBar.setLeftImage(R.drawable.main_menu);
+        titleBar.setListener((v)->{
+            presenter.setNagivation();
+            drawerLayout.openDrawer(Gravity.LEFT);
+        });
+    }
+
+    @Override
+    public void initEvent() {
         rg_tab.setOnCheckedChangeListener((group,checkedId)->{
             int position = 0;
             switch (checkedId){
@@ -104,44 +129,55 @@ public class MainActivity extends BaseActivity implements View.OnClickListener{
                     case 2:
                         rg_tab_job.setChecked(true);
                         break;
-                        default:break;
+                    default:break;
                 }
             }
             @Override
             public void onPageScrollStateChanged(int state) { }
         });
+        navigationView.setNavigationItemSelectedListener((item)->{
+            switch (item.getItemId()){
+                case R.id.collect:
+                    Intent intent = new Intent(MainActivity.this, CollectActivity.class);
+                    startActivity(intent);
+                    break;
+            }
+            drawerLayout.closeDrawer(Gravity.LEFT);
+            return true;
+        });
     }
+
 
     @Override
     public void initView() {
         initFragment();
+        initNavigation();
         drawerLayout = findViewById(R.id.drawer_layout);
-        title = findViewById(R.id.title_text);
+        titleBar = findViewById(R.id.main_title);
         viewPager = findViewById(R.id.viewPager);
         rg_tab = findViewById(R.id.rg_tab);
         rg_tab_topic = findViewById(R.id.rg_tab_topic);
         rg_tab_news = findViewById(R.id.rg_tab_news);
         rg_tab_job = findViewById(R.id.rg_tab_job);
-        service = findViewById(R.id.service);
-        drawerBtn = findViewById(R.id.drawerBtn);
-        service.setOnClickListener(this);
-        drawerBtn.setOnClickListener(this);
+    }
+
+    private void initNavigation() {
+        navigationView = findViewById(R.id.navigation_view);
+        header_layout = (LinearLayout) navigationView.getHeaderView(0);
+        user_image = header_layout.findViewById(R.id.user_image);
+        user_name = header_layout.findViewById(R.id.user_name);
+        presenter = new MainPresenter(this,this);
     }
 
     @Override
-    public void onClick(View v) {
-
-        switch (v.getId()){
-            case R.id.service:
-                Intent intent = new Intent(this, LoadingService.class);
-                startService(intent);
-                Toast.makeText(MainActivity.this,"click",Toast.LENGTH_SHORT).show();
-                break;
-            case R.id.drawerBtn:
-                drawerLayout.openDrawer(Gravity.LEFT);
-                break;
-                default:break;
+    public void showNagivation(String name,boolean isListen) {
+        user_name.setText(name);
+        if (isListen){
+            user_name.setOnClickListener((v)->{
+                presenter.loginByQQ();
+            });
         }
+
     }
 
     class ViewPagerAdapter extends FragmentPagerAdapter{
@@ -170,5 +206,13 @@ public class MainActivity extends BaseActivity implements View.OnClickListener{
             }
         }
     }
+
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+        UMShareAPI.get(this).onActivityResult(requestCode, resultCode, data);
+
+    }
+
 
 }

@@ -8,7 +8,7 @@ import android.view.View;
 import android.widget.TextView;
 
 import com.example.wwq_123.readhub.R;
-import com.example.wwq_123.readhub.model.jsonbean.bean.JobDataItem;
+import com.example.wwq_123.readhub.model.bean.JobDataItem;
 import com.example.wwq_123.readhub.view.job.detail.JobDetailActivity;
 
 public class JobViewHolder extends RecyclerView.ViewHolder {

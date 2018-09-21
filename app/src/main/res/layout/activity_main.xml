@@ -12,30 +12,12 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:orientation="vertical">
-        <android.support.v7.widget.Toolbar
-            android:background="@color/c1"
+        <com.example.wwq_123.readhub.view.custom_ui.TitleBar
+            android:id="@+id/main_title"
             android:layout_width="match_parent"
             android:layout_height="wrap_content">
-            <Button
-                android:id="@+id/drawerBtn"
-                android:text="drawer"
-                android:textColor="@color/colorWhite"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content" />
-            <TextView
-                android:id="@+id/title_text"
-                android:text="Readhub"
-                android:textSize="@dimen/font_25"
-                android:textColor="@color/b7"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content" />
-            <Button
-                android:id="@+id/service"
-                android:text="service"
-                android:textColor="@color/colorWhite"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content" />
-        </android.support.v7.widget.Toolbar>
+
+        </com.example.wwq_123.readhub.view.custom_ui.TitleBar>
 
         <com.example.wwq_123.readhub.view.custom_ui.ScrollViewPager
             android:layout_width="match_parent"

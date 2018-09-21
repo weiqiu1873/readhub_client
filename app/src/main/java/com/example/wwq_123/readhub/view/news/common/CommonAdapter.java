@@ -8,7 +8,7 @@ import android.view.View;
 import android.view.ViewGroup;
 
 import com.example.wwq_123.readhub.R;
-import com.example.wwq_123.readhub.model.jsonbean.bean.CommonDataItem;
+import com.example.wwq_123.readhub.model.bean.CommonDataItem;
 
 
 import java.util.ArrayList;
@@ -17,7 +17,7 @@ import java.util.List;
 public class CommonAdapter extends RecyclerView.Adapter {
     private Context context;
     private List<CommonDataItem> dataItems = new ArrayList<>();
-
+    private boolean showDelete = false;
     public CommonAdapter(Context context){ this.context = context; }
 
     @NonNull
@@ -29,6 +29,9 @@ public class CommonAdapter extends RecyclerView.Adapter {
 
     @Override
     public void onBindViewHolder(@NonNull RecyclerView.ViewHolder holder, int position) {
+        if (showDelete){
+            ((CommonViewHolder)holder).showDelete();
+        }
         ((CommonViewHolder)holder).onBind(dataItems.get(position));
     }
 
@@ -44,6 +47,14 @@ public class CommonAdapter extends RecyclerView.Adapter {
     }
     public void addData(List<? extends CommonDataItem> list){
         dataItems.addAll(list);
+        notifyDataSetChanged();
+    }
+    public void showDelete(boolean arg){
+        this.showDelete = arg;
+    }
+
+    public void remove(CommonDataItem item){
+        dataItems.remove(item);
         notifyDataSetChanged();
     }
 }

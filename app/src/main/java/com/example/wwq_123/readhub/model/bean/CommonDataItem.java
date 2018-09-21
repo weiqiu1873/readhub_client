@@ -1,4 +1,4 @@
-package com.example.wwq_123.readhub.model.jsonbean.bean;
+package com.example.wwq_123.readhub.model.bean;
 
 import android.os.Parcel;
 import android.os.Parcelable;
@@ -14,7 +14,7 @@ import org.greenrobot.greendao.annotation.Id;
 @Entity
 public class CommonDataItem implements Parcelable{
     @Id
-    private long id;
+    private String id;
     private String title;
     private String summary;
     private String summaryAuto;
@@ -27,7 +27,7 @@ public class CommonDataItem implements Parcelable{
     private int status;
 
     protected CommonDataItem(Parcel in) {
-        id = in.readLong();
+        id = in.readString();
         title = in.readString();
         summary = in.readString();
         summaryAuto = in.readString();
@@ -40,8 +40,8 @@ public class CommonDataItem implements Parcelable{
         status = in.readInt();
     }
 
-    @Generated(hash = 1123250255)
-    public CommonDataItem(long id, String title, String summary, String summaryAuto,
+    @Generated(hash = 932351220)
+    public CommonDataItem(String id, String title, String summary, String summaryAuto,
             String url, String mobileUrl, String siteName, String language, String authorName,
             String publishDate, int status) {
         this.id = id;
@@ -80,7 +80,7 @@ public class CommonDataItem implements Parcelable{
 
     @Override
     public void writeToParcel(Parcel dest, int flags) {
-        dest.writeLong(this.id);
+        dest.writeString(this.id);
         dest.writeString(this.title);
         dest.writeString(this.summary);
         dest.writeString(this.summaryAuto);
@@ -100,11 +100,11 @@ public class CommonDataItem implements Parcelable{
         this.status = status;
     }
 
-    public long getId() {
+    public String getId() {
         return id;
     }
 
-    public void setId(long id) {
+    public void setId(String id) {
         this.id = id;
     }
 

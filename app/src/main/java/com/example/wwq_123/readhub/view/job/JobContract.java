@@ -1,8 +1,7 @@
 package com.example.wwq_123.readhub.view.job;
 
 import com.example.wwq_123.readhub.base.BaseContract;
-import com.example.wwq_123.readhub.model.jsonbean.bean.JobDataItem;
-
+import com.example.wwq_123.readhub.model.bean.JobDataItem;
 import java.util.List;
 
 public interface JobContract {

@@ -9,8 +9,8 @@ import android.widget.Toast;
 
 import com.example.wwq_123.readhub.R;
 import com.example.wwq_123.readhub.base.BaseFragment;
-import com.example.wwq_123.readhub.db.SharedPreferencesUtil;
 import com.example.wwq_123.readhub.model.bean.TopicDataItem;
+import com.example.wwq_123.readhub.view.custom_ui.MyLoadingView;
 
 import java.util.List;
 
@@ -21,6 +21,7 @@ public class TopicFragment extends BaseFragment<TopicPresenter> implements Topic
     private TopicAdapter adapter;
     private TopicPresenter presenter;
     private String lastOrder = "";
+    private MyLoadingView loadingView;
 
     public String getLastOrder() {
         return lastOrder;
@@ -33,6 +34,8 @@ public class TopicFragment extends BaseFragment<TopicPresenter> implements Topic
 
     @Override
     protected void initView(View view) {
+        loadingView = new MyLoadingView(getContext());
+        loadingView.start();
         initRecycleView(view);
         initRefreshLayotu(view);
     }
@@ -68,6 +71,9 @@ public class TopicFragment extends BaseFragment<TopicPresenter> implements Topic
 
     @Override
     public void showTopicData( List<TopicDataItem> topicList) {
+        if (loadingView.isRun()){
+            loadingView.stop();
+        }
         String order = String.valueOf(topicList.get(topicList.size()-1).getOrder());
         if (order.equals(lastOrder)){
             Toast.makeText(getActivity(),"已是最新数据",Toast.LENGTH_SHORT).show();
@@ -75,10 +81,7 @@ public class TopicFragment extends BaseFragment<TopicPresenter> implements Topic
             Toast.makeText(getActivity(),"更新成功",Toast.LENGTH_SHORT).show();
             adapter.updateTopic(topicList);
             lastOrder = order;
-            SharedPreferencesUtil util = SharedPreferencesUtil.newInstance(getActivity());
-            util.insert("topicLastId",order);
         }
-
     }
 
     @Override

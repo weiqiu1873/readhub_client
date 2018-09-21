@@ -19,24 +19,25 @@ public class UMApplication extends Application {
          * 参数3:Push推送业务的secret
          */
 //        UMConfigure.init(this, UMConfigure.DEVICE_TYPE_PHONE, "dd722ae5353c0bddf8c4d7789ab207be");
-//        UMConfigure.init(this,"5b9267fdf43e480b39000402","readhub"
-//                ,UMConfigure.DEVICE_TYPE_PHONE, "dd722ae5353c0bddf8c4d7789ab207be");
-//        PushAgent pushAgent = PushAgent.getInstance(this);
+        UMConfigure.init(this,"5b9267fdf43e480b39000402","readhub"
+                ,UMConfigure.DEVICE_TYPE_PHONE, "dd722ae5353c0bddf8c4d7789ab207be");
+        PushAgent pushAgent = PushAgent.getInstance(this);
         //注册推送服务，每次调用register方法都会回调该接口j
-//        pushAgent.register(new IUmengRegisterCallback() {
-//            @Override
-//            public void onSuccess(String s) {
-//                Log.i("my_token",s);
-//            }
-//            @Override
-//            public void onFailure(String s, String s1) {
-//                Log.i("Failure",s+"\n"+s1);
-//            }
-//        });
+        pushAgent.register(new IUmengRegisterCallback() {
+            @Override
+            public void onSuccess(String s) {
+                Log.i("my_token",s);
+            }
+            @Override
+            public void onFailure(String s, String s1) {
+                Log.i("Failure",s+"\n"+s1);
+            }
+        });
     }
     {
         PlatformConfig.setWeixin("wx31c30eb903264e47", "3606c09643a7e5311054a1202136fc68");
-        PlatformConfig.setQQZone("1107757805", "ZJlY0gybmaB2MHmp");
-        PlatformConfig.setSinaWeibo("","","");
+        PlatformConfig.setQQZone("101501399", "b4560147d70c5294779a77bef0205940");
+
+//        PlatformConfig.setSinaWeibo("","","");
     }
 }

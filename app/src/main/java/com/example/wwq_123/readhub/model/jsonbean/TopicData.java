@@ -185,7 +185,7 @@ public class TopicData extends Data{
              * publishDate : 2018-08-08T06:05:17.000Z
              */
 
-            private int id;
+            private String id;
             private String url;
             private String title;
             private int groupId;
@@ -196,11 +196,11 @@ public class TopicData extends Data{
             private int duplicateId;
             private String publishDate;
 
-            public int getId() {
+            public String getId() {
                 return id;
             }
 
-            public void setId(int id) {
+            public void setId(String id) {
                 this.id = id;
             }
 

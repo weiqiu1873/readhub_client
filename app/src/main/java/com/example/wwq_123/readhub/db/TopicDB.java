@@ -2,13 +2,11 @@ package com.example.wwq_123.readhub.db;
 
 import android.content.Context;
 
+import com.example.wwq_123.readhub.greendao.gen.DaoMaster;
+import com.example.wwq_123.readhub.greendao.gen.DaoSession;
+import com.example.wwq_123.readhub.greendao.gen.TopicDataItemDao;
 import com.example.wwq_123.readhub.model.bean.TopicDataItem;
-import com.example.wwq_123.readhub.model.bean.TopicDataItemDao;
-import com.example.wwq_123.readhub.model.jsonbean.bean.DaoMaster;
-import com.example.wwq_123.readhub.model.jsonbean.bean.DaoSession;
-
 import org.greenrobot.greendao.query.QueryBuilder;
-
 import java.util.List;
 
 public class TopicDB {

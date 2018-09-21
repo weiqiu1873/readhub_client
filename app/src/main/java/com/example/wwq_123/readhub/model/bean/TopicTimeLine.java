@@ -1,4 +1,4 @@
-package com.example.wwq_123.readhub.model.jsonbean.bean;
+package com.example.wwq_123.readhub.model.bean;
 
 import android.os.Parcel;
 import android.os.Parcelable;

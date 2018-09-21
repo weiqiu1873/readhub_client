@@ -1,0 +1,5 @@
+<root>
+    <item name='android.view.View void setBackgroundColor(int)'>
+        <annotation name='java.lang.Deprecated' />
+    </item>
+</root>

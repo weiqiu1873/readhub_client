@@ -2,13 +2,12 @@ package com.example.wwq_123.readhub.db;
 
 import android.content.Context;
 
-import com.example.wwq_123.readhub.model.jsonbean.bean.CommonDataItem;
-import com.example.wwq_123.readhub.model.jsonbean.bean.CommonDataItemDao;
-import com.example.wwq_123.readhub.model.jsonbean.bean.DaoMaster;
-import com.example.wwq_123.readhub.model.jsonbean.bean.DaoSession;
 
+import com.example.wwq_123.readhub.greendao.gen.CommonDataItemDao;
+import com.example.wwq_123.readhub.greendao.gen.DaoMaster;
+import com.example.wwq_123.readhub.greendao.gen.DaoSession;
+import com.example.wwq_123.readhub.model.bean.CommonDataItem;
 import org.greenrobot.greendao.query.QueryBuilder;
-
 import java.util.List;
 
 

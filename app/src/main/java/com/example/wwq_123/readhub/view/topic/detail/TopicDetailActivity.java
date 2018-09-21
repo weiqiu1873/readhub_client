@@ -11,25 +11,21 @@ import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.ImageButton;
 import android.widget.ScrollView;
 import android.widget.TextView;
 
 import com.example.wwq_123.readhub.R;
 import com.example.wwq_123.readhub.base.BaseActivity;
-import com.example.wwq_123.readhub.model.jsonbean.bean.CommonDataItem;
-import com.example.wwq_123.readhub.model.jsonbean.bean.TopicDetail;
+import com.example.wwq_123.readhub.model.bean.CommonDataItem;
+import com.example.wwq_123.readhub.model.bean.TopicDetail;
+import com.example.wwq_123.readhub.view.custom_ui.TitleBar;
 import com.example.wwq_123.readhub.view.news.common.CommonViewHolder;
-import com.umeng.analytics.MobclickAgent;
-import com.umeng.commonsdk.UMConfigure;
-import com.umeng.message.PushAgent;
-
 import java.util.ArrayList;
 import java.util.List;
 
 public class TopicDetailActivity extends BaseActivity implements TopicDetailContract.View {
     private ScrollView scrollView;
-    private ImageButton backBtn;
+    private TitleBar titleBar;
     private TextView title,summary,relatedText;
     private ViewPager news_viewpager;
     private RecyclerView related_list;
@@ -42,42 +38,31 @@ public class TopicDetailActivity extends BaseActivity implements TopicDetailCont
     private TimeLineAdapter timeLineAdapter;
 
     @Override
-    protected void onCreate(@Nullable Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-        UMConfigure.setLogEnabled(true);
-        UMConfigure.setEncryptEnabled(true);
-        MobclickAgent.setScenarioType(this, MobclickAgent.EScenarioType.E_UM_NORMAL);
-        MobclickAgent.setSessionContinueMillis(1000);
-        PushAgent.getInstance(this).onAppStart();
-    }
-
-    @Override
     public int getLayoutId() {
         return R.layout.activity_topic_detail;
     }
 
     @Override
     public void initView() {
-        backBtn = findViewById(R.id.topic_detail_back_btn);
+        titleBar = findViewById(R.id.topic_detail_title_bar);
         scrollView = findViewById(R.id.topic_detail_scrollview);
         title = findViewById(R.id.topic_detail_title);
         summary = findViewById(R.id.topic_detail_summary);
         news_viewpager = findViewById(R.id.topic_detail_news_view_pager);
         relatedText = findViewById(R.id.topic_detail_related_text);
         related_list = findViewById(R.id.topic_detail_related_news_list);
-
-        initEvent();
-
-        newsAdapter = new NewsViewPagerAdapter();
-        news_viewpager.setAdapter(newsAdapter);
-
-        timeLineAdapter = new TimeLineAdapter();
-        related_list.setAdapter(timeLineAdapter);
-        related_list.setLayoutManager(new LinearLayoutManager(this));
+        initRecycleView();
     }
 
-    private void initEvent() {
-        backBtn.setOnClickListener((v)-> onBackPressed());
+    @Override
+    public void initTitleBar() {
+        titleBar.setTitle("热门详情");
+        titleBar.setLeftImage(R.drawable.ic_common_back);
+    }
+
+    @Override
+    public void initEvent() {
+        titleBar.setListener((v)->onBackPressed());
     }
 
     @Override
@@ -101,6 +86,14 @@ public class TopicDetailActivity extends BaseActivity implements TopicDetailCont
             related_list.setVisibility(View.GONE);
             relatedText.setVisibility(View.GONE);
         }
+    }
+
+    private void initRecycleView() {
+        newsAdapter = new NewsViewPagerAdapter();
+        news_viewpager.setAdapter(newsAdapter);
+        timeLineAdapter = new TimeLineAdapter();
+        related_list.setAdapter(timeLineAdapter);
+        related_list.setLayoutManager(new LinearLayoutManager(this));
     }
 
     private void showTimeLine(List<TopicDetail.TimelineBean.TopicsBean> topicsList) {

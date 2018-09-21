@@ -62,7 +62,7 @@ public class TechData extends Data{
          * publishDate : 2018-08-09T00:00:10.000Z
          */
 
-        private int id;
+        private String id;
         private String title;
         private String summary;
         private String summaryAuto;
@@ -73,11 +73,11 @@ public class TechData extends Data{
         private String authorName;
         private String publishDate;
 
-        public int getId() {
+        public String getId() {
             return id;
         }
 
-        public void setId(int id) {
+        public void setId(String id) {
             this.id = id;
         }
 

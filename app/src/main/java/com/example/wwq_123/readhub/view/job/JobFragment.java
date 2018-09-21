@@ -4,11 +4,9 @@ import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.util.Log;
 import android.view.View;
-
 import com.example.wwq_123.readhub.R;
 import com.example.wwq_123.readhub.base.BaseFragment;
-import com.example.wwq_123.readhub.model.jsonbean.bean.JobDataItem;
-
+import com.example.wwq_123.readhub.model.bean.JobDataItem;
 import java.util.List;
 
 public class JobFragment extends BaseFragment<JobPresenter> implements JobContract.View {

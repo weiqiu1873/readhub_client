@@ -4,8 +4,9 @@
     android:layout_width="match_parent"
     android:layout_height="200dp"
     android:orientation="vertical"
-    android:background="@color/b3"
-    android:padding="30dp">
+    android:background="@drawable/navigation_header"
+    android:padding="20dp"
+    android:id="@+id/header_layout">
     <com.example.wwq_123.readhub.view.custom_ui.CircleImageView
         android:id="@+id/user_image"
         android:src="@drawable/ic_flying_pig"
@@ -14,9 +15,11 @@
         android:layout_marginTop="40dp"/>
     <TextView
         android:id="@+id/user_name"
-        android:text="未登陆"
+        android:text="登陆"
         android:textSize="@dimen/font_16"
         android:textColor="@color/colorWhite"
+        android:layout_marginTop="5dp"
+        android:layout_marginLeft="10dp"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content" />
 

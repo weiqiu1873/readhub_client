@@ -3,9 +3,6 @@ package com.example.wwq_123.readhub.model.bean;
 import android.os.Parcel;
 import android.os.Parcelable;
 
-
-import com.example.wwq_123.readhub.model.jsonbean.bean.TopicTimeLine;
-
 import java.util.List;
 
 public class TimeLineBean implements Parcelable {

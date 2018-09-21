@@ -1,13 +1,14 @@
 package com.example.wwq_123.readhub.util;
 
+import com.example.wwq_123.readhub.model.bean.CommonDataItem;
+import com.example.wwq_123.readhub.model.bean.JobDataItem;
 import com.example.wwq_123.readhub.model.bean.TopicDataItem;
 import com.example.wwq_123.readhub.model.jsonbean.BlockchainData;
 import com.example.wwq_123.readhub.model.jsonbean.JobData;
 import com.example.wwq_123.readhub.model.jsonbean.NewsData;
 import com.example.wwq_123.readhub.model.jsonbean.TechData;
 import com.example.wwq_123.readhub.model.jsonbean.TopicData;
-import com.example.wwq_123.readhub.model.jsonbean.bean.CommonDataItem;
-import com.example.wwq_123.readhub.model.jsonbean.bean.JobDataItem;
+
 
 import java.util.ArrayList;
 import java.util.List;

@@ -1,12 +1,12 @@
 package com.example.wwq_123.readhub.net.retrofit;
 
+import com.example.wwq_123.readhub.model.bean.TopicDetail;
 import com.example.wwq_123.readhub.model.jsonbean.BlockchainData;
 import com.example.wwq_123.readhub.model.jsonbean.Chart;
 import com.example.wwq_123.readhub.model.jsonbean.JobData;
 import com.example.wwq_123.readhub.model.jsonbean.NewsData;
 import com.example.wwq_123.readhub.model.jsonbean.TechData;
 import com.example.wwq_123.readhub.model.jsonbean.TopicData;
-import com.example.wwq_123.readhub.model.jsonbean.bean.TopicDetail;
 
 import retrofit2.http.GET;
 import retrofit2.http.Path;

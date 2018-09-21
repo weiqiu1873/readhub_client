@@ -10,7 +10,7 @@ import android.os.SystemClock;
 import android.support.annotation.Nullable;
 import android.util.Log;
 
-import com.example.wwq_123.readhub.view.MainActivity;
+import com.example.wwq_123.readhub.view.main.MainActivity;
 
 public class LoadingService extends Service {
     private static int create_i = 0;

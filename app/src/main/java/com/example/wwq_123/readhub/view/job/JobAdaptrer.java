@@ -8,8 +8,7 @@ import android.view.View;
 import android.view.ViewGroup;
 
 import com.example.wwq_123.readhub.R;
-import com.example.wwq_123.readhub.model.jsonbean.bean.JobDataItem;
-
+import com.example.wwq_123.readhub.model.bean.JobDataItem;
 import java.util.ArrayList;
 import java.util.List;
 

@@ -6,9 +6,6 @@ import android.os.Parcelable;
 import android.support.annotation.RequiresApi;
 
 import com.example.wwq_123.readhub.model.bean.converter.CommonDataItemStringConverter;
-import com.example.wwq_123.readhub.model.jsonbean.bean.CommonDataItem;
-import com.example.wwq_123.readhub.model.jsonbean.bean.TopicTimeLine;
-
 import org.greenrobot.greendao.annotation.Convert;
 import org.greenrobot.greendao.annotation.Entity;
 import org.greenrobot.greendao.annotation.Generated;

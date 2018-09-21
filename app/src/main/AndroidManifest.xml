@@ -17,19 +17,33 @@
         <meta-data android:value="5b9267fdf43e480b39000402" android:name="UMENG_APPKEY" />
         <meta-data android:value="readhub" android:name="UMENG_CHANNEL" />
 
-        <activity android:name=".mvp.view.ShowDataActivity"></activity>
         <activity android:name=".view.WebActivity"></activity>
         <activity android:name=".view.topic.detail.TopicDetailActivity"></activity>
-        <activity android:name=".view.MainActivity">
+        <activity android:name=".view.main.MainActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
         <activity android:name=".view.job.detail.JobDetailActivity"></activity>
+        <activity android:name=".view.collect.CollectActivity"></activity>
         <service android:name=".service.LoadingService"></service>
 
+        <activity
+            android:name="com.tencent.tauth.AuthActivity"
+            android:launchMode="singleTask"
+            android:noHistory="true" >
+            <intent-filter>
+                <action android:name="android.intent.action.VIEW" />
+                <category android:name="android.intent.category.DEFAULT" />
+                <category android:name="android.intent.category.BROWSABLE" />
+                <data android:scheme="tencent101501399" />
+            </intent-filter>
+        </activity>
+        <activity
+            android:name="com.tencent.connect.common.AssistActivity"
+            android:theme="@android:style/Theme.Translucent.NoTitleBar"
+            android:configChanges="orientation|keyboardHidden|screenSize"/>
     </application>
-
 
 </manifest>
