@@ -75,7 +75,7 @@
 
 
 #实体类
--keep public class com.example.wwq_123.readhub.mvp.model.** {*;}
+-keep public class com.example.wwq_123.readhub.model.** {*;}
 # 删除代码中Log相关的代码
 -assumenosideeffects class android.util.log{
     public static boolean isLoggable(java.lang.String,int);
@@ -129,4 +129,21 @@
 -dontwarn com.huawei.**
 -dontwarn com.meizu.**
 
+-keepattributes *Annotation*
+-keep class com.taobao.** {*;}
+-keep class org.android.** {*;}
+-keep class anet.channel.** {*;}
+-keep class com.umeng.** {*;}
+-keep class com.xiaomi.** {*;}
+-keep class com.huawei.** {*;}
+-keep class com.meizu.** {*;}
+-keep class org.apache.thrift.** {*;}
+-keep class com.alibaba.sdk.android.**{*;}
+-keep class com.ut.**{*;}
+-keep class com.ta.**{*;}
+-keep public class **.R$*{
+   public static final int *;
+}
+
 -keep class com.github.PhilJay.** {*;}
+-keep class com.github.bumptech.glide.** {*;}

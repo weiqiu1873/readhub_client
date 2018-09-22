@@ -1,6 +1,5 @@
 package com.example.wwq_123.readhub.view.news.common;
 
-import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
 import android.support.v7.widget.CardView;
@@ -12,14 +11,12 @@ import android.widget.Toast;
 
 import com.example.wwq_123.readhub.R;
 import com.example.wwq_123.readhub.db.NewsDB;
+import com.example.wwq_123.readhub.db.PreferencesUtil;
 import com.example.wwq_123.readhub.eventbus.Event;
 import com.example.wwq_123.readhub.model.bean.CommonDataItem;
+import com.example.wwq_123.readhub.umeng.UMengShare;
 import com.example.wwq_123.readhub.view.WebActivity;
 import com.example.wwq_123.readhub.util.TimeUtil;
-import com.umeng.socialize.ShareAction;
-import com.umeng.socialize.UMShareListener;
-import com.umeng.socialize.bean.SHARE_MEDIA;
-
 import org.greenrobot.eventbus.EventBus;
 
 
@@ -35,6 +32,7 @@ public class CommonViewHolder extends RecyclerView.ViewHolder{
     private boolean collectStatus = false;
     private NewsDB newsDB;
     private Context context;
+    private PreferencesUtil util;
     public CommonViewHolder(Context context, View itemView){
         super(itemView);
         this.context = context;
@@ -46,6 +44,7 @@ public class CommonViewHolder extends RecyclerView.ViewHolder{
         news_delete = itemView.findViewById(R.id.news_common_item_delete);
         news_collect = itemView.findViewById(R.id.news_common_item_collect);
         news_share = itemView.findViewById(R.id.news_common_item_share);
+        util = PreferencesUtil.getInstance(context);
     }
 
     public void onBind(CommonDataItem item){
@@ -66,42 +65,25 @@ public class CommonViewHolder extends RecyclerView.ViewHolder{
             EventBus.getDefault().post(event);
         });
         news_collect.setOnClickListener((v)->{
-            newsDB = new NewsDB(context);
-            if (collectStatus){
-                Toast.makeText(context,"取消收藏",Toast.LENGTH_SHORT).show();
-//                news_collect.setImageResource(R.mipmap.collect);
-                collectStatus = false;
-                newsDB.delete(item);
+            if (!util.loginStatus()) {
+                Toast.makeText(context,"请先登录",Toast.LENGTH_SHORT).show();
             }else {
-                Toast.makeText(context,"收藏成功",Toast.LENGTH_SHORT).show();
+                newsDB = new NewsDB(context);
+                if (collectStatus){
+                    Toast.makeText(context,"取消收藏",Toast.LENGTH_SHORT).show();
+//                news_collect.setImageResource(R.mipmap.collect);
+                    collectStatus = false;
+                    newsDB.delete(item);
+                }else {
+                    Toast.makeText(context,"收藏成功",Toast.LENGTH_SHORT).show();
 //                news_collect.setImageResource(R.mipmap.collect_press);
-                collectStatus = true;
-                newsDB.insert(item);
+                    collectStatus = true;
+                    newsDB.insert(item);
+                }
             }
-        });
-        news_share.setOnClickListener((v)->{
-            new ShareAction((Activity) context)
-                    .withText(item.getTitle())
-                    .setDisplayList(SHARE_MEDIA.QQ,SHARE_MEDIA.WEIXIN,SHARE_MEDIA.SINA,SHARE_MEDIA.QZONE,SHARE_MEDIA.WEIXIN_CIRCLE)
-                    .setCallback(new UMShareListener() {
-                        @Override
-                        public void onStart(SHARE_MEDIA share_media) {
 
-                        }
-                        @Override
-                        public void onResult(SHARE_MEDIA share_media) {
-                            Toast.makeText(context,"成功了",Toast.LENGTH_LONG).show();
-                        }
-                        @Override
-                        public void onError(SHARE_MEDIA share_media, Throwable throwable) {
-                            Toast.makeText(context,"失败"+throwable.getMessage(),Toast.LENGTH_LONG).show();
-                        }
-                        @Override
-                        public void onCancel(SHARE_MEDIA share_media) {
-                            Toast.makeText(context,"取消了",Toast.LENGTH_LONG).show();
-                        }
-                    }).open();
         });
+        news_share.setOnClickListener((v)->{ new UMengShare(context).share(item); });
     }
 
     public void showDelete(){

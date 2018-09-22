@@ -4,6 +4,7 @@ import android.content.Context;
 
 import com.example.wwq_123.readhub.base.BasePresenter;
 import com.example.wwq_123.readhub.db.NewsDB;
+import com.example.wwq_123.readhub.db.PreferencesUtil;
 import com.example.wwq_123.readhub.db.TopicDB;
 import com.example.wwq_123.readhub.model.bean.CommonDataItem;
 import com.example.wwq_123.readhub.model.bean.TopicDataItem;
@@ -14,21 +15,29 @@ public class CollectPresenter extends BasePresenter<CollectContract.View> implem
     private Context context;
     private TopicDB topicDB;
     private NewsDB newsDB;
+    private PreferencesUtil util;
     public CollectPresenter(CollectContract.View view, Context context){
         attachView(view);
         this.context = context;
+        util = PreferencesUtil.getInstance(context);
     }
     @Override
     public void getTopic() {
-        topicDB = new TopicDB(context);
-        List<TopicDataItem> topicList = topicDB.getAll();
+        List<TopicDataItem> topicList = null;
+        if (util.loginStatus()){
+            topicDB = new TopicDB(context);
+            topicList = topicDB.getAll();
+        }
         view.showTopic(topicList);
     }
 
     @Override
     public void getNews() {
-        newsDB = new NewsDB(context);
-        List<CommonDataItem> newsList = newsDB.getAll();
+        List<CommonDataItem> newsList = null;
+        if (util.loginStatus()){
+            newsDB = new NewsDB(context);
+            newsList = newsDB.getAll();
+        }
         view.showNews(newsList);
     }
 }

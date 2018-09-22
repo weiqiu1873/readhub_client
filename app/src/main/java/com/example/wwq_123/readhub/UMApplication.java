@@ -35,7 +35,7 @@ public class UMApplication extends Application {
         });
     }
     {
-        PlatformConfig.setWeixin("wx31c30eb903264e47", "3606c09643a7e5311054a1202136fc68");
+        PlatformConfig.setWeixin("wx6ad550145b31aa6c", "b4c198ef5eb4998763f524e05d118bc9");
         PlatformConfig.setQQZone("101501399", "b4560147d70c5294779a77bef0205940");
 
 //        PlatformConfig.setSinaWeibo("","","");

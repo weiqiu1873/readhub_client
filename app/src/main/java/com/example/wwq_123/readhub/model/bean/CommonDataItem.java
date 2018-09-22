@@ -12,7 +12,7 @@ import org.greenrobot.greendao.annotation.Id;
  * 资讯
  */
 @Entity
-public class CommonDataItem implements Parcelable{
+public class CommonDataItem extends BaseDataItem implements Parcelable{
     @Id
     private String id;
     private String title;

@@ -15,6 +15,7 @@ import android.os.Build;
 import android.support.annotation.Nullable;
 import android.support.annotation.RequiresApi;
 import android.util.AttributeSet;
+import android.util.DisplayMetrics;
 import android.widget.ImageView;
 
 @SuppressLint("AppCompatCustomView")
@@ -51,15 +52,48 @@ public class CircleImageView extends ImageView {
 
     @Override
     protected void onMeasure(int widthMeasureSpec, int heightMeasureSpec) {
-        super.onMeasure(widthMeasureSpec, heightMeasureSpec);
-        wight = getMeasuredWidth();
-        height = getMeasuredHeight();
+//        super.onMeasure(widthMeasureSpec, heightMeasureSpec);
+        setMeasuredDimension(measureWidth(widthMeasureSpec),measureHeight(heightMeasureSpec));
         radius = Math.min(wight,height)/2;
+    }
+
+    private int measureWidth(int measureSpec){
+        int result = 0;
+        int specMode = MeasureSpec.getMode(measureSpec);
+        int specSize = MeasureSpec.getSize(measureSpec);
+        if (specMode==MeasureSpec.EXACTLY){
+            result = specSize;
+        }else {
+            DisplayMetrics dm = getResources().getDisplayMetrics();
+           int windowSize = dm.widthPixels;
+           result = windowSize/5;
+           if (specMode==MeasureSpec.AT_MOST){
+               result = Math.min(result,specSize);
+           }
+        }
+        wight = result;
+        return result;
+    }
+    private int measureHeight(int measureSpec){
+        int result = 0;
+        int specMode = MeasureSpec.getMode(measureSpec);
+        int specSize = MeasureSpec.getSize(measureSpec);
+        if (specMode==MeasureSpec.EXACTLY){
+            result = specSize;
+        }else {
+            DisplayMetrics dm = getResources().getDisplayMetrics();
+            int windowHeight = dm.heightPixels;
+            result = windowHeight/7;
+            if (specMode==MeasureSpec.AT_MOST){
+                result = Math.min(result,specSize);
+            }
+        }
+        height = result;
+        return result;
     }
 
     @Override
     protected void onDraw(Canvas canvas) {
-
         paint.setShader(initBitmapShader());    //将着色器设置给画笔
         canvas.drawCircle(wight/2,height/2,radius,paint);
     }

@@ -15,7 +15,7 @@ import java.util.List;
 import java.util.Objects;
 
 @Entity
-public class TopicDataItem implements Parcelable{
+public class TopicDataItem extends BaseDataItem implements Parcelable{
     @Id
     private String url;
     private String createdAt;

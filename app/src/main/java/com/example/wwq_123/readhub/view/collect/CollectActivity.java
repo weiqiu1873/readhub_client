@@ -40,6 +40,7 @@ public class CollectActivity extends BaseActivity implements CollectContract.Vie
     private CollectPresenter presenter;
     private List<View> viewList = new ArrayList<>();
     private String[] tabTitle= {"热门","资讯"};
+
     @Override
     public int getLayoutId() {
         return R.layout.activity_collect;
@@ -126,17 +127,20 @@ public class CollectActivity extends BaseActivity implements CollectContract.Vie
     @Override
     public void showTopic(List<TopicDataItem> topicList) {
         if (topicList==null||topicList.size()==0){
-            Toast.makeText(this,"暂无收藏的热门话题",Toast.LENGTH_SHORT).show();
+            Toast.makeText(this,"收藏夹为空",Toast.LENGTH_SHORT).show();
+        }else {
+            topicAdapter.updateTopic(topicList);
         }
-        topicAdapter.updateTopic(topicList);
+
     }
 
     @Override
     public void showNews(List<CommonDataItem> newsList) {
         if (newsList==null||newsList.size()==0){
-            Toast.makeText(this,"暂无收藏的资讯",Toast.LENGTH_SHORT).show();
+            Toast.makeText(this,"收藏夹为空",Toast.LENGTH_SHORT).show();
+        }else {
+            commonAdapter.updateData(newsList);
         }
-        commonAdapter.updateData(newsList);
     }
 
     @Override

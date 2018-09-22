@@ -2,38 +2,32 @@ package com.example.wwq_123.readhub.view.main;
 
 import android.content.Intent;
 import android.graphics.Bitmap;
-import android.graphics.drawable.Drawable;
 import android.support.design.widget.NavigationView;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentPagerAdapter;
 import android.support.v4.view.ViewPager;
 import android.support.v4.widget.DrawerLayout;
-import android.util.Log;
 import android.view.Gravity;
-import android.widget.LinearLayout;
+import android.view.Menu;
 import android.widget.RadioButton;
 import android.widget.RadioGroup;
+import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
 import com.example.wwq_123.readhub.R;
 import com.example.wwq_123.readhub.base.BaseActivity;
-import com.example.wwq_123.readhub.db.PreferencesUtil;
-import com.example.wwq_123.readhub.util.ImageUtil;
 import com.example.wwq_123.readhub.view.collect.CollectActivity;
 import com.example.wwq_123.readhub.view.custom_ui.CircleImageView;
 import com.example.wwq_123.readhub.view.custom_ui.TitleBar;
 import com.example.wwq_123.readhub.view.job.JobFragment;
 import com.example.wwq_123.readhub.view.news.NewsFragment;
 import com.example.wwq_123.readhub.view.topic.TopicFragment;
-import com.umeng.socialize.UMAuthListener;
 import com.umeng.socialize.UMShareAPI;
-import com.umeng.socialize.bean.SHARE_MEDIA;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Map;
 
 
 public class MainActivity extends BaseActivity<MainPresenter> implements MainContract.View{
@@ -48,9 +42,10 @@ public class MainActivity extends BaseActivity<MainPresenter> implements MainCon
     private ViewPager viewPager;
     private ViewPagerAdapter adapter;
     private NavigationView navigationView;
-    private LinearLayout header_layout;
+    private RelativeLayout header_layout;
     private CircleImageView user_image;
     private TextView user_name;
+    private Menu menu;
     private List<String> titles = new ArrayList<>();
     private List<Fragment> fragments = new ArrayList<>();
 
@@ -141,6 +136,12 @@ public class MainActivity extends BaseActivity<MainPresenter> implements MainCon
                     Intent intent = new Intent(MainActivity.this, CollectActivity.class);
                     startActivity(intent);
                     break;
+                case R.id.quit:
+                    Toast.makeText(MainActivity.this,"exit",Toast.LENGTH_SHORT).show();
+                    presenter.exit();
+                    menu.setGroupVisible(R.id.group3,false);
+                    break;
+                    default:break;
             }
             drawerLayout.closeDrawer(Gravity.LEFT);
             return true;
@@ -159,36 +160,33 @@ public class MainActivity extends BaseActivity<MainPresenter> implements MainCon
         rg_tab_topic = findViewById(R.id.rg_tab_topic);
         rg_tab_news = findViewById(R.id.rg_tab_news);
         rg_tab_job = findViewById(R.id.rg_tab_job);
+        presenter = new MainPresenter(this,this);
     }
 
     private void initNavigation() {
         navigationView = findViewById(R.id.navigation_view);
-        header_layout = (LinearLayout) navigationView.getHeaderView(0);
+        header_layout = (RelativeLayout) navigationView.getHeaderView(0);
         user_image = header_layout.findViewById(R.id.user_image);
         user_name = header_layout.findViewById(R.id.user_name);
-        presenter = new MainPresenter(this,this);
+        menu = navigationView.getMenu();
     }
 
     @Override
     public void showNagivation(String name,boolean isListen) {
         user_name.setText(name);
+        menu.setGroupVisible(R.id.group3,!isListen);
         if (isListen){
             user_name.setOnClickListener((v)->{
                 presenter.loginByQQ();
+                drawerLayout.closeDrawer(Gravity.LEFT);
             });
+            user_image.setImageDrawable(getResources().getDrawable(R.drawable.ic_flying_pig));
         }
-
     }
 
-    class ViewPagerAdapter extends FragmentPagerAdapter{
-
-        public ViewPagerAdapter(FragmentManager fm) { super(fm); }
-
-        @Override
-        public Fragment getItem(int position) { return fragments.get(position); }
-
-        @Override
-        public int getCount() { return fragments.size(); }
+    @Override
+    public void showUserImage(Bitmap bitmap) {
+        user_image.setImageBitmap(bitmap);
     }
 
     private long exitTime = 0;
@@ -202,7 +200,6 @@ public class MainActivity extends BaseActivity<MainPresenter> implements MainCon
                 exitTime = System.currentTimeMillis();
             } else {
                 finish();
-                System.exit(0);
             }
         }
     }
@@ -211,8 +208,16 @@ public class MainActivity extends BaseActivity<MainPresenter> implements MainCon
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
         UMShareAPI.get(this).onActivityResult(requestCode, resultCode, data);
-
     }
 
+    class ViewPagerAdapter extends FragmentPagerAdapter{
 
+        public ViewPagerAdapter(FragmentManager fm) { super(fm); }
+
+        @Override
+        public Fragment getItem(int position) { return fragments.get(position); }
+
+        @Override
+        public int getCount() { return fragments.size(); }
+    }
 }

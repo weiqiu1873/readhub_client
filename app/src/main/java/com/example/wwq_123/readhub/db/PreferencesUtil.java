@@ -63,19 +63,28 @@ public class PreferencesUtil extends BasePreferences {
     public void setUserId(String id){
         setString(USER_ID,id);
     }
+
     public String getId(){
         return getString(USER_ID);
     }
+
     public void setUserName(String name){
         setString(USER_NAME,name);
     }
+
     public String getUserName(){
         return getString(USER_NAME);
     }
+
     public void setUserImage(String imageUrl){
         setString(USER_IMAGE,imageUrl);
     }
+
     public String getUserImage(){
         return getString(USER_IMAGE);
+    }
+
+    public boolean loginStatus(){
+        return isLogin()&&!loginIsPass()?true:false;
     }
 }
