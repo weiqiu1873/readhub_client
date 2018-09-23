@@ -7,6 +7,7 @@ import com.example.wwq_123.readhub.R;
 import com.example.wwq_123.readhub.model.bean.BaseDataItem;
 import com.example.wwq_123.readhub.model.bean.CommonDataItem;
 import com.example.wwq_123.readhub.model.bean.TopicDataItem;
+import com.example.wwq_123.readhub.util.PermissionsUtil;
 import com.umeng.socialize.ShareAction;
 import com.umeng.socialize.bean.SHARE_MEDIA;
 import com.umeng.socialize.media.UMImage;
@@ -26,6 +27,11 @@ public class MyShareBoardlistener implements ShareBoardlistener {
         ShareAction shareAction = new MyShareAction((Activity) context).getAction(share_media);
 
         if (share_media==SHARE_MEDIA.QQ||share_media==SHARE_MEDIA.QZONE){
+            //手机存储权限判断
+            PermissionsUtil util = PermissionsUtil.getInstance(context);
+            if (!util.hasStoragePermission()){
+                util.getStoragePermission();
+            }
             shareAction.withMedia(new UMImage(context, R.drawable.ic_flying_pig));
         }
         if (share_media==SHARE_MEDIA.WEIXIN||share_media==SHARE_MEDIA.WEIXIN_CIRCLE){
