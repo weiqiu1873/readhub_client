@@ -12,7 +12,8 @@ public class CollectContract implements BaseContract {
         void showTopic(List<TopicDataItem> topicList);
         void showNews(List<CommonDataItem> newsList);
     }
-    interface CollectPresenter extends BaseContract.BasePresenter<View>{
+
+    interface Presenter extends BaseContract.BasePresenter<View>{
         void getTopic();
         void getNews();
     }

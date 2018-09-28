@@ -10,6 +10,7 @@ import android.support.v4.view.ViewPager;
 import android.support.v4.widget.DrawerLayout;
 import android.view.Gravity;
 import android.view.Menu;
+import android.view.View;
 import android.widget.RadioButton;
 import android.widget.RadioGroup;
 import android.widget.RelativeLayout;
@@ -29,10 +30,8 @@ import com.umeng.socialize.UMShareAPI;
 import java.util.ArrayList;
 import java.util.List;
 
-
 public class MainActivity extends BaseActivity<MainPresenter> implements MainContract.View{
 
-    private static final String TAG = "MainActivity";
     private DrawerLayout drawerLayout;
     private TitleBar titleBar;
     private RadioGroup rg_tab;
@@ -52,8 +51,6 @@ public class MainActivity extends BaseActivity<MainPresenter> implements MainCon
     private TopicFragment topicFragment;
     private NewsFragment newsFragment;
     private JobFragment jobFragment;
-
-    private MainPresenter presenter;
 
     @Override
     public int getLayoutId() {
@@ -89,6 +86,28 @@ public class MainActivity extends BaseActivity<MainPresenter> implements MainCon
             presenter.setNagivation();
             drawerLayout.openDrawer(Gravity.LEFT);
         });
+    }
+
+    @Override
+    public void initView() {
+        initFragment();
+        initNavigation();
+        drawerLayout = findViewById(R.id.drawer_layout);
+        titleBar = findViewById(R.id.main_title);
+        viewPager = findViewById(R.id.viewPager);
+        rg_tab = findViewById(R.id.rg_tab);
+        rg_tab_topic = findViewById(R.id.rg_tab_topic);
+        rg_tab_news = findViewById(R.id.rg_tab_news);
+        rg_tab_job = findViewById(R.id.rg_tab_job);
+        presenter = new MainPresenter(this,this);
+    }
+
+    private void initNavigation() {
+        navigationView = findViewById(R.id.navigation_view);
+        header_layout = (RelativeLayout) navigationView.getHeaderView(0);
+        user_image = header_layout.findViewById(R.id.user_image);
+        user_name = header_layout.findViewById(R.id.user_name);
+        menu = navigationView.getMenu();
     }
 
     @Override
@@ -141,34 +160,11 @@ public class MainActivity extends BaseActivity<MainPresenter> implements MainCon
                     presenter.exit();
                     menu.setGroupVisible(R.id.group3,false);
                     break;
-                    default:break;
+                default:break;
             }
             drawerLayout.closeDrawer(Gravity.LEFT);
             return true;
         });
-    }
-
-
-    @Override
-    public void initView() {
-        initFragment();
-        initNavigation();
-        drawerLayout = findViewById(R.id.drawer_layout);
-        titleBar = findViewById(R.id.main_title);
-        viewPager = findViewById(R.id.viewPager);
-        rg_tab = findViewById(R.id.rg_tab);
-        rg_tab_topic = findViewById(R.id.rg_tab_topic);
-        rg_tab_news = findViewById(R.id.rg_tab_news);
-        rg_tab_job = findViewById(R.id.rg_tab_job);
-        presenter = new MainPresenter(this,this);
-    }
-
-    private void initNavigation() {
-        navigationView = findViewById(R.id.navigation_view);
-        header_layout = (RelativeLayout) navigationView.getHeaderView(0);
-        user_image = header_layout.findViewById(R.id.user_image);
-        user_name = header_layout.findViewById(R.id.user_name);
-        menu = navigationView.getMenu();
     }
 
     @Override

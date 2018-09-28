@@ -24,12 +24,12 @@ public class NewsFragment extends BaseFragment{
     private String[] tabTitle = {"科技资讯","开发者资讯","区块链资讯"};
 
     @Override
-    protected int getLayoutId() {
+    public int getLayoutId() {
         return R.layout.fragment_news;
     }
 
     @Override
-    protected void initView(View view) {
+    public void initView(View view) {
         news_tab_layout = view.findViewById(R.id.news_tablayout);
         news_viewpager = view.findViewById(R.id.news_viewpager);
         adapter = new NewsViewPagerAdapter(getChildFragmentManager());
@@ -39,11 +39,26 @@ public class NewsFragment extends BaseFragment{
     }
 
     @Override
-    protected void initData() {
+    public void initData() {
         for (int i=0;i<3;i++){
             CommonFragment fragment = CommonFragment.newInstance(i);
             fragments.add(fragment);
         }
+    }
+
+    @Override
+    public void initEvent() {
+
+    }
+
+    @Override
+    public void showSuccess() {
+
+    }
+
+    @Override
+    public void showFailed() {
+
     }
 
     class NewsViewPagerAdapter extends FragmentPagerAdapter {

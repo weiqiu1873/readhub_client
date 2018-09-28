@@ -10,16 +10,10 @@ import android.view.View;
 import android.view.ViewGroup;
 
 
-public abstract class BaseFragment<T extends BaseContract.BasePresenter> extends Fragment implements BaseContract.BaseView {
+public abstract class BaseFragment<T extends BasePresenter> extends Fragment implements BaseContract.BaseView {
 
     private View rootView;
-
-    protected abstract int getLayoutId();
-
-    protected abstract void initView(View view);
-
-    protected abstract void initData();
-
+    protected T presenter;
 
     @Nullable
     @Override
@@ -39,7 +33,12 @@ public abstract class BaseFragment<T extends BaseContract.BasePresenter> extends
     @Override
     public void onDestroy() {
         super.onDestroy();
+        if (presenter!=null){
+            presenter.detachView();
+        }
     }
+
+    public abstract void initView(View view);
 
     @Override
     public void showSuccess() {
@@ -50,10 +49,4 @@ public abstract class BaseFragment<T extends BaseContract.BasePresenter> extends
     public void showFailed() {
 
     }
-
-    @Override
-    public void showNoNet() {
-
-    }
-
 }

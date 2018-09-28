@@ -1,5 +1,6 @@
 package com.example.wwq_123.readhub.view.news.common;
 
+import android.os.Handler;
 import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
@@ -8,7 +9,6 @@ import android.view.View;
 import com.example.wwq_123.readhub.R;
 import com.example.wwq_123.readhub.base.BaseFragment;
 import com.example.wwq_123.readhub.model.bean.CommonDataItem;
-
 import java.util.List;
 
 public class CommonFragment extends BaseFragment<CommonPresenter> implements CommonContract.View,SwipeRefreshLayout.OnRefreshListener {
@@ -17,7 +17,7 @@ public class CommonFragment extends BaseFragment<CommonPresenter> implements Com
     private RecyclerView news_common_list;
     private CommonAdapter adapter;
     private int currentPosition = 0;
-    private CommonPresenter presenter;
+
     public static CommonFragment newInstance(int position){
         CommonFragment fragment = new CommonFragment();
         fragment.currentPosition = position;
@@ -25,12 +25,12 @@ public class CommonFragment extends BaseFragment<CommonPresenter> implements Com
     }
 
     @Override
-    protected int getLayoutId() {
+    public int getLayoutId() {
         return R.layout.fragment_news_common;
     }
 
     @Override
-    protected void initView(View view) {
+    public void initView(View view) {
         news_common_refresh = view.findViewById(R.id.refresh_news_common);
         news_common_list = view.findViewById(R.id.news_common_list);
         news_common_list.setLayoutManager(new LinearLayoutManager(getActivity()));
@@ -39,7 +39,7 @@ public class CommonFragment extends BaseFragment<CommonPresenter> implements Com
     }
 
     @Override
-    protected void initData() {
+    public void initData() {
         if (presenter==null){
             presenter = new CommonPresenter(this);
         }
@@ -55,6 +55,11 @@ public class CommonFragment extends BaseFragment<CommonPresenter> implements Com
                 break;
             default:break;
         }
+    }
+
+    @Override
+    public void initEvent() {
+
     }
 
     @Override
@@ -74,6 +79,19 @@ public class CommonFragment extends BaseFragment<CommonPresenter> implements Com
 
     @Override
     public void onRefresh() {
-
+        switch (currentPosition){
+            case 0:
+                presenter.getTechNews();
+                break;
+            case 1:
+                presenter.getDevelopNews();
+                break;
+            case 2:
+                presenter.getBlockchainNews();
+                break;
+            default:break;
+        }
+        news_common_refresh.setRefreshing(true);
+        new Handler().postDelayed(()->news_common_refresh.setRefreshing(false),1000);
     }
 }

@@ -11,7 +11,7 @@ import com.example.wwq_123.readhub.model.bean.TopicDataItem;
 
 import java.util.List;
 
-public class CollectPresenter extends BasePresenter<CollectContract.View> implements CollectContract.CollectPresenter {
+public class CollectPresenter extends BasePresenter<CollectContract.View> implements CollectContract.Presenter {
     private Context context;
     private TopicDB topicDB;
     private NewsDB newsDB;

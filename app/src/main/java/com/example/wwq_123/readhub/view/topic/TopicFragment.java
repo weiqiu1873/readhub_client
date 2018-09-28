@@ -19,21 +19,16 @@ public class TopicFragment extends BaseFragment<TopicPresenter> implements Topic
     private SwipeRefreshLayout refreshLayout;
     private RecyclerView recyclerView;
     private TopicAdapter adapter;
-    private TopicPresenter presenter;
     private String lastOrder = "";
     private MyLoadingView loadingView;
 
-    public String getLastOrder() {
-        return lastOrder;
-    }
-
     @Override
-    protected int getLayoutId() {
+    public int getLayoutId() {
         return R.layout.fragment_topic;
     }
 
     @Override
-    protected void initView(View view) {
+    public void initView(View view) {
         loadingView = new MyLoadingView(getContext());
         loadingView.start();
         initRecycleView(view);
@@ -62,11 +57,16 @@ public class TopicFragment extends BaseFragment<TopicPresenter> implements Topic
     }
 
     @Override
-    protected void initData() {
+    public void initData() {
         if (presenter==null){
             presenter = new TopicPresenter(this);
         }
         presenter.getTopic();
+    }
+
+    @Override
+    public void initEvent() {
+
     }
 
     @Override

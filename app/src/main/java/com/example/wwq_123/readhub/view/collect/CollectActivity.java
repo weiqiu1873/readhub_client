@@ -21,6 +21,7 @@ import com.example.wwq_123.readhub.model.bean.TopicDataItem;
 import com.example.wwq_123.readhub.view.custom_ui.TitleBar;
 import com.example.wwq_123.readhub.view.news.common.CommonAdapter;
 import com.example.wwq_123.readhub.view.topic.TopicAdapter;
+import com.example.wwq_123.readhub.view.topic.TopicContract;
 
 import org.greenrobot.eventbus.EventBus;
 import org.greenrobot.eventbus.Subscribe;
@@ -29,7 +30,7 @@ import org.greenrobot.eventbus.ThreadMode;
 import java.util.ArrayList;
 import java.util.List;
 
-public class CollectActivity extends BaseActivity implements CollectContract.View{
+public class CollectActivity extends BaseActivity<CollectPresenter> implements CollectContract.View{
     private TitleBar titleBar;
     private TabLayout tabLayout;
     private ViewPager viewPager;
@@ -37,7 +38,6 @@ public class CollectActivity extends BaseActivity implements CollectContract.Vie
     private RecyclerView newsRecycler;
     private TopicAdapter topicAdapter;
     private CommonAdapter commonAdapter;
-    private CollectPresenter presenter;
     private List<View> viewList = new ArrayList<>();
     private String[] tabTitle= {"热门","资讯"};
 

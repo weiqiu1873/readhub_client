@@ -13,6 +13,7 @@ import android.view.Window;
 import android.view.WindowManager;
 
 import com.example.wwq_123.readhub.R;
+import com.example.wwq_123.readhub.umeng.UMeng;
 import com.umeng.analytics.MobclickAgent;
 import com.umeng.commonsdk.UMConfigure;
 import com.umeng.message.PushAgent;
@@ -20,8 +21,9 @@ import com.umeng.socialize.UMShareAPI;
 
 import static anet.channel.util.Utils.context;
 
-public abstract class BaseActivity<T extends BaseContract.BasePresenter> extends AppCompatActivity implements BaseContract.BaseView {
+public abstract class BaseActivity<T extends BasePresenter> extends AppCompatActivity implements BaseContract.BaseView {
 
+    protected T presenter;
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -30,11 +32,15 @@ public abstract class BaseActivity<T extends BaseContract.BasePresenter> extends
         initTitleBar();
         initData();
         initEvent();
-        UMConfigure.setLogEnabled(true);
-        UMConfigure.setEncryptEnabled(true);
-        MobclickAgent.setScenarioType(this, MobclickAgent.EScenarioType.E_UM_NORMAL);
-        MobclickAgent.setSessionContinueMillis(1000);
-        PushAgent.getInstance(this).onAppStart();
+        UMeng.setUMeng(this);
+    }
+
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+        if (presenter!=null){
+            presenter.detachView();
+        }
     }
 
     @Override
@@ -52,30 +58,12 @@ public abstract class BaseActivity<T extends BaseContract.BasePresenter> extends
     @Override
     public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults) {
         super.onRequestPermissionsResult(requestCode, permissions, grantResults);
-        if(Build.VERSION.SDK_INT>=23){
-            String[] mPermissionList = new String[]{Manifest.permission.WRITE_EXTERNAL_STORAGE
-                    ,Manifest.permission.ACCESS_FINE_LOCATION
-                    ,Manifest.permission.CALL_PHONE
-                    ,Manifest.permission.READ_LOGS
-                    ,Manifest.permission.READ_PHONE_STATE
-                    ,Manifest.permission.READ_EXTERNAL_STORAGE
-                    ,Manifest.permission.SET_DEBUG_APP
-                    ,Manifest.permission.SYSTEM_ALERT_WINDOW
-                    ,Manifest.permission.GET_ACCOUNTS
-                    ,Manifest.permission.WRITE_APN_SETTINGS};
-            ActivityCompat.requestPermissions(this,mPermissionList,123);
-        }
+        UMeng.checkVersion(this);
     }
-
-    public abstract int getLayoutId();
 
     public abstract void initView();
 
-    public abstract void initData();
-
     public abstract void initTitleBar();
-
-    public abstract void initEvent();
 
     @Override
     public void showSuccess() {
@@ -87,8 +75,4 @@ public abstract class BaseActivity<T extends BaseContract.BasePresenter> extends
 
     }
 
-    @Override
-    public void showNoNet() {
-
-    }
 }
