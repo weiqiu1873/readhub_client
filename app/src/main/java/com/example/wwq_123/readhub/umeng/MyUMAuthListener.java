@@ -17,7 +17,7 @@ public class MyUMAuthListener implements UMAuthListener {
 
     @Override
     public void onStart(SHARE_MEDIA share_media) {
-        Toast.makeText(context,"onStart",Toast.LENGTH_SHORT).show();
+//        Toast.makeText(context,"onStart",Toast.LENGTH_SHORT).show();
     }
 
     @Override

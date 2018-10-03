@@ -9,34 +9,58 @@ import com.example.wwq_123.readhub.util.DataUtil;
 import java.util.List;
 
 public class TopicPresenter extends BasePresenter<TopicContract.View> implements TopicContract.Presenter{
+
+    private String lastOrder = "";
     public TopicPresenter(TopicContract.View view){
         attachView(view);
     }
+
     @Override
     public void getTopic() {
         addSubscription(api.getTopicData("",10)
                 .map((topicData)->dataChange(topicData))
                 ,new MySubscriber<List<TopicDataItem>>(){
-            @Override
-            public void onNext(List<TopicDataItem> list) {
-                view.showTopicData(list);
-                view.showSuccess();
-            }
-        });
-    }
-
-    @Override
-    public void getMoreTopic(String order) {
-        addSubscription(api
-                .getTopicData(order,10)
-                .map((topicData)-> dataChange(topicData))
-                ,new MySubscriber<List<TopicDataItem>>(){
                     @Override
-                    public void onNext(List<TopicDataItem> list) { view.showMoreTopicData(list); }
+                    public void onNext(List<TopicDataItem> list) {
+                        lastOrder = String.valueOf(list.get(list.size()-1).getOrder());
+                        view.showTopicData(list);
+                    }
                 });
     }
 
-    public List<TopicDataItem> dataChange(TopicData topicData){
+    @Override
+    public void getMoreTopic() {
+        addSubscription(api
+                .getTopicData(lastOrder,10)
+                .map((topicData)-> dataChange(topicData))
+                ,new MySubscriber<List<TopicDataItem>>(){
+                    @Override
+                    public void onNext(List<TopicDataItem> list) {
+                        lastOrder = String.valueOf(list.get(list.size()-1).getOrder());
+                        view.showMoreTopicData(list);
+                    }
+                });
+    }
+
+    @Override
+    public void getLatestTopic() {
+        addSubscription(api.getTopicData("",10)
+                .map((topicData) -> dataChange(topicData)),
+                new MySubscriber<List<TopicDataItem>>(){
+                    @Override
+                    public void onNext(List<TopicDataItem> list) {
+                        String order = String.valueOf(list.get(list.size()-1).getOrder());
+                        if (lastOrder.equals(order)){
+                            view.showLatestTopicData(null);
+                        }else {
+                            lastOrder = order;
+                            view.showLatestTopicData(list);
+                        }
+                    }
+                });
+    }
+
+    private List<TopicDataItem> dataChange(TopicData topicData){
         DataUtil util = new DataUtil();
         List<TopicDataItem> topicList = util.extractTopic(topicData);
         return topicList;

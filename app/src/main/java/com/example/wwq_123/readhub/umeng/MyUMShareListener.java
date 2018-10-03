@@ -18,16 +18,16 @@ public class MyUMShareListener implements UMShareListener {
 
     @Override
     public void onResult(SHARE_MEDIA share_media) {
-        Toast.makeText(context,"成功了",Toast.LENGTH_LONG).show();
+        Toast.makeText(context,"分享成功",Toast.LENGTH_LONG).show();
     }
 
     @Override
     public void onError(SHARE_MEDIA share_media, Throwable throwable) {
-        Toast.makeText(context,"失败"+throwable.getMessage(),Toast.LENGTH_LONG).show();
+        Toast.makeText(context,"分享失败"+throwable.getMessage(),Toast.LENGTH_LONG).show();
     }
 
     @Override
     public void onCancel(SHARE_MEDIA share_media) {
-        Toast.makeText(context,"取消了",Toast.LENGTH_LONG).show();
+        Toast.makeText(context,"取消分享",Toast.LENGTH_LONG).show();
     }
 }

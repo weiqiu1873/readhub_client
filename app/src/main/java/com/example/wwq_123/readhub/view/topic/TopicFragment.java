@@ -19,7 +19,6 @@ public class TopicFragment extends BaseFragment<TopicPresenter> implements Topic
     private SwipeRefreshLayout refreshLayout;
     private RecyclerView recyclerView;
     private TopicAdapter adapter;
-    private String lastOrder = "";
     private MyLoadingView loadingView;
 
     @Override
@@ -50,7 +49,7 @@ public class TopicFragment extends BaseFragment<TopicPresenter> implements Topic
             public void onScrollStateChanged(RecyclerView recyclerView, int newState) {
                 super.onScrollStateChanged(recyclerView, newState);
                 if (newState == RecyclerView.SCROLL_STATE_IDLE){
-                    presenter.getMoreTopic(lastOrder);
+                    presenter.getMoreTopic();
                 }
             }
         });
@@ -74,32 +73,29 @@ public class TopicFragment extends BaseFragment<TopicPresenter> implements Topic
         if (loadingView.isRun()){
             loadingView.stop();
         }
-        String order = String.valueOf(topicList.get(topicList.size()-1).getOrder());
-        if (order.equals(lastOrder)){
-            Toast.makeText(getActivity(),"已是最新数据",Toast.LENGTH_SHORT).show();
-        }else {
-            Toast.makeText(getActivity(),"更新成功",Toast.LENGTH_SHORT).show();
-            adapter.updateTopic(topicList);
-            lastOrder = order;
-        }
+        adapter.updateTopic(topicList);
     }
 
     @Override
     public void showMoreTopicData(List<TopicDataItem> topicList) {
         adapter.addTopic(topicList);
-        lastOrder = String.valueOf(topicList.get(topicList.size()-1).getOrder());
+    }
+
+    @Override
+    public void showLatestTopicData(List<TopicDataItem> topicList) {
+        if (topicList==null){
+            Toast.makeText(getActivity(),"已是最新数据",Toast.LENGTH_SHORT).show();
+        }else {
+            Toast.makeText(getActivity(),"更新成功",Toast.LENGTH_SHORT).show();
+            adapter.updateTopic(topicList);
+        }
     }
 
     @Override
     public void onRefresh() {
-        presenter.getTopic();
+        presenter.getLatestTopic();
         refreshLayout.setRefreshing(true);
         new Handler().postDelayed(()->refreshLayout.setRefreshing(false), 1000);
-    }
-
-    @Override
-    public void showSuccess() {
-        Toast.makeText(getActivity(),"数据获取成功",Toast.LENGTH_SHORT).show();
     }
 
     @Override

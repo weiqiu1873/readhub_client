@@ -57,7 +57,7 @@ public class MainPresenter extends BasePresenter<MainContract.View> implements M
                 , new MyUMAuthListener(context){
                     @Override
                     public void onComplete(SHARE_MEDIA share_media, int i, Map<String, String> map) {
-                        super.onComplete(share_media, i, map);
+                        Toast.makeText(context,"登录成功",Toast.LENGTH_SHORT).show();
                         view.showNagivation(map.get("name"),false);
                         saveInfor(map);
                     }

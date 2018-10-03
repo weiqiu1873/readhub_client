@@ -94,8 +94,7 @@ public class TopicViewHolder extends RecyclerView.ViewHolder {
                 }
             }
         });
-        tvShare.setOnClickListener((v) ->{ new UMengShare(context).share(item); });
+        tvShare.setOnClickListener((v) -> new UMengShare(context).share(item));
     }
-
 
 }

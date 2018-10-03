@@ -2,6 +2,8 @@ package com.example.wwq_123.readhub.umeng;
 
 import android.app.Activity;
 import android.content.Context;
+import android.widget.Toast;
+
 import com.umeng.socialize.ShareAction;
 import com.umeng.socialize.bean.SHARE_MEDIA;
 

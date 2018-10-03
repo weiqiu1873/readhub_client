@@ -55,8 +55,7 @@ public class CollectActivity extends BaseActivity<CollectPresenter> implements C
         viewList.add(topicRecycler);
         viewList.add(newsRecycler);
         tabLayout.setupWithViewPager(viewPager);
-        CollectPagerAdapter adapter = new CollectPagerAdapter();
-        viewPager.setAdapter(adapter);
+        viewPager.setAdapter(new CollectPagerAdapter());
     }
 
     private void initRecycler() {

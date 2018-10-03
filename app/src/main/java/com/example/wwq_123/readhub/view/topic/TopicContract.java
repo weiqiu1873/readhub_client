@@ -10,9 +10,11 @@ public interface TopicContract {
     interface View extends BaseContract.BaseView{
         void showTopicData(List<TopicDataItem> topicList);
         void showMoreTopicData(List<TopicDataItem> topicList);
+        void showLatestTopicData(List<TopicDataItem> topicList);
     }
     interface Presenter extends BaseContract.BasePresenter<View>{
         void getTopic();
-        void getMoreTopic(String order);
+        void getMoreTopic();
+        void getLatestTopic();
     }
 }
