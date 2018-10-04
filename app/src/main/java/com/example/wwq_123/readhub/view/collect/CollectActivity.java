@@ -73,7 +73,6 @@ public class CollectActivity extends BaseActivity<CollectPresenter> implements C
 
     @Override
     public void initData() {
-        EventBus.getDefault().register(this);
         if (presenter==null){
             presenter = new CollectPresenter(this,this);
         }
@@ -113,16 +112,6 @@ public class CollectActivity extends BaseActivity<CollectPresenter> implements C
         });
     }
 
-    @Subscribe(threadMode = ThreadMode.MAIN)
-    public void updateTopic(Event.Topic topic){
-        topicAdapter.remove(topic.item);
-    }
-
-    @Subscribe(threadMode = ThreadMode.MAIN)
-    public void updateNews(Event.News news){
-        commonAdapter.remove(news.item);
-    }
-
     @Override
     public void showTopic(List<TopicDataItem> topicList) {
         if (topicList==null||topicList.size()==0){
@@ -143,10 +132,27 @@ public class CollectActivity extends BaseActivity<CollectPresenter> implements C
     }
 
     @Override
-    protected void onDestroy() {
-        super.onDestroy();
+    protected void onStart() {
+        super.onStart();
+        EventBus.getDefault().register(this);
+    }
+
+    @Override
+    protected void onStop() {
+        super.onStop();
         EventBus.getDefault().unregister(this);
     }
+
+    @Subscribe
+    public void updateTopic(Event.Topic topic){
+        topicAdapter.remove(topic.item);
+    }
+
+    @Subscribe
+    public void updateNews(Event.News news){
+        commonAdapter.remove(news.item);
+    }
+
 
     class CollectPagerAdapter extends PagerAdapter{
 

@@ -105,11 +105,34 @@
     rx.internal.util.atomic.LinkedQueueNode consumerNode;
 }
 -keep class com.android.support.**{*;}
--keep class org.jsoup.**{*;}
--keep class org.greenrobot.**{*;}
 -keep class com.just.agentweb.**{*;}
 -keep class io.reactivex.**{*;}
+-keep class com.github.PhilJay.** {*;}
+-keep class com.github.bumptech.glide.** {*;}
 
+#EventBus
+-keepattributes *Annotation*
+-keepclassmembers class ** {
+    @org.greenrobot.eventbus.Subscribe <methods>;
+}
+-keep enum org.greenrobot.eventbus.ThreadMode { *; }
+# Only required if you use AsyncExecutor
+-keepclassmembers class * extends org.greenrobot.eventbus.util.ThrowableFailureEvent {
+    <init>(java.lang.Throwable);
+}
+#greendao
+-keep class org.greenrobot.greendao.**{*;}
+-keep public interface org.greenrobot.greendao.**
+-keepclassmembers class * extends org.greenrobot.greendao.AbstractDao {
+public static java.lang.String TABLENAME;
+}
+-keep class **$Properties
+-keep class net.sqlcipher.database.**{*;}
+-keep public interface net.sqlcipher.database.**
+-dontwarn net.sqlcipher.database.**
+-dontwarn org.greenrobot.greendao.**
+
+#友盟
 -keep class com.umeng.** {*;}
 -keepclassmembers class * {
    public <init> (org.json.JSONObject);
@@ -144,6 +167,3 @@
 -keep public class **.R$*{
    public static final int *;
 }
-
--keep class com.github.PhilJay.** {*;}
--keep class com.github.bumptech.glide.** {*;}
