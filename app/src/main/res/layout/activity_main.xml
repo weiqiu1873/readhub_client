@@ -60,7 +60,7 @@
         android:fitsSystemWindows="true"
         app:headerLayout="@layout/header_layout"
         app:menu="@menu/drawer_menu"
-        app:itemIconTint="@color/c4">
+        app:itemIconTint="@color/c3">
 
     </android.support.design.widget.NavigationView>
 

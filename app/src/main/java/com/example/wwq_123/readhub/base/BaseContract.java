@@ -1,6 +1,5 @@
 package com.example.wwq_123.readhub.base;
 
-import android.view.View;
 
 public interface BaseContract {
 

@@ -1,6 +1,5 @@
 package com.example.wwq_123.readhub.view.topic;
 
-import android.os.Handler;
 import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
@@ -30,20 +29,25 @@ public class TopicFragment extends BaseFragment<TopicPresenter> implements Topic
     public void initView(View view) {
         loadingView = new MyLoadingView(getContext());
         loadingView.start();
-        initRecycleView(view);
-        initRefreshLayotu(view);
-    }
-
-    private void initRefreshLayotu(View view) {
         refreshLayout = view.findViewById(R.id.refresh_topic);
-        refreshLayout.setOnRefreshListener(this);
-    }
-
-    private void initRecycleView(View view) {
         recyclerView = view.findViewById(R.id.topic_list);
         recyclerView.setLayoutManager(new LinearLayoutManager(getActivity()));
         adapter = new TopicAdapter(getActivity());
         recyclerView.setAdapter(adapter);
+    }
+
+    @Override
+    public void initData() {
+        if (presenter==null){
+            presenter = new TopicPresenter(this);
+        }
+        presenter.getTopic();
+        refreshLayout.setRefreshing(true);
+    }
+
+    @Override
+    public void initEvent() {
+        refreshLayout.setOnRefreshListener(this);
         recyclerView.addOnScrollListener(new RecyclerView.OnScrollListener() {
             @Override
             public void onScrollStateChanged(RecyclerView recyclerView, int newState) {
@@ -56,24 +60,12 @@ public class TopicFragment extends BaseFragment<TopicPresenter> implements Topic
     }
 
     @Override
-    public void initData() {
-        if (presenter==null){
-            presenter = new TopicPresenter(this);
-        }
-        presenter.getTopic();
-    }
-
-    @Override
-    public void initEvent() {
-
-    }
-
-    @Override
     public void showTopicData( List<TopicDataItem> topicList) {
         if (loadingView.isRun()){
             loadingView.stop();
         }
         adapter.updateTopic(topicList);
+        refreshLayout.setRefreshing(false);
     }
 
     @Override
@@ -83,7 +75,8 @@ public class TopicFragment extends BaseFragment<TopicPresenter> implements Topic
 
     @Override
     public void showLatestTopicData(List<TopicDataItem> topicList) {
-        if (topicList==null){
+        refreshLayout.setRefreshing(false);
+        if (null==topicList||topicList.size()==0){
             Toast.makeText(getActivity(),"已是最新数据",Toast.LENGTH_SHORT).show();
         }else {
             Toast.makeText(getActivity(),"更新成功",Toast.LENGTH_SHORT).show();
@@ -95,7 +88,6 @@ public class TopicFragment extends BaseFragment<TopicPresenter> implements Topic
     public void onRefresh() {
         presenter.getLatestTopic();
         refreshLayout.setRefreshing(true);
-        new Handler().postDelayed(()->refreshLayout.setRefreshing(false), 1000);
     }
 
     @Override

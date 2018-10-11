@@ -83,12 +83,12 @@ public class TopicViewHolder extends RecyclerView.ViewHolder {
             }else {
                 if (collectStatus) {
                     Toast.makeText(context, "取消收藏", Toast.LENGTH_SHORT).show();
-//                    tvCollect.setImageResource(R.mipmap.collect);
+                    tvCollect.setImageResource(R.mipmap.collect);
                     collectStatus = false;
                     topicDB.delete(item);
                 } else {
                     Toast.makeText(context, "收藏成功", Toast.LENGTH_SHORT).show();
-//                    tvCollect.setImageResource(R.mipmap.collect_press);
+                    tvCollect.setImageResource(R.mipmap.collect_press);
                     collectStatus = true;
                     topicDB.insert(item);
                 }

@@ -2,9 +2,6 @@ package com.example.wwq_123.readhub.net.retrofit;
 
 import android.util.Log;
 import android.widget.Toast;
-
-import com.example.wwq_123.readhub.util.DataUtil;
-
 import rx.Subscriber;
 
 public class MySubscriber<T> extends Subscriber<T>{

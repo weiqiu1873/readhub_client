@@ -32,8 +32,7 @@ public class DBManager {
         if (helper==null){
             helper = new DaoMaster.DevOpenHelper(context,DB_NAME,null);
         }
-        SQLiteDatabase database = helper.getReadableDatabase();
-        return database;
+        return helper.getReadableDatabase();
     }
     public SQLiteDatabase getWritableDataBase(){
         if (helper==null){

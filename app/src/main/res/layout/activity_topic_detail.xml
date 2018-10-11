@@ -2,31 +2,13 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:paddingBottom="20dp"
     android:orientation="vertical">
-    <!--<android.support.v7.widget.Toolbar-->
-        <!--android:background="@color/c1"-->
-        <!--android:layout_width="match_parent"-->
-        <!--android:layout_height="wrap_content">-->
-        <!--<ImageButton-->
-            <!--android:id="@+id/topic_detail_back_btn"-->
-            <!--android:background="@color/c1"-->
-            <!--android:src="@mipmap/ic_common_back"-->
-            <!--android:layout_marginRight="20dp"-->
-            <!--android:layout_width="wrap_content"-->
-            <!--android:layout_height="wrap_content" />-->
-        <!--<TextView-->
-            <!--android:text="热门详情"-->
-            <!--android:textColor="@color/b7"-->
-            <!--android:textSize="@dimen/font_20"-->
-            <!--android:layout_width="wrap_content"-->
-            <!--android:layout_height="wrap_content" />-->
-    <!--</android.support.v7.widget.Toolbar>-->
+
     <com.example.wwq_123.readhub.view.custom_ui.TitleBar
         android:id="@+id/topic_detail_title_bar"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content">
-
-    </com.example.wwq_123.readhub.view.custom_ui.TitleBar>
+        android:layout_height="wrap_content"/>
     <ScrollView
         android:id="@+id/topic_detail_scrollview"
         android:layout_width="match_parent"
@@ -56,13 +38,14 @@
             <android.support.v4.view.ViewPager
                 android:id="@+id/topic_detail_news_view_pager"
                 android:layout_width="match_parent"
-                android:layout_height="110dp"/>
+                android:layout_height="110dp" />
 
             <TextView
                 android:text="相关事件"
                 android:id="@+id/topic_detail_related_text"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:layout_marginTop="10dp"
                 android:layout_marginBottom="10dp"
                 android:paddingLeft="20dp"
                 android:textColor="@color/b1"
@@ -74,6 +57,7 @@
                 android:paddingRight="10dp"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"/>
+
         </LinearLayout>
 
     </ScrollView>

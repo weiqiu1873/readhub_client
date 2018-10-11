@@ -31,8 +31,8 @@ public class TopicDetailActivity extends BaseActivity implements TopicDetailCont
     private RecyclerView related_list;
     private TopicDetailPresenter presenter;
     private List<CommonDataItem> newsArray = new ArrayList<>();
-    private List<TopicDetail.TimelineBean.TopicsBean> timeline = new ArrayList<>();
     private List<View> newsView = new ArrayList<>();
+    private List<TopicDetail.TimelineBean.TopicsBean> timeline = new ArrayList<>();
     private String url;
     private NewsViewPagerAdapter newsAdapter;
     private TimeLineAdapter timeLineAdapter;
@@ -93,7 +93,12 @@ public class TopicDetailActivity extends BaseActivity implements TopicDetailCont
         news_viewpager.setAdapter(newsAdapter);
         timeLineAdapter = new TimeLineAdapter();
         related_list.setAdapter(timeLineAdapter);
-        related_list.setLayoutManager(new LinearLayoutManager(this));
+        related_list.setLayoutManager(new LinearLayoutManager(this){
+            @Override
+            public boolean canScrollVertically() {
+                return false;
+            }
+        });
     }
 
     private void showTimeLine(List<TopicDetail.TimelineBean.TopicsBean> topicsList) {
@@ -145,7 +150,6 @@ public class TopicDetailActivity extends BaseActivity implements TopicDetailCont
     }
 
     class TimeLineAdapter extends RecyclerView.Adapter{
-
         @NonNull
         @Override
         public RecyclerView.ViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
@@ -172,6 +176,11 @@ public class TopicDetailActivity extends BaseActivity implements TopicDetailCont
         }
         public void onBind(TopicDetail.TimelineBean.TopicsBean bean){
             title.setText(bean.getTitle());
+            title.setOnClickListener((view)->{
+                Intent intent = new Intent(TopicDetailActivity.this,TopicDetailActivity.class);
+                intent.putExtra("url",bean.getId());
+                startActivity(intent);
+            });
         }
     }
 }

@@ -6,13 +6,28 @@ import java.util.List;
 
 public class CommonContract {
     interface View extends BaseContract.BaseView{
-        void showTechNews(List<CommonDataItem> list);
-        void showDeveloperNews(List<CommonDataItem> list);
-        void showBlockchainNews(List<CommonDataItem> list);
+        void showNews(List<CommonDataItem> list);
+        void showMoreNews(List<CommonDataItem> list);
+        void showUpdateNews(List<CommonDataItem> list);
     }
     interface Presenter extends BaseContract.BasePresenter<View>{
+        void getNews(int position);
+        void getMoreNews(int position);
+        void updateNews(int position);
+    }
+    interface TechPresenter extends BaseContract.BasePresenter<View>{
         void getTechNews();
+        void getMoreTechNews();
+        void getLatestTechNews();
+    }
+    interface DeveloperPresenter extends BaseContract.BasePresenter<View>{
         void getDevelopNews();
+        void getMoreDevelopNews();
+        void getLatestDevelopNews();
+    }
+    interface BlockchainPresenter extends BaseContract.BasePresenter<View>{
         void getBlockchainNews();
+        void getMoreBlockchainNews();
+        void getLatestBlockchainNews();
     }
 }

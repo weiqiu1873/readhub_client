@@ -21,9 +21,13 @@ public class PreferencesUtil extends BasePreferences {
         super(context);
     }
 
-    public synchronized static PreferencesUtil getInstance(Context context){
+    public static PreferencesUtil getInstance(Context context){
         if (null==util){
-            util = new PreferencesUtil(context);
+            synchronized(PreferencesUtil.class){
+                if (util==null){
+                    util = new PreferencesUtil(context);
+                }
+            }
         }
         return util;
     }
@@ -31,15 +35,18 @@ public class PreferencesUtil extends BasePreferences {
     public void setLogin(boolean islogin){
         setBoolean(IS_LOGIN,islogin);
     }
+
     public boolean isLogin(){
         return getBoolean(IS_LOGIN);
     }
+
     public void setLastlogin(){
         Date date = new Date();
         SimpleDateFormat format = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
         String currentTime = format.format(date);
         setString(LAST_LOGIN,currentTime);
     }
+
     public boolean loginIsPass(){
         SimpleDateFormat format = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
         Calendar lastTime = Calendar.getInstance();

@@ -51,12 +51,29 @@ public class CommonViewHolder extends RecyclerView.ViewHolder{
         news_title.setText(item.getTitle());
         news_summary.setText(item.getSummary());
         news_time.setText(TimeUtil.TimeDifference(item.getPublishDate()));
-        news_author.setText(item.getSiteName() +"/"+item.getAuthorName());
+        setAuthor(item);
+        setCardView(item);
+        setDelete(item);
+        setCollect(item);
+        news_share.setOnClickListener((v)->{ new UMengShare(context).share(item); });
+    }
+
+    private void setAuthor(CommonDataItem item){
+        StringBuilder builder = new StringBuilder();
+        builder.append(item.getSiteName()==null?"&":item.getSiteName());
+        builder.append(item.getAuthorName()==null?"&":item.getAuthorName());
+        if (!builder.toString().equals("&&")){
+            news_author.setText(builder.toString());
+        }
+    }
+    private void setCardView(CommonDataItem item){
         cardView.setOnClickListener((v)->{
-                Intent intent = new Intent(context, WebActivity.class);
-                intent.putExtra("url",item.getMobileUrl());
-                context.startActivity(intent);
+            Intent intent = new Intent(context, WebActivity.class);
+            intent.putExtra("url",item.getMobileUrl());
+            context.startActivity(intent);
         });
+    }
+    private void setDelete(CommonDataItem item){
         news_delete.setOnClickListener((v)->{
             newsDB = new NewsDB(context);
             newsDB.delete(item);
@@ -64,6 +81,8 @@ public class CommonViewHolder extends RecyclerView.ViewHolder{
             event.item = item;
             EventBus.getDefault().post(event);
         });
+    }
+    private void setCollect(CommonDataItem item){
         news_collect.setOnClickListener((v)->{
             if (!util.loginStatus()) {
                 Toast.makeText(context,"请先登录",Toast.LENGTH_SHORT).show();
@@ -71,19 +90,17 @@ public class CommonViewHolder extends RecyclerView.ViewHolder{
                 newsDB = new NewsDB(context);
                 if (collectStatus){
                     Toast.makeText(context,"取消收藏",Toast.LENGTH_SHORT).show();
-//                news_collect.setImageResource(R.mipmap.collect);
+                    news_collect.setImageResource(R.mipmap.collect);
                     collectStatus = false;
                     newsDB.delete(item);
                 }else {
                     Toast.makeText(context,"收藏成功",Toast.LENGTH_SHORT).show();
-//                news_collect.setImageResource(R.mipmap.collect_press);
+                    news_collect.setImageResource(R.mipmap.collect_press);
                     collectStatus = true;
                     newsDB.insert(item);
                 }
             }
-
         });
-        news_share.setOnClickListener((v)->{ new UMengShare(context).share(item); });
     }
 
     public void showDelete(){

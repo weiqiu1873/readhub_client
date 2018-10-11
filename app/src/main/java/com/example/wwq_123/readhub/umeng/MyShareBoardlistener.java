@@ -8,9 +8,10 @@ import com.example.wwq_123.readhub.model.bean.BaseDataItem;
 import com.example.wwq_123.readhub.model.bean.CommonDataItem;
 import com.example.wwq_123.readhub.model.bean.TopicDataItem;
 import com.example.wwq_123.readhub.util.PermissionsUtil;
-import com.umeng.socialize.ShareAction;
 import com.umeng.socialize.bean.SHARE_MEDIA;
 import com.umeng.socialize.media.UMImage;
+import com.umeng.socialize.media.UMWeb;
+import com.umeng.socialize.shareboard.ShareBoardConfig;
 import com.umeng.socialize.shareboard.SnsPlatform;
 import com.umeng.socialize.utils.ShareBoardlistener;
 
@@ -18,31 +19,32 @@ public class MyShareBoardlistener implements ShareBoardlistener {
 
     private Context context;
     private BaseDataItem item;
+    private MyShareAction shareAction;
     public MyShareBoardlistener(Context context, BaseDataItem item){
         this.context = context;
         this.item = item;
     }
     @Override
     public void onclick(SnsPlatform snsPlatform, SHARE_MEDIA share_media) {
-        ShareAction shareAction = new MyShareAction((Activity) context).getAction(share_media);
-
-        if (share_media==SHARE_MEDIA.QQ||share_media==SHARE_MEDIA.QZONE){
-            //手机存储权限判断
-            PermissionsUtil util = PermissionsUtil.getInstance(context);
-            if (!util.hasStoragePermission()){
-                util.getStoragePermission();
-            }
-            shareAction.withMedia(new UMImage(context, R.drawable.ic_flying_pig));
+        if (shareAction==null){
+            shareAction = MyShareAction.getAction(context,share_media);
         }
-        if (share_media==SHARE_MEDIA.WEIXIN||share_media==SHARE_MEDIA.WEIXIN_CIRCLE){
-            if (item instanceof TopicDataItem){
-                TopicDataItem topic = (TopicDataItem) item;
-                shareAction.withText(topic.getTitle());
-            }else {
-                CommonDataItem common = (CommonDataItem) item;
-                shareAction.withText(common.getTitle());
-            }
-
+        checkPremission();
+//        shareAction.setImage(R.drawable.ic_flying_pig);
+        if (item instanceof TopicDataItem){
+            shareAction.withText(((TopicDataItem)item).getTitle())
+            .withMedia(new UMImage(context,R.drawable.ic_flying_pig));
+        }else {
+            shareAction.setWeb((CommonDataItem)item);
         }
     }
+
+    //手机存储权限判断
+    private void checkPremission(){
+        PermissionsUtil util = PermissionsUtil.getInstance(context);
+        if (!util.hasStoragePermission()){
+            util.getStoragePermission();
+        }
+    }
+
 }

@@ -3,14 +3,14 @@
     xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="200dp"
-    android:background="@drawable/navigation_header"
+    android:background="@color/c3"
     android:padding="20dp"
     android:id="@+id/header_layout">
     <com.example.wwq_123.readhub.view.custom_ui.CircleImageView
         android:id="@+id/user_image"
         android:src="@drawable/ic_flying_pig"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
+        android:layout_width="100dp"
+        android:layout_height="100dp"
         android:layout_centerVertical="true"
         android:layout_alignParentLeft="true"
         android:layout_marginTop="40dp"/>
@@ -24,5 +24,4 @@
         android:layout_toRightOf="@id/user_image"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content" />
-
 </RelativeLayout>

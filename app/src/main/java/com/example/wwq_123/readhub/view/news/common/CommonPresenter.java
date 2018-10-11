@@ -1,52 +1,71 @@
 package com.example.wwq_123.readhub.view.news.common;
 
 import com.example.wwq_123.readhub.base.BasePresenter;
-import com.example.wwq_123.readhub.model.bean.CommonDataItem;
-import com.example.wwq_123.readhub.net.retrofit.MySubscriber;
-import com.example.wwq_123.readhub.util.DataUtil;
-
-import java.util.List;
 
 public class CommonPresenter extends BasePresenter<CommonContract.View> implements CommonContract.Presenter {
 
+    private CommonContract.View view;
+    private TechPresenter techPresenter;
+    private DeveloperPresenter developerPresenter;
+    private BlockchainPresenter blockchainPresenter;
+
     public CommonPresenter(CommonContract.View view){
-        attachView(view);
+        this.view = view;
+    }
+    @Override
+    public void getNews(int position) {
+        switch (position){
+            case 0:
+                if (techPresenter==null){
+                    techPresenter = new TechPresenter(view);
+                }
+                techPresenter.getTechNews();
+                break;
+            case 1:
+                if (developerPresenter==null){
+                    developerPresenter = new DeveloperPresenter(view);
+                }
+                developerPresenter.getDevelopNews();
+                break;
+            case 2:
+                if (blockchainPresenter==null){
+                    blockchainPresenter = new BlockchainPresenter(view);
+                }
+                blockchainPresenter.getBlockchainNews();
+                break;
+                default:break;
+        }
     }
 
     @Override
-    public void getTechNews() {
-        addSubscription(api.getTechNews("",10)
-                .map((techData)->DataUtil.extractTech(techData))
-                , new MySubscriber<List<CommonDataItem>>(){
-                    @Override
-                    public void onNext(List<CommonDataItem> list) {
-                        view.showTechNews(list);
-                    }
-                });
+    public void getMoreNews(int position) {
+        switch (position){
+            case 0:
+                techPresenter.getMoreTechNews();
+                break;
+            case 1:
+                developerPresenter.getMoreDevelopNews();
+                break;
+            case 2:
+                blockchainPresenter.getMoreBlockchainNews();
+                break;
+            default:break;
+        }
     }
 
     @Override
-    public void getDevelopNews() {
-        addSubscription(api.getDeveloperNews("",10)
-                .map((developerData)->DataUtil.extractDeveloper(developerData)),
-                new MySubscriber<List<CommonDataItem>>(){
-                    @Override
-                    public void onNext(List<CommonDataItem> list) {
-                        view.showDeveloperNews(list);
-                    }
-                });
+    public void updateNews(int position) {
+        switch (position){
+            case 0:
+                techPresenter.getLatestTechNews();
+                break;
+            case 1:
+                developerPresenter.getLatestDevelopNews();
+                break;
+            case 2:
+                blockchainPresenter.getLatestBlockchainNews();
+                break;
+            default:break;
+        }
     }
-
-    @Override
-    public void getBlockchainNews() {
-        addSubscription(api.getBlockchainNews("",10)
-                .map((blockchainData)->DataUtil.extractBlockchain(blockchainData))
-                ,new MySubscriber<List<CommonDataItem>>(){
-                    @Override
-                    public void onNext(List<CommonDataItem> list) {
-                        view.showBlockchainNews(list);
-                    }
-                });
-    }
-
 }

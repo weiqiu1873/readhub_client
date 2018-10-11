@@ -15,7 +15,6 @@ public class ImageUtil {
 
     private PreferencesUtil util;
     private Context context;
-    public static final String PATH_NAME = "/image/";
     private static final String DirectoryName = "image";
 
     public ImageUtil(Context context){

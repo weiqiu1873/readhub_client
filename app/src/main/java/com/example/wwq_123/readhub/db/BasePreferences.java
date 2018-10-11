@@ -20,6 +20,7 @@ public class BasePreferences {
     public String getString(String key){
         return sharedPreferences.getString(key,null);
     }
+
     public void setBoolean(String key,boolean value){
         sharedPreferences.edit().putBoolean(key,value).commit();
     }

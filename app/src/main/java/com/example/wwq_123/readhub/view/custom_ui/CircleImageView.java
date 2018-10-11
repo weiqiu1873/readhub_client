@@ -21,7 +21,7 @@ import android.widget.ImageView;
 @SuppressLint("AppCompatCustomView")
 public class CircleImageView extends ImageView {
 
-    private float wight;
+    private float width;
     private float height;
     private float radius;
     private Paint paint;
@@ -54,7 +54,7 @@ public class CircleImageView extends ImageView {
     protected void onMeasure(int widthMeasureSpec, int heightMeasureSpec) {
 //        super.onMeasure(widthMeasureSpec, heightMeasureSpec);
         setMeasuredDimension(measureWidth(widthMeasureSpec),measureHeight(heightMeasureSpec));
-        radius = Math.min(wight,height)/2;
+        radius = Math.min(width,height)/2;
     }
 
     private int measureWidth(int measureSpec){
@@ -71,7 +71,7 @@ public class CircleImageView extends ImageView {
                result = Math.min(result,specSize);
            }
         }
-        wight = result;
+        width = result;
         return result;
     }
     private int measureHeight(int measureSpec){
@@ -95,13 +95,13 @@ public class CircleImageView extends ImageView {
     @Override
     protected void onDraw(Canvas canvas) {
         paint.setShader(initBitmapShader());    //将着色器设置给画笔
-        canvas.drawCircle(wight/2,height/2,radius,paint);
+        canvas.drawCircle(width/2,height/2,radius,paint);
     }
     private BitmapShader initBitmapShader(){
         BitmapDrawable drawable = (BitmapDrawable) getDrawable();
         Bitmap bitmap = drawable.getBitmap();
         BitmapShader shader = new BitmapShader(bitmap, Shader.TileMode.CLAMP,Shader.TileMode.CLAMP);
-        float scale = Math.max(wight/bitmap.getWidth(),height/bitmap.getHeight());
+        float scale = Math.max(width/bitmap.getWidth(),height/bitmap.getHeight());
         matrix.setScale(scale,scale);
         shader.setLocalMatrix(matrix);
         return shader;

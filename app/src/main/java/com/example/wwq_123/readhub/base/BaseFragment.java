@@ -21,6 +21,7 @@ public abstract class BaseFragment<T extends BasePresenter> extends Fragment imp
         int layoutId = getLayoutId();
         rootView = inflater.inflate(layoutId,container,false);
         initView(rootView);
+        initEvent();
         return rootView;
     }
 

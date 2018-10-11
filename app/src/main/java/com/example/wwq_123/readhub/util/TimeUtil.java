@@ -1,7 +1,5 @@
 package com.example.wwq_123.readhub.util;
 
-import android.util.Log;
-
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
@@ -34,7 +32,6 @@ public class TimeUtil {
     }
     //获取发布时间(utc)与现在时间的时间差
     public static String TimeDifference(String utcTime) {
-
         Date utc = null;
         try {
             utc = UTCToCTC(utcTime);
