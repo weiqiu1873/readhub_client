@@ -17,16 +17,8 @@ public class UserDB {
     }
 
     public void insert(User user){
-        DaoMaster master = new DaoMaster(manager.getWritableDataBase());
-        DaoSession session = master.newSession();
-        UserDao dao = session.getUserDao();
+        UserDao dao = manager.getWriteSession().getUserDao();
         dao.insertOrReplace(user);
     }
 
-//    public User getUser(String uid){
-//        DaoMaster master = new DaoMaster(manager.getWritableDataBase());
-//        DaoSession session = master.newSession();
-//        UserDao dao = session.getUserDao();
-//
-//    }
 }

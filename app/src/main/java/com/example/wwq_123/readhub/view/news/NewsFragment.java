@@ -1,5 +1,6 @@
 package com.example.wwq_123.readhub.view.news;
 
+import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.design.widget.TabLayout;
 import android.support.v4.app.Fragment;
@@ -10,7 +11,11 @@ import android.view.View;
 
 import com.example.wwq_123.readhub.R;
 import com.example.wwq_123.readhub.base.BaseFragment;
+import com.example.wwq_123.readhub.eventbus.Event;
 import com.example.wwq_123.readhub.view.news.common.CommonFragment;
+
+import org.greenrobot.eventbus.EventBus;
+import org.greenrobot.eventbus.Subscribe;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -35,6 +40,7 @@ public class NewsFragment extends BaseFragment{
         adapter = new NewsViewPagerAdapter(getChildFragmentManager());
         news_viewpager.setAdapter(adapter);
         news_viewpager.setCurrentItem(0);
+        news_viewpager.setOffscreenPageLimit(2);
         news_tab_layout.setupWithViewPager(news_viewpager);
     }
 
@@ -52,13 +58,23 @@ public class NewsFragment extends BaseFragment{
     }
 
     @Override
-    public void showSuccess() {
-
+    public void onCreate(@Nullable Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        EventBus.getDefault().register(this);
     }
 
     @Override
-    public void showFailed() {
+    public void onDestroy() {
+        super.onDestroy();
+        EventBus.getDefault().unregister(this);
+    }
 
+    @Subscribe
+    public void cancleCollect(Event.News news){
+        int i = 0;
+        while (!fragments.get(i).cancleCollect(news.item)){
+            i++;
+        }
     }
 
     class NewsViewPagerAdapter extends FragmentPagerAdapter {

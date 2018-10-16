@@ -18,7 +18,7 @@ public class JobDataItem implements Serializable{
     private List<SourceBean> sources;
     private String publishDate;
     private String createdAt;
-    private List<JobsArrayBean> jobsArray;
+    private List<JobArrayBean> jobsArray;
 
     public long getId() {
         return id;
@@ -124,11 +124,11 @@ public class JobDataItem implements Serializable{
         this.createdAt = createdAt;
     }
 
-    public List<JobsArrayBean> getJobsArray() {
+    public List<JobArrayBean> getJobsArray() {
         return jobsArray;
     }
 
-    public void setJobsArray(List<JobsArrayBean> jobsArray) {
+    public void setJobsArray(List<JobArrayBean> jobsArray) {
         this.jobsArray = jobsArray;
     }
 
@@ -184,122 +184,6 @@ public class JobDataItem implements Serializable{
 
         public void setNumber(int number) {
             this.number = number;
-        }
-    }
-
-    public static class JobsArrayBean implements Serializable{
-        /**
-         * id : 2152164
-         * url : https://www.zhipin.com/job_detail/c726135ef446e5c81XB53tq_FVE~.html
-         * city : 上海
-         * title : 平面/手绘创意设计师
-         * company : 牧野国际教育
-         * sponsor : false
-         * siteName : BOSS 直聘
-         * salaryLower : 7
-         * salaryUpper : 10
-         * experienceLower : 1
-         * experienceUpper : 3
-         */
-
-        private int id;
-        private String url;
-        private String city;
-        private String title;
-        private String company;
-        private boolean sponsor;
-        private String siteName;
-        private int salaryLower;
-        private int salaryUpper;
-        private int experienceLower;
-        private int experienceUpper;
-
-        public int getId() {
-            return id;
-        }
-
-        public void setId(int id) {
-            this.id = id;
-        }
-
-        public String getUrl() {
-            return url;
-        }
-
-        public void setUrl(String url) {
-            this.url = url;
-        }
-
-        public String getCity() {
-            return city;
-        }
-
-        public void setCity(String city) {
-            this.city = city;
-        }
-
-        public String getTitle() {
-            return title;
-        }
-
-        public void setTitle(String title) {
-            this.title = title;
-        }
-
-        public String getCompany() {
-            return company;
-        }
-
-        public void setCompany(String company) {
-            this.company = company;
-        }
-
-        public boolean isSponsor() {
-            return sponsor;
-        }
-
-        public void setSponsor(boolean sponsor) {
-            this.sponsor = sponsor;
-        }
-
-        public String getSiteName() {
-            return siteName;
-        }
-
-        public void setSiteName(String siteName) {
-            this.siteName = siteName;
-        }
-
-        public int getSalaryLower() {
-            return salaryLower;
-        }
-
-        public void setSalaryLower(int salaryLower) {
-            this.salaryLower = salaryLower;
-        }
-
-        public int getSalaryUpper() {
-            return salaryUpper;
-        }
-
-        public void setSalaryUpper(int salaryUpper) {
-            this.salaryUpper = salaryUpper;
-        }
-
-        public int getExperienceLower() {
-            return experienceLower;
-        }
-
-        public void setExperienceLower(int experienceLower) {
-            this.experienceLower = experienceLower;
-        }
-
-        public int getExperienceUpper() {
-            return experienceUpper;
-        }
-
-        public void setExperienceUpper(int experienceUpper) {
-            this.experienceUpper = experienceUpper;
         }
     }
 

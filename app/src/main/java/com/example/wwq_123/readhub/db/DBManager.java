@@ -4,6 +4,7 @@ import android.content.Context;
 import android.database.sqlite.SQLiteDatabase;
 
 import com.example.wwq_123.readhub.greendao.gen.DaoMaster;
+import com.example.wwq_123.readhub.greendao.gen.DaoSession;
 
 
 public class DBManager {
@@ -28,16 +29,13 @@ public class DBManager {
         this.context = context;
         helper = new DaoMaster.DevOpenHelper(context,DB_NAME,null);
     }
-    public SQLiteDatabase getReadableDataBase(){
-        if (helper==null){
-            helper = new DaoMaster.DevOpenHelper(context,DB_NAME,null);
-        }
-        return helper.getReadableDatabase();
+
+    public DaoSession getReadSession(){
+        DaoMaster master = new DaoMaster(helper.getReadableDatabase());
+        return master.newSession();
     }
-    public SQLiteDatabase getWritableDataBase(){
-        if (helper==null){
-            helper = new DaoMaster.DevOpenHelper(context,DB_NAME,null);
-        }
-        return helper.getWritableDatabase();
+    public DaoSession getWriteSession(){
+        DaoMaster master = new DaoMaster(helper.getWritableDatabase());
+        return master.newSession();
     }
 }

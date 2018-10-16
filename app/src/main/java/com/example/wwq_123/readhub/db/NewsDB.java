@@ -19,21 +19,15 @@ public class NewsDB {
     }
 
     public void insert(CommonDataItem dataItem){
-        DaoMaster master = new DaoMaster(manager.getWritableDataBase());
-        DaoSession session = master.newSession();
-        CommonDataItemDao dao = session.getCommonDataItemDao();
+        CommonDataItemDao dao = manager.getWriteSession().getCommonDataItemDao();
         dao.insertOrReplace(dataItem);
     }
     public void delete(CommonDataItem dataItem){
-        DaoMaster master = new DaoMaster(manager.getWritableDataBase());
-        DaoSession session = master.newSession();
-        CommonDataItemDao dao = session.getCommonDataItemDao();
+        CommonDataItemDao dao = manager.getWriteSession().getCommonDataItemDao();
         dao.delete(dataItem);
     }
     public List<CommonDataItem> getAll(){
-        DaoMaster master = new DaoMaster(manager.getReadableDataBase());
-        DaoSession session = master.newSession();
-        CommonDataItemDao dao = session.getCommonDataItemDao();
+        CommonDataItemDao dao = manager.getReadSession().getCommonDataItemDao();
         QueryBuilder<CommonDataItem> builder = dao.queryBuilder();
         return builder.list();
     }

@@ -30,6 +30,20 @@ public class TimeUtil {
         calendar.set(Calendar.HOUR,calendar.get(Calendar.HOUR)+8);
         return calendar.getTime();
     }
+    //将UTC时间转换成年月日
+    public static String UTCToTime(String utc){
+        Calendar calendar = Calendar.getInstance();
+        try {
+            calendar.setTime(UTCToCTC(utc));
+        } catch (ParseException e) {
+            e.printStackTrace();
+        }
+        StringBuilder builder = new StringBuilder();
+        builder.append(calendar.get(Calendar.MONTH)+"月")
+                .append(calendar.get(Calendar.DAY_OF_MONTH)+"日");
+        return builder.toString();
+    }
+
     //获取发布时间(utc)与现在时间的时间差
     public static String TimeDifference(String utcTime) {
         Date utc = null;
@@ -48,6 +62,5 @@ public class TimeUtil {
             int minute = (int) (secondDifference/60000);
             return  minute==0 ? String.valueOf(1) :minute+"分钟前";
         }
-
     }
 }

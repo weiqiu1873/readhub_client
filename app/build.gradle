@@ -47,6 +47,11 @@ android {
         daoPackage 'com.example.wwq_123.readhub.greendao.gen'
         targetGenDir 'src/main/java'
     }
+
+//    lintOptions{
+//        checkReleaseBuilds false
+//        abortOnError false
+//    }
 }
 
 dependencies {

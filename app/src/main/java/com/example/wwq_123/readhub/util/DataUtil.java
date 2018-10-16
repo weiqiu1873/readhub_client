@@ -1,6 +1,7 @@
 package com.example.wwq_123.readhub.util;
 
 import com.example.wwq_123.readhub.model.bean.CommonDataItem;
+import com.example.wwq_123.readhub.model.bean.JobArrayBean;
 import com.example.wwq_123.readhub.model.bean.JobDataItem;
 import com.example.wwq_123.readhub.model.bean.TopicDataItem;
 import com.example.wwq_123.readhub.model.jsonbean.BlockchainData;
@@ -124,10 +125,10 @@ public class DataUtil {
             item.setExperienceUpper(bean.getExperienceUpper());
             item.setPublishDate(bean.getPublishDate());
             item.setCreatedAt(bean.getCreatedAt());
-            List<JobDataItem.JobsArrayBean> beanList = new ArrayList<>();
+            List<JobArrayBean> beanList = new ArrayList<>();
             for (JobData.DataBean.JobsArrayBean arrayBean:bean.getJobsArray()) {
-                JobDataItem.JobsArrayBean array = new JobDataItem.JobsArrayBean();
-                array.setId(arrayBean.getId());
+                JobArrayBean array = new JobArrayBean();
+                array.setId(String.valueOf(arrayBean.getId()));
                 array.setCity(arrayBean.getCity());
                 array.setCompany(arrayBean.getCompany());
                 array.setUrl(arrayBean.getUrl());

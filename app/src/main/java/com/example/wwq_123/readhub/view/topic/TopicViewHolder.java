@@ -6,6 +6,7 @@ import android.support.v7.widget.CardView;
 import android.support.v7.widget.RecyclerView;
 import android.view.View;
 import android.widget.ImageButton;
+import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -26,8 +27,6 @@ public class TopicViewHolder extends RecyclerView.ViewHolder {
     TextView tvTopicTime;
     TextView tvTopicTitle;
     TextView tvTopicSummary;
-    TextView tvNewsOne;
-    TextView tvNewsTwo;
     ImageButton tvDelete;
     ImageButton tvCollect;
     ImageButton tvShare;
@@ -42,17 +41,22 @@ public class TopicViewHolder extends RecyclerView.ViewHolder {
         tvTopicTime = itemView.findViewById(R.id.tv_topic_time);
         tvTopicTitle = itemView.findViewById(R.id.tv_topic_title);
         tvTopicSummary = itemView.findViewById(R.id.tv_topic_summary);
-        tvNewsOne = itemView.findViewById(R.id.tv_news_one);
-        tvNewsTwo = itemView.findViewById(R.id.tv_news_two);
         tvDelete = itemView.findViewById(R.id.tv_topic_delete);
         tvCollect = itemView.findViewById(R.id.tv_topic_collect);
         tvShare = itemView.findViewById(R.id.tv_topic_share);
+        setShareLocation(R.id.tv_topic_collect);
         util = PreferencesUtil.getInstance(context);
     }
 
     public void showDelete(){
         tvDelete.setVisibility(View.VISIBLE);
         tvCollect.setVisibility(View.GONE);
+        setShareLocation(R.id.tv_topic_delete);
+    }
+
+    private void setShareLocation(int id){
+        RelativeLayout.LayoutParams params = (RelativeLayout.LayoutParams) tvShare.getLayoutParams();
+        params.addRule(RelativeLayout.LEFT_OF,id);
     }
 
     public void onBind(TopicDataItem item){
@@ -83,12 +87,12 @@ public class TopicViewHolder extends RecyclerView.ViewHolder {
             }else {
                 if (collectStatus) {
                     Toast.makeText(context, "取消收藏", Toast.LENGTH_SHORT).show();
-                    tvCollect.setImageResource(R.mipmap.collect);
+                    tvCollect.setImageResource(R.drawable.ic_uncollect);
                     collectStatus = false;
                     topicDB.delete(item);
                 } else {
                     Toast.makeText(context, "收藏成功", Toast.LENGTH_SHORT).show();
-                    tvCollect.setImageResource(R.mipmap.collect_press);
+                    tvCollect.setImageResource(R.drawable.ic_collect);
                     collectStatus = true;
                     topicDB.insert(item);
                 }
@@ -96,5 +100,8 @@ public class TopicViewHolder extends RecyclerView.ViewHolder {
         });
         tvShare.setOnClickListener((v) -> new UMengShare(context).share(item));
     }
-
+    public void cancleCollect(){
+        tvCollect.setImageResource(R.drawable.ic_uncollect);
+        collectStatus = false;
+    }
 }

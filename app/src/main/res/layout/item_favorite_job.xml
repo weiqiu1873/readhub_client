@@ -3,8 +3,8 @@
     xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:layout_marginTop="5dp"
-    android:layout_marginBottom="5dp">
+    android:padding="5dp"
+    android:background="@color/b6">
 
     <TextView
         android:id="@+id/jobArray_item_title"
@@ -63,5 +63,51 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:textSize="@dimen/font_14"
+        android:layout_marginRight="10dp"
         android:textColor="@color/b3"/>
+    <View
+        android:id="@+id/jobArray_item_divider"
+        android:layout_below="@id/jobArray_item_site"
+        android:background="@color/b7"
+        android:layout_width="match_parent"
+        android:layout_height="1dp"/>
+
+    <ImageButton
+        android:id="@+id/jobArray_item_collect"
+        android:src="@drawable/ic_uncollect"
+        android:background="@color/b6"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/jobArray_item_divider"
+        android:layout_alignParentRight="true"
+        android:paddingTop="5dp"
+        android:paddingBottom="5dp"
+        android:paddingLeft="15dp"
+        android:paddingRight="15dp"/>
+
+    <ImageButton
+        android:id="@+id/jobArray_item_delete"
+        android:src="@mipmap/ic_delete"
+        android:background="@color/b6"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/jobArray_item_divider"
+        android:layout_alignParentRight="true"
+        android:paddingTop="5dp"
+        android:paddingBottom="5dp"
+        android:paddingLeft="15dp"
+        android:paddingRight="15dp"
+        android:visibility="gone"/>
+
+    <ImageButton
+        android:id="@+id/jobArray_item_share"
+        android:src="@mipmap/share"
+        android:background="@color/b6"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/jobArray_item_divider"
+        android:paddingTop="5dp"
+        android:paddingBottom="5dp"
+        android:paddingLeft="15dp"
+        android:paddingRight="15dp"/>
 </RelativeLayout>

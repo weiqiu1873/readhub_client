@@ -42,6 +42,11 @@ public class TopicAdapter extends RecyclerView.Adapter {
         return topicList.size();
     }
 
+    @Override
+    public int getItemViewType(int position) {
+        return position;
+    }
+
     public void updateTopic(List<TopicDataItem> topicDataItems){
         topicList.clear();
         topicList.addAll(topicDataItems);
@@ -59,5 +64,14 @@ public class TopicAdapter extends RecyclerView.Adapter {
     public void remove(TopicDataItem topic){
         topicList.remove(topic);
         notifyDataSetChanged();
+    }
+
+    public int getViewHolderLocationForAdapter(TopicDataItem item){
+        for (int i = 0; i < topicList.size(); i++) {
+            if (topicList.get(i).getOrder()==item.getOrder()){
+                return i;
+            }
+        }
+        return -1;
     }
 }

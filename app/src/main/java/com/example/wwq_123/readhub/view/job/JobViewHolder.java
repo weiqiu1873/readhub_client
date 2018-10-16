@@ -15,8 +15,7 @@ public class JobViewHolder extends RecyclerView.ViewHolder {
 
     private CardView job_cardview;
     private TextView job_title;
-    private TextView job_summary1;
-    private TextView job_summary2;
+    private TextView job_summary;
     private Context context;
 
     public JobViewHolder(View itemView,Context context) {
@@ -24,19 +23,17 @@ public class JobViewHolder extends RecyclerView.ViewHolder {
         this.context = context;
         job_cardview = itemView.findViewById(R.id.job_cardview);
         job_title = itemView.findViewById(R.id.job_item_title);
-        job_summary1 = itemView.findViewById(R.id.job_item_summary1);
-        job_summary2 = itemView.findViewById(R.id.job_item_summary2);
+        job_summary = itemView.findViewById(R.id.job_item_summary);
     }
 
     public void onBind(JobDataItem item){
         job_title.setText(item.getJobTitle());
         StringBuilder builder = new StringBuilder();
-//        job_summary1.setText(item.getJobsArray().get(0).getTitle()+"...");
         String summmary2 = "北京、上海、深圳"
                 +"等地共更新了"+item.getJobCount()+"个职位，待遇集中在"
                 +item.getSalaryLower()+"-"+item.getSalaryUpper()+"k,一般要求"
                 +item.getExperienceLower()+"-"+item.getExperienceUpper()+"年经验";
-        job_summary2.setText(summmary2);
+        job_summary.setText(summmary2);
 
         job_cardview.setOnClickListener((v)->{
             Intent intent  = new Intent(context, JobDetailActivity.class);

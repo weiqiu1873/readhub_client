@@ -9,6 +9,7 @@ import android.view.ViewGroup;
 
 import com.example.wwq_123.readhub.R;
 import com.example.wwq_123.readhub.model.bean.CommonDataItem;
+import com.example.wwq_123.readhub.model.bean.TopicDataItem;
 
 
 import java.util.ArrayList;
@@ -56,5 +57,14 @@ public class CommonAdapter extends RecyclerView.Adapter {
     public void remove(CommonDataItem item){
         dataItems.remove(item);
         notifyDataSetChanged();
+    }
+
+    public int getViewHolderLocationForAdapter(CommonDataItem item){
+        for (int i = 0; i < dataItems.size(); i++) {
+            if (dataItems.get(i).getId().equals(item.getId())){
+                return i;
+            }
+        }
+        return -1;
     }
 }

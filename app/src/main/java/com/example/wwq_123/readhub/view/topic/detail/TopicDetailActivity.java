@@ -1,6 +1,7 @@
 package com.example.wwq_123.readhub.view.topic.detail;
 
 import android.content.Intent;
+import android.graphics.Color;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
@@ -18,6 +19,7 @@ import com.example.wwq_123.readhub.R;
 import com.example.wwq_123.readhub.base.BaseActivity;
 import com.example.wwq_123.readhub.model.bean.CommonDataItem;
 import com.example.wwq_123.readhub.model.bean.TopicDetail;
+import com.example.wwq_123.readhub.util.TimeUtil;
 import com.example.wwq_123.readhub.view.custom_ui.TitleBar;
 import com.example.wwq_123.readhub.view.news.common.CommonViewHolder;
 import java.util.ArrayList;
@@ -169,12 +171,15 @@ public class TopicDetailActivity extends BaseActivity implements TopicDetailCont
     }
 
     private class TimeLineViewHolder extends RecyclerView.ViewHolder{
+        private TextView time;
         private TextView title;
         public TimeLineViewHolder(View itemView) {
             super(itemView);
+            time = itemView.findViewById(R.id.timeline_item_time);
             title = itemView.findViewById(R.id.timeline_item_title);
         }
         public void onBind(TopicDetail.TimelineBean.TopicsBean bean){
+            time.setText(TimeUtil.UTCToTime(bean.getCreatedAt()));
             title.setText(bean.getTitle());
             title.setOnClickListener((view)->{
                 Intent intent = new Intent(TopicDetailActivity.this,TopicDetailActivity.class);

@@ -6,17 +6,9 @@
             android:icon="@mipmap/ic_launcher"
             android:title="收藏"/>
         <item
-            android:id="@+id/wallet"
+            android:id="@+id/favoritejob"
             android:icon="@mipmap/ic_launcher"
-            android:title="钱包"/>
-        <item
-            android:id="@+id/photo"
-            android:icon="@mipmap/ic_launcher"
-            android:title="相册"/>
-        <item
-            android:id="@+id/file"
-            android:icon="@mipmap/ic_launcher"
-            android:title="文件"/>
+            android:title="喜爱职位"/>
     </group>
     <group android:id="@+id/group2">0
         <item

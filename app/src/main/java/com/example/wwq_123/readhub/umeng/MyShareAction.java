@@ -7,6 +7,7 @@ import android.widget.Toast;
 import com.example.wwq_123.readhub.R;
 import com.example.wwq_123.readhub.model.bean.BaseDataItem;
 import com.example.wwq_123.readhub.model.bean.CommonDataItem;
+import com.example.wwq_123.readhub.model.bean.JobArrayBean;
 import com.example.wwq_123.readhub.model.bean.TopicDataItem;
 import com.umeng.socialize.ShareAction;
 import com.umeng.socialize.bean.SHARE_MEDIA;
@@ -27,19 +28,23 @@ public class MyShareAction extends ShareAction {
                 .share();
         return shareAction;
     }
-    public MyShareAction setImage(int drawable){
-        UMImage image = new UMImage(context,drawable);
-        this.withMedia(image);
-        return this;
+
+    public UMWeb setWeb(TopicDataItem item){
+        UMWeb web = new UMWeb("https://readhub.cn/topic/"+((TopicDataItem) item).getUrl());
+        web.setTitle(item.getTitle());
+        web.setDescription(item.getSummary());
+        return web;
     }
-    public MyShareAction setWeb(CommonDataItem item){
+    public UMWeb setWeb(CommonDataItem item){
         UMWeb web = new UMWeb(item.getMobileUrl());
         web.setTitle(item.getTitle());
-        web.setDescription(item.getSummaryAuto());
-        web.setThumb(new UMImage(context,R.drawable.ic_flying_pig));
-        this.withMedia(web);
-        return this;
+        web.setDescription(item.getSummary());
+        return web;
     }
-
-
+    public UMWeb setWeb(JobArrayBean bean){
+        UMWeb web = new UMWeb(bean.getUrl());
+        web.setTitle(bean.getTitle());
+        web.setDescription(bean.getCompany());
+        return web;
+    }
 }

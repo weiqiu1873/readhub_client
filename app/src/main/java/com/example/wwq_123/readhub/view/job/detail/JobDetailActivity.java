@@ -1,25 +1,22 @@
 package com.example.wwq_123.readhub.view.job.detail;
 
-import android.content.Context;
 import android.content.Intent;
-import android.support.annotation.NonNull;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.util.Log;
-import android.view.LayoutInflater;
-import android.view.View;
-import android.view.ViewGroup;
 import android.widget.TextView;
 
 import com.example.wwq_123.readhub.R;
 import com.example.wwq_123.readhub.base.BaseActivity;
+import com.example.wwq_123.readhub.model.bean.JobArrayBean;
 import com.example.wwq_123.readhub.model.bean.JobDataItem;
 import com.example.wwq_123.readhub.model.jsonbean.Chart;
-import com.example.wwq_123.readhub.view.WebActivity;
-import com.example.wwq_123.readhub.view.custom_ui.MyLoadingView;
+import com.example.wwq_123.readhub.view.custom_ui.MyItemDecoration;
 import com.example.wwq_123.readhub.view.custom_ui.TitleBar;
+import com.example.wwq_123.readhub.view.favoritejob.FavoriteJobAdapter;
 import com.github.mikephil.charting.charts.BarChart;
 import com.github.mikephil.charting.charts.LineChart;
+import com.github.mikephil.charting.components.Description;
 import com.github.mikephil.charting.components.XAxis;
 import com.github.mikephil.charting.data.BarData;
 import com.github.mikephil.charting.data.BarDataSet;
@@ -29,10 +26,8 @@ import com.github.mikephil.charting.data.LineData;
 import com.github.mikephil.charting.data.LineDataSet;
 import com.github.mikephil.charting.interfaces.datasets.IBarDataSet;
 import com.github.mikephil.charting.interfaces.datasets.ILineDataSet;
-
 import java.util.ArrayList;
 import java.util.List;
-
 
 public class JobDetailActivity extends BaseActivity implements JobDetailContract.View {
     private TitleBar titleBar;
@@ -42,8 +37,7 @@ public class JobDetailActivity extends BaseActivity implements JobDetailContract
     private RecyclerView jobArray;
     private JobDetailPresenter presenter;
     private JobDataItem job;
-    private List<JobDataItem.JobsArrayBean> jobArrayList = new ArrayList<>();
-    private JobArrayAdapter adapter;
+    private FavoriteJobAdapter adapter;
     @Override
     public int getLayoutId() {
         return R.layout.activity_job_detail;
@@ -55,29 +49,34 @@ public class JobDetailActivity extends BaseActivity implements JobDetailContract
         detail_title = findViewById(R.id.job_detail_title);
         detail_summary = findViewById(R.id.job_detail_summary);
         jobArray = findViewById(R.id.job_detail_jobArray);
-        adapter = new JobArrayAdapter(this);
-        jobArray.setAdapter(adapter);
-        jobArray.setLayoutManager(new LinearLayoutManager(this));
         salary_chart = findViewById(R.id.job_detail_salary_chart);
         experience_chart = findViewById(R.id.job_detail_experience_chart);
         city_chart = findViewById(R.id.job_detail_city_chart);
+        initRecycleView();
         initSalaryChart();
         initExperienceChart();
         initCityChart();
+    }
+
+    private void initRecycleView() {
+        adapter = new FavoriteJobAdapter(this);
+        adapter.setShowdelete(false);
+        jobArray.setAdapter(adapter);
+        jobArray.addItemDecoration(new MyItemDecoration().setTop(5).setBottom(5));
+        jobArray.setLayoutManager(new LinearLayoutManager(this));
     }
 
     @Override
     public void initData() {
         Intent intent = getIntent();
         job = (JobDataItem) intent.getSerializableExtra("job");
-        Log.d("job",job.toString());
         detail_title.setText(job.getJobTitle());
         String summmary = "北京、上海、深圳"
                 +"等地共更新了"+job.getJobCount()+"个职位\n待遇集中在"
                 +job.getSalaryLower()+"-"+job.getSalaryUpper()+"k\n一般要求"
                 +job.getExperienceLower()+"-"+job.getExperienceUpper()+"年经验";
         detail_summary.setText(summmary);
-        jobArrayList = job.getJobsArray();
+        adapter.setList(job.getJobsArray());
         if (presenter==null){
             presenter = new JobDetailPresenter(this);
         }
@@ -93,11 +92,7 @@ public class JobDetailActivity extends BaseActivity implements JobDetailContract
 
     @Override
     public void initEvent() {
-        adapter.setListenter((v,position)->{
-            Intent intent = new Intent(this, WebActivity.class);
-            intent.putExtra("url",jobArrayList.get(position).getUrl());
-            startActivity(intent);
-        });
+
     }
 
     private void initCityChart() {
@@ -158,7 +153,6 @@ public class JobDetailActivity extends BaseActivity implements JobDetailContract
         List<BarEntry> cityEntry = new ArrayList<>();
         List<String> cities = new ArrayList<>();
         for (int i=0,size=cityBean.size();i<size;i++){
-            Log.d("city:","X:"+cityBean.get(i).getXaxis()+"\tY"+cityBean.get(i).getYaxis());
             cities.add(cityBean.get(i).getXaxis());
             cityEntry.add(new BarEntry(i,cityBean.get(i).getYaxis()));
         }
@@ -207,70 +201,7 @@ public class JobDetailActivity extends BaseActivity implements JobDetailContract
         iLineDataSets.add(salarySet);
         LineData lineData = new LineData(iLineDataSets);
         salary_chart.setData(lineData);
-
+        salary_chart.setDescription(new Description());
     }
 
-    class JobArrayAdapter extends RecyclerView.Adapter{
-        private LayoutInflater inflater;
-        private OnItemClickListenter listenter;
-        public JobArrayAdapter(Context context){
-            inflater = LayoutInflater.from(context);
-        }
-        @NonNull
-        @Override
-        public RecyclerView.ViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
-            View view = inflater.inflate(R.layout.item_jobarray,parent,false);
-            return new JobArrayViewHolder(view);
-        }
-
-        @Override
-        public void onBindViewHolder(@NonNull RecyclerView.ViewHolder holder, int position) {
-            ((JobArrayViewHolder)holder).onBind(jobArrayList.get(position));
-        }
-
-        @Override
-        public int getItemCount() {
-            return jobArrayList.size();
-        }
-
-        public void setListenter(OnItemClickListenter listenter) {
-            this.listenter = listenter;
-        }
-    }
-    class JobArrayViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener{
-        private TextView ja_title,ja_company,ja_salary,ja_experience,ja_city,ja_site;
-        private OnItemClickListenter listenter;
-        public JobArrayViewHolder(View itemView) {
-            super(itemView);
-            ja_title = itemView.findViewById(R.id.jobArray_item_title);
-            ja_company = itemView.findViewById(R.id.jobArray_item_company);
-            ja_salary = itemView.findViewById(R.id.jobArray_item_salary);
-            ja_experience = itemView.findViewById(R.id.jobArray_item_experience);
-            ja_city = itemView.findViewById(R.id.jobArray_item_city);
-            ja_site = itemView.findViewById(R.id.jobArray_item_site);
-        }
-        public void onBind(JobDataItem.JobsArrayBean bean){
-            ja_title.setText(bean.getTitle());
-            ja_company.setText(bean.getCompany());
-            if (bean.getSalaryLower()==-1){
-                ja_salary.setText("面议");
-            }else {
-                ja_salary.setText(bean.getSalaryLower()+"-"+bean.getSalaryUpper()+"k");
-            }
-            if (bean.getExperienceLower()==-1){
-                ja_experience.setText("经验不限");
-            }else {
-                ja_experience.setText(bean.getExperienceLower()+"-"+bean.getExperienceUpper()+"年");
-            }
-            ja_city.setText(bean.getCity());
-            ja_site.setText(bean.getSiteName());
-        }
-        @Override
-        public void onClick(View v) {
-            listenter.OnItemClick(v,getPosition());
-        }
-    }
-    public interface OnItemClickListenter{
-        void OnItemClick(View view,int position);
-    }
 }

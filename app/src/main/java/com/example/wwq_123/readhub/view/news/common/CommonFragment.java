@@ -1,5 +1,7 @@
 package com.example.wwq_123.readhub.view.news.common;
 
+import android.os.Bundle;
+import android.support.annotation.Nullable;
 import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
@@ -8,7 +10,12 @@ import android.widget.Toast;
 
 import com.example.wwq_123.readhub.R;
 import com.example.wwq_123.readhub.base.BaseFragment;
+import com.example.wwq_123.readhub.eventbus.Event;
 import com.example.wwq_123.readhub.model.bean.CommonDataItem;
+
+import org.greenrobot.eventbus.EventBus;
+import org.greenrobot.eventbus.Subscribe;
+
 import java.util.List;
 
 public class CommonFragment extends BaseFragment<CommonPresenter> implements CommonContract.View,SwipeRefreshLayout.OnRefreshListener {
@@ -53,8 +60,10 @@ public class CommonFragment extends BaseFragment<CommonPresenter> implements Com
             @Override
             public void onScrollStateChanged(RecyclerView recyclerView, int newState) {
                 super.onScrollStateChanged(recyclerView, newState);
-                if (newState==RecyclerView.SCROLL_STATE_IDLE){
-                    presenter.getMoreNews(currentPosition);
+                if (newState==RecyclerView.SCROLL_STATE_SETTLING){
+                    if (!recyclerView.canScrollVertically(1)){
+                        presenter.getMoreNews(currentPosition);
+                    }
                 }
             }
         });
@@ -84,5 +93,16 @@ public class CommonFragment extends BaseFragment<CommonPresenter> implements Com
     public void onRefresh() {
         presenter.updateNews(currentPosition);
         refreshLayout.setRefreshing(true);
+    }
+
+    public boolean cancleCollect(CommonDataItem item){
+        int location = adapter.getViewHolderLocationForAdapter(item);
+        if (location==-1){
+            return false;
+        }else {
+            CommonViewHolder viewHolder = (CommonViewHolder) newsList.findViewHolderForAdapterPosition(location);
+            viewHolder.cancleCollect();
+            return true;
+        }
     }
 }

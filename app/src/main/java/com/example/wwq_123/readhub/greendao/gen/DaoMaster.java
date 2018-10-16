@@ -22,6 +22,7 @@ public class DaoMaster extends AbstractDaoMaster {
     /** Creates underlying database table using DAOs. */
     public static void createAllTables(Database db, boolean ifNotExists) {
         CommonDataItemDao.createTable(db, ifNotExists);
+        JobArrayBeanDao.createTable(db, ifNotExists);
         TopicDataItemDao.createTable(db, ifNotExists);
         UserDao.createTable(db, ifNotExists);
     }
@@ -29,6 +30,7 @@ public class DaoMaster extends AbstractDaoMaster {
     /** Drops underlying database table using DAOs. */
     public static void dropAllTables(Database db, boolean ifExists) {
         CommonDataItemDao.dropTable(db, ifExists);
+        JobArrayBeanDao.dropTable(db, ifExists);
         TopicDataItemDao.dropTable(db, ifExists);
         UserDao.dropTable(db, ifExists);
     }
@@ -50,6 +52,7 @@ public class DaoMaster extends AbstractDaoMaster {
     public DaoMaster(Database db) {
         super(db, SCHEMA_VERSION);
         registerDaoClass(CommonDataItemDao.class);
+        registerDaoClass(JobArrayBeanDao.class);
         registerDaoClass(TopicDataItemDao.class);
         registerDaoClass(UserDao.class);
     }

@@ -20,23 +20,16 @@ public class TopicDB {
     }
     //插入一条数据
     public void insert(TopicDataItem dataItem){
-        DaoMaster master = new DaoMaster(manager.getWritableDataBase());
-        DaoSession session = master.newSession();
-        TopicDataItemDao dao = session.getTopicDataItemDao();
+        TopicDataItemDao dao = manager.getWriteSession().getTopicDataItemDao();
         dao.insertOrReplace(dataItem);
     }
     public void delete(TopicDataItem dataItem){
-        DaoMaster master = new DaoMaster(manager.getWritableDataBase());
-        DaoSession session = master.newSession();
-        TopicDataItemDao dao = session.getTopicDataItemDao();
+        TopicDataItemDao dao = manager.getWriteSession().getTopicDataItemDao();
         dao.delete(dataItem);
     }
     public List<TopicDataItem> getAll(){
-        DaoMaster master = new DaoMaster(manager.getReadableDataBase());
-        DaoSession session = master.newSession();
-        TopicDataItemDao dao = session.getTopicDataItemDao();
+        TopicDataItemDao dao = manager.getReadSession().getTopicDataItemDao();
         QueryBuilder<TopicDataItem> builder = dao.queryBuilder();
-        List<TopicDataItem> topicDataItems = builder.list();
-        return topicDataItems;
+        return builder.list();
     }
 }

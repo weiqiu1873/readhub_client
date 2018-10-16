@@ -6,6 +6,7 @@ import android.support.v7.widget.CardView;
 import android.support.v7.widget.RecyclerView;
 import android.view.View;
 import android.widget.ImageButton;
+import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -44,7 +45,12 @@ public class CommonViewHolder extends RecyclerView.ViewHolder{
         news_delete = itemView.findViewById(R.id.news_common_item_delete);
         news_collect = itemView.findViewById(R.id.news_common_item_collect);
         news_share = itemView.findViewById(R.id.news_common_item_share);
+        setShareLocation(R.id.news_common_item_collect);
         util = PreferencesUtil.getInstance(context);
+    }
+    private void setShareLocation(int id){
+        RelativeLayout.LayoutParams params = (RelativeLayout.LayoutParams) news_share.getLayoutParams();
+        params.addRule(RelativeLayout.LEFT_OF,id);
     }
 
     public void onBind(CommonDataItem item){
@@ -75,6 +81,7 @@ public class CommonViewHolder extends RecyclerView.ViewHolder{
     }
     private void setDelete(CommonDataItem item){
         news_delete.setOnClickListener((v)->{
+            Toast.makeText(context,"取消收藏",Toast.LENGTH_SHORT).show();
             newsDB = new NewsDB(context);
             newsDB.delete(item);
             Event.News event = new Event.News();
@@ -90,12 +97,12 @@ public class CommonViewHolder extends RecyclerView.ViewHolder{
                 newsDB = new NewsDB(context);
                 if (collectStatus){
                     Toast.makeText(context,"取消收藏",Toast.LENGTH_SHORT).show();
-                    news_collect.setImageResource(R.mipmap.collect);
+                    news_collect.setImageResource(R.drawable.ic_uncollect);
                     collectStatus = false;
                     newsDB.delete(item);
                 }else {
                     Toast.makeText(context,"收藏成功",Toast.LENGTH_SHORT).show();
-                    news_collect.setImageResource(R.mipmap.collect_press);
+                    news_collect.setImageResource(R.drawable.ic_collect);
                     collectStatus = true;
                     newsDB.insert(item);
                 }
@@ -107,5 +114,14 @@ public class CommonViewHolder extends RecyclerView.ViewHolder{
         news_delete.setVisibility(View.VISIBLE);
         news_time.setVisibility(View.GONE);
         news_collect.setVisibility(View.GONE);
+        setShareLocation(R.id.news_common_item_delete);
+    }
+    public void cancleCollect(){
+        news_collect.setImageResource(R.drawable.ic_uncollect);
+        collectStatus = false;
+    }
+
+    public CardView getCardView() {
+        return cardView;
     }
 }

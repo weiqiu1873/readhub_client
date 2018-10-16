@@ -19,7 +19,8 @@
             android:focusable="true"
             android:focusableInTouchMode="true"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content">
+            android:layout_height="wrap_content"
+            android:background="@color/b6">
             <TextView
                 android:id="@+id/job_detail_title"
                 android:layout_width="match_parent"
@@ -75,6 +76,7 @@
                 android:textSize="@dimen/font_16"/>
             <android.support.v7.widget.RecyclerView
                 android:id="@+id/job_detail_jobArray"
+                android:background="@color/b7"
                 android:paddingLeft="10dp"
                 android:paddingRight="10dp"
                 android:layout_marginBottom="20dp"

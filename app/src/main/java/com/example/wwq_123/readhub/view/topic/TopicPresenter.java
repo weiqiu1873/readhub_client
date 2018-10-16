@@ -1,5 +1,7 @@
 package com.example.wwq_123.readhub.view.topic;
 
+import android.util.Log;
+
 import com.example.wwq_123.readhub.base.BasePresenter;
 import com.example.wwq_123.readhub.model.bean.TopicDataItem;
 import com.example.wwq_123.readhub.model.jsonbean.TopicData;

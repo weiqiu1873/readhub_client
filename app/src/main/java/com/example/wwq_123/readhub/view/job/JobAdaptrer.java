@@ -43,4 +43,8 @@ public class JobAdaptrer extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
         jobList.addAll(jobDataItems);
         notifyDataSetChanged();
     }
+    public void addJobList(List<JobDataItem> jobDataItems){
+        jobList.addAll(jobDataItems);
+        notifyDataSetChanged();
+    }
 }

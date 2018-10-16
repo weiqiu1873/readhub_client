@@ -7,21 +7,19 @@
     <com.example.wwq_123.readhub.view.custom_ui.TitleBar
         android:id="@+id/collect_title"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content">
-
-    </com.example.wwq_123.readhub.view.custom_ui.TitleBar>
+        android:layout_height="wrap_content"/>
 
     <android.support.design.widget.TabLayout
         android:id="@+id/collect_tablayout"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        app:tabTextColor="@color/c3"></android.support.design.widget.TabLayout>
+        app:tabTextColor="@color/c3"/>
 
     <android.support.v4.view.ViewPager
         android:id="@+id/collect_viewpager"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:background="@color/b5">
+        android:background="@color/b7">
 
     </android.support.v4.view.ViewPager>
 </LinearLayout>

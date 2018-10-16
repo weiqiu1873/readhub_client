@@ -2,6 +2,8 @@ package com.example.wwq_123.readhub.view.main;
 
 import android.content.Intent;
 import android.graphics.Bitmap;
+import android.os.Bundle;
+import android.support.annotation.Nullable;
 import android.support.design.widget.NavigationView;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
@@ -22,10 +24,13 @@ import com.example.wwq_123.readhub.base.BaseActivity;
 import com.example.wwq_123.readhub.view.collect.CollectActivity;
 import com.example.wwq_123.readhub.view.custom_ui.CircleImageView;
 import com.example.wwq_123.readhub.view.custom_ui.TitleBar;
+import com.example.wwq_123.readhub.view.favoritejob.FavoriteJobActivity;
 import com.example.wwq_123.readhub.view.job.JobFragment;
 import com.example.wwq_123.readhub.view.news.NewsFragment;
 import com.example.wwq_123.readhub.view.topic.TopicFragment;
 import com.umeng.socialize.UMShareAPI;
+
+import org.greenrobot.eventbus.EventBus;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -154,6 +159,10 @@ public class MainActivity extends BaseActivity<MainPresenter> implements MainCon
                 case R.id.collect:
                     Intent intent = new Intent(MainActivity.this, CollectActivity.class);
                     startActivity(intent);
+                    break;
+                case R.id.favoritejob:
+                    Intent intent1 = new Intent(MainActivity.this, FavoriteJobActivity.class);
+                    startActivity(intent1);
                     break;
                 case R.id.quit:
                     Toast.makeText(MainActivity.this,"exit",Toast.LENGTH_SHORT).show();

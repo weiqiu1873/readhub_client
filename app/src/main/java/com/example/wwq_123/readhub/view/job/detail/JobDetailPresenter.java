@@ -9,6 +9,7 @@ public class JobDetailPresenter extends BasePresenter<JobDetailContract.View> im
     public JobDetailPresenter(JobDetailContract.View view){
         attachView(view);
     }
+
     @Override
     public void getChart(String id) {
         addSubscription(api.getChart(id)

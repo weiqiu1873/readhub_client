@@ -6,9 +6,11 @@ import java.util.List;
 
 public interface JobContract {
     interface View extends BaseContract.BaseView{
-        void showJobData(List<JobDataItem> topicList);
+        void showJobData(List<JobDataItem> jobDataItems);
+        void showMoreJobData(List<JobDataItem> jobDataItems);
     }
     interface Presenter extends BaseContract.BasePresenter<View>{
         void getJobData();
+        void getMoreJobData();
     }
 }

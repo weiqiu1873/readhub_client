@@ -15,9 +15,7 @@
         <com.example.wwq_123.readhub.view.custom_ui.TitleBar
             android:id="@+id/main_title"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content">
-
-        </com.example.wwq_123.readhub.view.custom_ui.TitleBar>
+            android:layout_height="wrap_content"/>
 
         <com.example.wwq_123.readhub.view.custom_ui.ScrollViewPager
             android:layout_width="match_parent"

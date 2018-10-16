@@ -10,7 +10,7 @@
     <application
         android:name=".UMApplication"
         android:allowBackup="true"
-        android:icon="@mipmap/ic_launcher"
+        android:icon="@drawable/ic_flying_pig"
         android:label="@string/app_name"
         android:hardwareAccelerated="false"
         android:roundIcon="@mipmap/ic_launcher_round"
@@ -29,6 +29,7 @@
         </activity>
         <activity android:name=".view.job.detail.JobDetailActivity"></activity>
         <activity android:name=".view.collect.CollectActivity"></activity>
+        <activity android:name=".view.favoritejob.FavoriteJobActivity"></activity>
         <service android:name=".service.LoadingService"></service>
         <activity
             android:name=".wxapi.WXEntryActivity"
